@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dllhehg3gni18"]
+
+[ext_resource type="Script" path="res://Scripts/tool_extract_curves.gd" id="1_rhrgi"]
+[ext_resource type="PackedScene" uid="uid://2w7rk0gefkn" path="res://level_data/snake_hefty_animated_2.glb" id="2_rhrgi"]
+
+[node name="drop_snake_below" type="Node3D"]
+script = ExtResource("1_rhrgi")
+
+[node name="snake_hefty_animated_2" parent="." instance=ExtResource("2_rhrgi")]
+
+[editable path="snake_hefty_animated_2"]
