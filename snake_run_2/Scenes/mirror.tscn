@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxn7he2a25fa1"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_aik5e"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.13591)
+texture = SubResource("ViewportTexture_aik5e")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(-0.999957, 0, 0.00930239, 0, 1, 0, -0.00930239, 0, -0.999957, 0, 0, -6.13738)

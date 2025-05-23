@@ -141,7 +141,7 @@ spot_attenuation = 0.170755
 spot_angle = 42.2129
 
 [node name="green" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_1_001", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.613, 1.91779, -11.8973)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.613, 2.17535, -3.92434)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_ubood")
 
@@ -203,6 +203,45 @@ surface_material_override/0 = SubResource("StandardMaterial3D_w2vjh")
 [node name="Snake" parent="." groups=["snake"] instance=ExtResource("3_2lqy7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.52916, 4.31555, 0)
 hide_triangles = true
+
+[node name="Skeleton3D" parent="Snake/snake_hefty_animated_4/snake_export" index="0"]
+bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
+bones/0/rotation = Quaternion(-0.600857, -0.0907782, -0.0888705, 0.789197)
+bones/3/rotation = Quaternion(0.997821, -9.26268e-08, 1.05982e-06, -0.0659763)
+bones/4/position = Vector3(-5.91258e-08, 0.457736, -2.32831e-09)
+bones/4/rotation = Quaternion(0.116756, -0.00429382, 0.149037, 0.981905)
+bones/5/rotation = Quaternion(0.107207, 0.0117925, 0.648451, 0.753577)
+bones/6/rotation = Quaternion(0.0093614, -1.06081e-08, 0.102584, 0.99468)
+bones/7/rotation = Quaternion(0.0885625, 3.81025e-08, 0.344395, 0.934638)
+bones/8/rotation = Quaternion(0.054732, -2.1884e-08, 0.360471, 0.931163)
+bones/9/rotation = Quaternion(-0.0651952, -3.44511e-08, 0.0239546, 0.997585)
+bones/10/rotation = Quaternion(0.119439, -9.19423e-09, -0.0484807, 0.991657)
+bones/11/rotation = Quaternion(0.0298712, -1.61463e-08, 0.355735, 0.934109)
+bones/12/rotation = Quaternion(-0.118568, 1.49691e-08, 0.105043, 0.987374)
+bones/13/rotation = Quaternion(0.150823, -1.93024e-08, 0.479242, 0.864627)
+bones/14/rotation = Quaternion(-0.00297302, 1.81382e-08, 0.385657, 0.922637)
+bones/15/rotation = Quaternion(-0.34262, -8.64488e-10, 0.210249, 0.915645)
+bones/16/rotation = Quaternion(-0.142559, -2.84851e-08, 0.450209, 0.88147)
+bones/17/rotation = Quaternion(-0.0635774, 3.06426e-09, 0.377245, 0.923929)
+bones/18/rotation = Quaternion(-0.300896, -2.53452e-08, 0.324868, 0.896618)
+bones/19/rotation = Quaternion(-0.288619, -4.11154e-08, 0.275515, 0.916947)
+bones/20/rotation = Quaternion(-0.157562, 4.46666e-08, 0.133035, 0.978507)
+bones/21/rotation = Quaternion(-0.355576, 2.22744e-08, 0.342477, 0.869641)
+bones/22/rotation = Quaternion(-0.256026, -2.49768e-08, 0.329896, 0.908636)
+bones/23/rotation = Quaternion(-0.261708, 1.37239e-08, 0.153929, 0.952793)
+bones/24/rotation = Quaternion(-0.380927, -2.30158e-08, 0.165511, 0.909671)
+bones/25/rotation = Quaternion(-0.401022, -9.3691e-08, 0.146976, 0.904201)
+bones/26/rotation = Quaternion(-0.286506, -5.71828e-08, 0.174643, 0.942027)
+bones/27/rotation = Quaternion(-0.396004, -9.98185e-08, 0.224196, 0.890459)
+bones/28/rotation = Quaternion(-0.428486, -3.39298e-08, -0.13324, 0.89367)
+bones/29/rotation = Quaternion(-0.443484, -6.98824e-08, 0.0712895, 0.893443)
+bones/30/rotation = Quaternion(-0.347804, -3.4795e-08, -0.00676661, 0.937543)
+bones/31/rotation = Quaternion(-0.547533, -7.88456e-08, -0.130606, 0.826529)
+bones/32/rotation = Quaternion(-0.256552, -2.47794e-08, -0.0641491, 0.964399)
+bones/33/rotation = Quaternion(-0.47099, -8.9553e-08, -0.144393, 0.870241)
+bones/34/rotation = Quaternion(-0.459838, -4.63188e-08, -0.176794, 0.870226)
+bones/35/rotation = Quaternion(-0.284853, -7.47074e-08, -0.155128, 0.945935)
+bones/36/rotation = Quaternion(-0.408406, -6.42449e-08, -0.21474, 0.887182)
 
 [node name="Game_over_timer" type="Timer" parent="."]
 wait_time = 5.0

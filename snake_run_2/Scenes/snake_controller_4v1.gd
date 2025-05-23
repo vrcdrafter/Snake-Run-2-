@@ -180,12 +180,15 @@ func _physics_process(delta: float) -> void:
 				"run_animation":
 					bone_overriding = false
 					skel.clear_bones_global_pose_override()
+					
+					
 					if transform_onestart:
 						transform_save = self.global_transform # note this line needs to run once too 
-						transform_onestart = false
+						
 					# move the snake to the position 
 						self.global_transform = snake_target.global_transform
-					
+						snake_animations.play_section(target_animation,.1,8.0)
+						transform_onestart = false
 					# check to see if player gets close 
 					var player_distance :float = self.global_position.distance_to(player.global_position) # the reason why its self .global is because of the animation transform 
 					if player_distance < 5 and not snake_target == player: # but what if your after the player , ( problem here ) 
@@ -198,7 +201,8 @@ func _physics_process(delta: float) -> void:
 						
 
 					
-					snake_animations.play(target_animation)
+					
+
 					if onestart:
 						timer_move_on.start() # start the timer for how long to be there .
 						onestart = false
