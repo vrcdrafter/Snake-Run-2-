@@ -29,6 +29,11 @@ var direction :Vector3
 var can_play_walk :bool = false
 var audio_toggle :bool = false
 
+# fetching mouse events from top sub viewport container 
+@onready var top_container_handle :SubViewportContainer = get_node("../..")
+var event : Vector2 
+var previous_event :Vector2 = Vector2(0,0)
+
 func _ready():
 	camera = $rotation_helper/Camera3D
 	rotation_helper = $rotation_helper
@@ -46,17 +51,31 @@ func _ready():
 	$AudioStreamPlayer3D.stream_paused = true
 	$AudioStreamPlayer3D.pitch_scale = .8
 		
-		
-	
-func _input(event):
-	# This section controls your player camera. Sensitivity can be changed.
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		rotation_helper.rotate_x(deg_to_rad(event.relative.y * MOUSE_SENSITIVITY * -1))
-		self.rotate_y(deg_to_rad(event.relative.x * MOUSE_SENSITIVITY * -1))
 
-		var camera_rot = rotation_helper.rotation
-		camera_rot.x = clampf(camera_rot.x, -1.4, 1.4)
-		rotation_helper.rotation = camera_rot
+
+
+
+	
+func _process(delta: float) -> void:
+	
+
+	
+	event = top_container_handle.mouse_event
+	
+	if previous_event == event:
+		event = Vector2(0,0)
+	else:
+		previous_event = event
+	
+	rotation_helper.rotate_x(deg_to_rad(event.y * MOUSE_SENSITIVITY * -1))
+	self.rotate_y(deg_to_rad(event.x * MOUSE_SENSITIVITY * -1))
+
+	var camera_rot = rotation_helper.rotation
+	camera_rot.x = clampf(camera_rot.x, -1.4, 1.4)
+	rotation_helper.rotation = camera_rot
+	
+	event = Vector2(0,0)
+
 
 
 func _physics_process(delta):
@@ -158,11 +177,11 @@ func remake_connections():
 	
 	var all_snakes :Array = get_tree().get_nodes_in_group("snake")
 	print("all _snakes", all_snakes)
-	var frame_rate_manager :Node3D = get_node("..")
+	
 
 	
-	var timer_handle :Timer = get_node("../Game_over_timer")
-	var game_over_button_handle :Button = get_node("../Control/Button")
+	var timer_handle :Timer = get_node("../../../SubViewportContainer/SubViewport/Node3D/Game_over_timer")
+	var game_over_button_handle :Button = get_node("../../../SubViewportContainer/SubViewport/Node3D/Control/Button")
 	var callable_mouse_button = Callable(self,"_on_button_button_down")
 	var callable_ensnare = Callable(self, "_on_snake_ensnared")
 	var timer_callable = Callable(self, "_on_game_over_timer_timeout")
@@ -198,7 +217,6 @@ func setup_level():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
-
 
 func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):

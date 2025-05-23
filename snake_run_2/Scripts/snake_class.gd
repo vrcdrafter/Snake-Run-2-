@@ -436,5 +436,5 @@ func _on_timer_timeout2():    # Code to execute when the timer times out
 
 
 func twist_triangles(value :float):
-	for tri in follow_path_array:
+	for tri in tri_array:
 		tri.global_rotation.z = deg_to_rad(value)

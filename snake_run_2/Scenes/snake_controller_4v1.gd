@@ -1,7 +1,7 @@
 extends Snake
 var ensnare_state :String = "path"
 var snake_state :String = "patrol"
-@onready var player :CharacterBody3D = get_node("../Player")
+@onready var player :CharacterBody3D = get_node("../../../../SubViewportContainer2/SubViewport/Player")
 @onready var test_mesh :MeshInstance3D = get_node("../MeshInstance3D")
 var snake_target :Node3D = null
 
@@ -171,8 +171,8 @@ func _physics_process(delta: float) -> void:
 				"run":
 					
 
-					twist_triangles(180)
-					ennarement_done = move_segments_along_path(delta,2)
+					twist_triangles(0)
+					ennarement_done = move_segments_along_path(delta,3)
 					var local_target_distance :float = (snake_target.global_position - tri_array[0].global_position).length()
 					if ennarement_done and not (local_target_distance > 2.3):
 						ensnare_state = "run_animation"
