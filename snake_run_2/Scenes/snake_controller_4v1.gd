@@ -21,6 +21,11 @@ var snake_ensnare_oneshot :bool = true
 # slider bar
 @onready var slidex :VSlider = get_node("../X_axis")
 
+# RENDERING INCREMENTER , OK THIS IS A WIERD ONE , 
+#THIS IS THE VARIABLE THAT KEEPS TRACK OF WHAT FRAMES TO SKIP 
+var skip_frame :int = 1
+
+
 func _ready() -> void:
 	snake_target = player
 	
@@ -166,7 +171,7 @@ func _physics_process(delta: float) -> void:
 				"run":
 					
 
-					
+					twist_triangles(180)
 					ennarement_done = move_segments_along_path(delta,2)
 					var local_target_distance :float = (snake_target.global_position - tri_array[0].global_position).length()
 					if ennarement_done and not (local_target_distance > 2.3):
@@ -180,13 +185,19 @@ func _physics_process(delta: float) -> void:
 				"run_animation":
 					bone_overriding = false
 					skel.clear_bones_global_pose_override()
-					
+					var junk :SubViewport = get_node("../..")
+					skip_frame -= 1
+					if skip_frame < 0:
+						junk.set_update_mode(4)
+						
 					
 					if transform_onestart:
 						transform_save = self.global_transform # note this line needs to run once too 
 						
 					# move the snake to the position 
 						self.global_transform = snake_target.global_transform
+						
+						junk.set_update_mode(0) # dont render it for a minute
 						snake_animations.play_section(target_animation,.1,8.0)
 						transform_onestart = false
 					# check to see if player gets close 
@@ -215,6 +226,7 @@ func _physics_process(delta: float) -> void:
 						onestart = true
 						snake_animations.stop()
 						bone_overriding = true
+						skip_frame = 1 # this is important so it knows how to skip a fram again 
 						#transform the object back too 
 						self.global_transform = transform_save# remember to restore the transform 
 						
