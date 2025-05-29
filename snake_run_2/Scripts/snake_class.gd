@@ -245,7 +245,9 @@ func make_tris():
 	for i in snake_vertibrea.size(): #EXCLUDE THE TWO EYES AND JAW
 		# add triangles
 		tri_array.append(MeshInstance3D.new())
-		tri_array[i].mesh = PrismMesh.new()
+		var triangle_mesh :PrismMesh = PrismMesh.new()
+		triangle_mesh.size = Vector3(.5,.5,.5)
+		tri_array[i].mesh = triangle_mesh
 		
 		tri_array[i].name = "body"+str(i)
 		var new_mat :StandardMaterial3D = StandardMaterial3D.new()
@@ -393,10 +395,11 @@ func _on_timer_timeout():    # Code to execute when the timer times out
 	
 	
 func pick_new_target(snake_target :Node3D) -> Node3D:
+	snake_target.remove_from_group("occupied") # first remove from the occupies group of whereveer the snake was .
 	var next_target :MeshInstance3D = fetch_random_patrol_object()
-	while next_target == snake_target:
-		next_target = patrol_objects.pick_random()
-
+	while next_target == snake_target or (snake_target.is_in_group("occupied")):
+		next_target = patrol_objects.pick_random() # keep picking till its a new unoccupied group
+	next_target .add_to_group("occupied")
 	return next_target
 
 

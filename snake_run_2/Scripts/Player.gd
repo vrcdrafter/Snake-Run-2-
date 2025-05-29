@@ -7,8 +7,8 @@ const SPEED = 5.0
 const SPRINT_MULT = 2
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.06
-@onready var Game_over :Control = get_node("../Control")
-@onready var Game_over_timer :Timer = get_node("../Game_over_timer")
+@onready var Game_over :Control = get_node("../../../SubViewportContainer/SubViewport/Node3D/Control")
+@onready var Game_over_timer :Timer = get_node("../../../SubViewportContainer/SubViewport/Node3D/Game_over_timer")
 # Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 

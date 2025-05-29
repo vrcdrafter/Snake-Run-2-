@@ -274,8 +274,8 @@ tracks/9/keys = PackedFloat32Array(0, 1, -0.688325, 0.00440798, -0.00176121, 0.7
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ae0t8"]
 _data = {
-&"run": SubResource("Animation_3qult"),
-&"sidestep_left": SubResource("Animation_28wcd")
+&"sidestep_left": SubResource("Animation_28wcd"),
+&"run": SubResource("Animation_3qult")
 }
 
 [node name="Player" type="CharacterBody3D"]

@@ -51,4 +51,7 @@ bones/34/rotation = Quaternion(-0.460569, -4.71019e-08, -0.176045, 0.869991)
 bones/35/rotation = Quaternion(-0.284883, -8.26922e-08, -0.154366, 0.946051)
 bones/36/rotation = Quaternion(-0.408705, -6.71823e-08, -0.214063, 0.887208)
 
+[node name="Sphere_001" parent="snake_hefty_animated_4/snake_export/Skeleton3D" index="0"]
+extra_cull_margin = 100.0
+
 [editable path="snake_hefty_animated_4"]

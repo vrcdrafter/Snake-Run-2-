@@ -49,6 +49,7 @@ render_target_update_mode = 4
 [node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport"]
 
 [node name="NavRegion" type="NavigationRegion3D" parent="SubViewportContainer/SubViewport/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0302277, 0, 0.049614)
 navigation_mesh = SubResource("NavigationMesh_2lqy7")
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="SubViewportContainer/SubViewport/Node3D/NavRegion"]
@@ -165,6 +166,11 @@ spot_angle = 42.2129
 
 [node name="green" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.613, 2.17535, -3.92434)
+mesh = SubResource("PrismMesh_7nt77")
+surface_material_override/0 = SubResource("StandardMaterial3D_ubood")
+
+[node name="green2" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.9392, 2.17535, -3.92434)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_ubood")
 

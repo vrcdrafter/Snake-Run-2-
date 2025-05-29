@@ -82,10 +82,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				if non_player_target_distance < 1 and not snake_target.is_in_group("A"):
 					# pick new object
-					var next_target :MeshInstance3D = fetch_random_patrol_object()
-					while next_target == target:
-						next_target = patrol_objects.pick_random()
-					snake_target = next_target
+					snake_target = pick_new_target(snake_target)
 				# if condition if its a animated object 
 				if non_player_target_distance < 1 and snake_target.is_in_group("A"):
 					# its a animated spot run an animated ensnar 
@@ -151,6 +148,7 @@ func _physics_process(delta: float) -> void:
 			if player_distance > 8: # give up chase 
 				snake_state = "patrol"
 				snake_target = pick_new_target(snake_target) # get a new target too
+				
 			
 		"ensnare_anim": # meaning animated ensnarement
 			# need to find right curve to use 

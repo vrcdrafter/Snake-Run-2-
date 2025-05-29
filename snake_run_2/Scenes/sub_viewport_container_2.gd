@@ -4,7 +4,7 @@ extends SubViewportContainer
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		mouse_event = event.relative
-		print("top_mouse_event",mouse_event)
+		
 		
 
 
