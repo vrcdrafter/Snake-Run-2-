@@ -267,7 +267,7 @@ func make_tris():
 	trans_prime = trans_new.rotated(Vector3(0,0,1),deg_to_rad(180)) * trans_prime
 	
 	# does not belong here but find that animion player 
-	snake_animations = find_child("Anim*")
+	snake_animations = find_child("Anim*") # note this may be a problem if there is two animation players
 	
 
 # navigation stuff 

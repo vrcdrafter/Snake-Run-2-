@@ -196,7 +196,7 @@ func _physics_process(delta: float) -> void:
 						self.global_transform = snake_target.global_transform
 						
 						junk.set_update_mode(0) # dont render it for a minute
-						snake_animations.play_section(target_animation,.1,8.0)
+						snake_animations.play(target_animation)
 						transform_onestart = false
 					# check to see if player gets close 
 					var player_distance :float = self.global_position.distance_to(player.global_position) # the reason why its self .global is because of the animation transform 
