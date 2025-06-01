@@ -62,6 +62,14 @@ func _physics_process(delta: float) -> void:
 		
 		"patrol":
 			
+			
+			# when you go into patrol , just skip a frame , see how bad it looks 
+			var junk :SubViewport = get_node("../..")
+			skip_frame -= 1
+			if skip_frame < 0:
+				junk.set_update_mode(4)
+			
+			
 			# just be casual agressivness 
 			aggressivness = 1
 			movement_speed = 1
@@ -183,7 +191,7 @@ func _physics_process(delta: float) -> void:
 				"run_animation":
 					bone_overriding = false
 					skel.clear_bones_global_pose_override()
-					var junk :SubViewport = get_node("../..")
+					var junk :SubViewport = get_node("../../../../SubViewportContainer2/SubViewport")
 					skip_frame -= 1
 					if skip_frame < 0:
 						junk.set_update_mode(4)
@@ -217,6 +225,10 @@ func _physics_process(delta: float) -> void:
 						onestart = false
 					
 					if timer_up:
+						
+						# you need to skip some of these frames too . 
+						
+						
 						transform_onestart = true # reset this so it can grab the next transform when the time comes . 
 						snake_state = "patrol"
 						# reset the ensnare state too 
@@ -226,6 +238,8 @@ func _physics_process(delta: float) -> void:
 						bone_overriding = true
 						skip_frame = 1 # this is important so it knows how to skip a fram again 
 						#transform the object back too 
+						# you need to skip some of these frames too . 						
+						
 						self.global_transform = transform_save# remember to restore the transform 
 						
 						# also pick new target ( made a function ) 

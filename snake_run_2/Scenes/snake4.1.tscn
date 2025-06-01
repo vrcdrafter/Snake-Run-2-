@@ -21,7 +21,7 @@ bones/4/scale = Vector3(1, 1, 1)
 bones/5/rotation = Quaternion(-0.0181826, -2.52344e-18, -2.34117e-16, 0.999835)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="."]
-transform = Transform3D(1, -6.64243e-08, 2.14031e-06, 2.11981e-06, -0.110584, -0.993878, 3.02698e-07, 0.993867, -0.110585, 7.92943e-09, -0.0250267, -0.535618)
+transform = Transform3D(1, -6.64246e-08, 2.14031e-06, 2.11981e-06, -0.110584, -0.993877, 3.02699e-07, 0.993867, -0.110585, 7.92943e-09, -0.0250267, -0.535618)
 bone_name = "jaw"
 bone_idx = 3
 use_external_skeleton = true

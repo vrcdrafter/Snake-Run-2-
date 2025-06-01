@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://cxhqkru7kmp2a"]
+[gd_scene load_steps=13 format=3 uid="uid://cxhqkru7kmp2a"]
 
+[ext_resource type="Script" path="res://Scripts/detect_controller_script.gd" id="1_tylgm"]
 [ext_resource type="Script" path="res://Scenes/experimetal_snake_ground_4v_0.gd" id="1_w2vjh"]
 [ext_resource type="PackedScene" uid="uid://c1716s0ci3nkt" path="res://Scenes/snake4.1.tscn" id="3_2lqy7"]
 [ext_resource type="Script" path="res://Scenes/sub_viewport_container_2.gd" id="3_tylgm"]
@@ -26,6 +27,7 @@ albedo_color = Color(0.92468, 0.312884, 0.115777, 1)
 albedo_color = Color(0.189267, 0.216364, 1, 1)
 
 [node name="Node" type="Node"]
+script = ExtResource("1_tylgm")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 editor_description = "This is so that you can pause a frame "
@@ -37,11 +39,10 @@ mouse_filter = 0
 script = ExtResource("1_w2vjh")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+editor_description = "keep update mode on default to skip frames"
 handle_input_locally = false
 gui_disable_input = true
 size = Vector2i(1152, 648)
-render_target_clear_mode = 2
-render_target_update_mode = 4
 
 [node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport"]
 
@@ -260,7 +261,7 @@ bones/35/rotation = Quaternion(-0.284853, -7.47074e-08, -0.155128, 0.945935)
 bones/36/rotation = Quaternion(-0.408406, -6.42449e-08, -0.21474, 0.887182)
 
 [node name="BoneAttachment3D" parent="SubViewportContainer/SubViewport/Node3D/Snake" index="1"]
-transform = Transform3D(0.967723, -0.242387, 0.0690044, -0.0311813, -0.386858, -0.921623, 0.250082, 0.889713, -0.381933, 0.622143, 1.03106, -1.1397)
+transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -0.921621, 0.250082, 0.889713, -0.381933, 0.622143, 1.03106, -1.1397)
 
 [node name="Game_over_timer" type="Timer" parent="SubViewportContainer/SubViewport/Node3D"]
 wait_time = 5.0
@@ -310,14 +311,15 @@ grow_vertical = 2
 text = "game over play again ? "
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
-offset_left = 11.0
-offset_top = 4.0
-offset_right = 523.0
-offset_bottom = 516.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 1150.0
+offset_bottom = 646.0
 script = ExtResource("3_tylgm")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer2"]
 handle_input_locally = false
+size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="Player" parent="SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_1_001"] instance=ExtResource("3_w2vjh")]
