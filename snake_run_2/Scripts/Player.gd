@@ -180,8 +180,9 @@ func remake_connections():
 	
 
 	
-	var timer_handle :Timer = get_node("../../../SubViewportContainer/SubViewport/Node3D/Game_over_timer")
-	var game_over_button_handle :Button = get_node("../../../SubViewportContainer/SubViewport/Node3D/Control/Button")
+	var timer_handle :Timer = get_node("../../../../SubViewportContainer/SubViewport/Node3D/Game_over_timer")
+
+	var game_over_button_handle :Button = get_node("../../../../SubViewportContainer/SubViewport/Node3D/Control/Button")
 	var callable_mouse_button = Callable(self,"_on_button_button_down")
 	var callable_ensnare = Callable(self, "_on_snake_ensnared")
 	var timer_callable = Callable(self, "_on_game_over_timer_timeout")

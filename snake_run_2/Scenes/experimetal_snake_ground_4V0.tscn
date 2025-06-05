@@ -42,7 +42,7 @@ script = ExtResource("1_w2vjh")
 editor_description = "keep update mode on default to skip frames"
 handle_input_locally = false
 gui_disable_input = true
-size = Vector2i(1152, 648)
+size = Vector2i(500, 648)
 render_target_update_mode = 4
 
 [node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport"]
@@ -311,21 +311,37 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "game over play again ? "
 
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
-offset_left = -2.0
-offset_top = -2.0
-offset_right = 1150.0
-offset_bottom = 646.0
+[node name="spawn_point_1" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.1678, 14.5329)
+
+[node name="GridContainer" type="GridContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
 script = ExtResource("3_tylgm")
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer2"]
+[node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 handle_input_locally = false
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="Player" parent="SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_1_001"] instance=ExtResource("3_w2vjh")]
+[node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_1_001"] instance=ExtResource("3_w2vjh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.2316, 4.36125, -1.24877)
+
+[node name="AudioListener3D" parent="GridContainer/SubViewportContainer2/SubViewport/Player" index="2"]
+current = true
 
 [editable path="SubViewportContainer/SubViewport/Node3D/Snake"]
 [editable path="SubViewportContainer/SubViewport/Node3D/Snake/snake_hefty_animated_4"]
 [editable path="SubViewportContainer/SubViewport/Node3D/Snake/BoneAttachment3D/tounge_1"]
+[editable path="GridContainer/SubViewportContainer2/SubViewport/Player"]

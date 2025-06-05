@@ -1,7 +1,7 @@
 extends Snake
 var ensnare_state :String = "path"
 var snake_state :String = "patrol"
-@onready var player :CharacterBody3D = get_node("../../../../SubViewportContainer2/SubViewport/Player")
+@onready var player :CharacterBody3D = get_node("../../../../GridContainer/SubViewportContainer2/SubViewport/Player")
 @onready var test_mesh :MeshInstance3D = get_node("../MeshInstance3D")
 var snake_target :Node3D = null
 
@@ -27,7 +27,7 @@ var skip_frame :int = 1
 
 
 func _ready() -> void:
-	snake_target = player
+	
 	
 	#initialize spine 
 	initilaize_spine_bones()
@@ -52,6 +52,9 @@ func _ready() -> void:
 	all_animation_curves = _make_curve_from_animation(skel,false) # register animations if ther is any on the model
 
 	var make_timer :Timer = make_anim_timer()
+	
+
+	#print(player_array)
 
 func _physics_process(delta: float) -> void:
 	
@@ -191,7 +194,7 @@ func _physics_process(delta: float) -> void:
 				"run_animation":
 					bone_overriding = false
 					skel.clear_bones_global_pose_override()
-					var junk :SubViewport = get_node("../../../../SubViewportContainer2/SubViewport")
+					var junk :SubViewport = get_node("../../../../GridContainer/SubViewportContainer2/SubViewport")
 					skip_frame -= 1
 					if skip_frame < 0:
 						junk.set_update_mode(4)
