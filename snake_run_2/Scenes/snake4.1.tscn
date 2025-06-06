@@ -62,15 +62,15 @@ bones/18/rotation = Quaternion(0.029615, -1.19006e-09, 0.000576679, 0.999561)
 [node name="AnimationPlayer" parent="BoneAttachment3D/tounge_1" index="1"]
 script = ExtResource("4_4llle")
 
-[node name="Area3D" type="Area3D" parent="BoneAttachment3D"]
+[node name="Detection" type="Area3D" parent="BoneAttachment3D"]
 transform = Transform3D(1, 2.12876e-06, 3.06718e-07, -6.94289e-08, -0.110585, 0.993867, 2.14962e-06, -0.993867, -0.110585, 2.07254e-07, 0.529565, -0.0841033)
 script = ExtResource("5_o881f")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BoneAttachment3D/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BoneAttachment3D/Detection"]
 transform = Transform3D(1, -1.93267e-12, -4.68603e-12, 1.93268e-12, 1, 6.03488e-07, 4.68603e-12, -6.03488e-07, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_ajh1n")
 
-[connection signal="body_entered" from="BoneAttachment3D/Area3D" to="BoneAttachment3D/Area3D" method="_on_body_entered"]
+[connection signal="body_entered" from="BoneAttachment3D/Detection" to="BoneAttachment3D/Detection" method="_on_body_entered"]
 
 [editable path="snake_hefty_animated_4"]
 [editable path="BoneAttachment3D/tounge_1"]
