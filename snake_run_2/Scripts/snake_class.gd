@@ -447,14 +447,15 @@ func twist_triangles(value :float):
 
 func connect_player_signals(): #what this does is connect the players signals if there on the scene 
 	var player_to_chase
+	var test
 	var all_player :Array[Node] = get_tree().root.find_children("Detection","Area3D",true,false)
 	var chase_callable :Callable = Callable(self, "found_prey")
-	print("players found ",all_player)
+	
 	for each in all_player:
-		print("found thiiiiis ",each.name)
-		each.connect("found_player",chase_callable.bind([player_to_chase]))
+		
+		each.connect("found_player",chase_callable.bind([player_to_chase,test]))
 	
 	
-func found_prey(player_to_chase):
+func found_prey(player_to_chase,test):
 	
-	print("found something to chase",player_to_chase.name)
+	print("found something to chase ",player_to_chase.name)
