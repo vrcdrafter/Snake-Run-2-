@@ -75,6 +75,11 @@ var snake_vertibrea :PackedInt32Array
 
 signal ensnared
 
+# for finding players 
+var found_player :bool = false
+var player_to_chase :Node3D
+var target_player :Node3D
+
 func _init() -> void:
 
 
@@ -446,7 +451,7 @@ func twist_triangles(value :float):
 
 
 func connect_player_signals(): #what this does is connect the players signals if there on the scene 
-	var player_to_chase
+	
 	var test
 	var all_player :Array[Node] = get_tree().root.find_children("Detection","Area3D",true,false)
 	var chase_callable :Callable = Callable(self, "found_prey")
@@ -457,5 +462,6 @@ func connect_player_signals(): #what this does is connect the players signals if
 	
 	
 func found_prey(player_to_chase,test):
-	
+	found_player = true
 	print("found something to chase ",player_to_chase.name)
+	target_player = player_to_chase

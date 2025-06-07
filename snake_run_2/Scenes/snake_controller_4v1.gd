@@ -25,6 +25,8 @@ var snake_ensnare_oneshot :bool = true
 #THIS IS THE VARIABLE THAT KEEPS TRACK OF WHAT FRAMES TO SKIP 
 var skip_frame :int = 1
 
+var locked_on_player :bool = true
+
 
 func _ready() -> void:
 	
@@ -85,11 +87,14 @@ func _physics_process(delta: float) -> void:
 			
 			var non_player_target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
 			# if condition if its just a relay point
-			var player_distance :float = tri_array[0].global_position.distance_to(player.global_position)
-			if player_distance < 5:
+			
+			if found_player and locked_on_player:
+				# so if you found the player start chase , and lock it in , 
 				# chase player
-				snake_target = player
+				var name_local = snake_target.name
+				snake_target = target_player
 				snake_state = "chase"
+				locked_on_player = false # meaning I dont want you to switch to other players 
 			else:
 				if non_player_target_distance < 1 and not snake_target.is_in_group("A"):
 					# pick new object
@@ -139,18 +144,19 @@ func _physics_process(delta: float) -> void:
 					snake_state = "patrol"
 					ensnare_state = "path"
 			
-		"chase":
+		"chase": # chase if for only if your after the plaer 
 			#find something to patrol to 
 			aggressivness = 6
 			movement_speed = 6
-			# 
-
+			#
+			
+			#now for chase you need to be tracking  the found player detected in Patrol 
 			set_movement_target(snake_target.global_position) # assigns target
 			nav_startup_physics_process(delta,tri_array[0]) #starts up the navigation server 
 			#start tris following eachother
 			follower(delta,tri_array,bone_length)
 			
-			var player_distance :float = tri_array[0].global_position.distance_to(player.global_position)
+			var player_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
 			
 			if player_distance < 1:
 				snake_state = "ensnare_anim"  
@@ -158,7 +164,7 @@ func _physics_process(delta: float) -> void:
 				
 			if player_distance > 8: # give up chase 
 				snake_state = "patrol"
-				snake_target = pick_new_target(snake_target) # get a new target too
+				snake_target = pick_new_target(snake_target) # get a new target too thats not the player
 				
 			
 		"ensnare_anim": # meaning animated ensnarement
@@ -175,7 +181,7 @@ func _physics_process(delta: float) -> void:
 					make_ensnarement_curve(ensnarement_points,tri_array,snake_target,animation_curve)
 					move_segments_to_path()
 					ensnare_state = "run"
-					if snake_target == player:
+					if snake_target == target_player: # meaning you have the player and not some inatimate object
 						emit_signal("ensnared") # good to put this signal here because path is only written once 
 				"run":
 					
@@ -187,7 +193,7 @@ func _physics_process(delta: float) -> void:
 						ensnare_state = "run_animation"
 						
 					elif local_target_distance > 2.3:
-						
+						# meaning the prey escaped 
 						ensnare_state = "abort"
 					else :
 						pass
@@ -210,18 +216,14 @@ func _physics_process(delta: float) -> void:
 						snake_animations.play(target_animation)
 						transform_onestart = false
 					# check to see if player gets close 
-					var player_distance :float = self.global_position.distance_to(player.global_position) # the reason why its self .global is because of the animation transform 
-					if player_distance < 5 and not snake_target == player: # but what if your after the player , ( problem here ) 
-						# chase player
-						# force timer to conclude 
-						timer_up = true
-						snake_target = player
-					if player_distance > 3 and  snake_target == player:
-						timer_up = true
-						
+					# so reset so that the signal is ready again 
 
-					
-					
+
+					# check for signal now like in the chase routine 
+					if found_player:
+						snake_target = target_player
+						locked_on_player = false # meaning I dont want you to switch to other players 
+						timer_up = true
 
 					if onestart:
 						timer_move_on.start() # start the timer for how long to be there .
@@ -246,7 +248,10 @@ func _physics_process(delta: float) -> void:
 						self.global_transform = transform_save# remember to restore the transform 
 						
 						# also pick new target ( made a function ) 
-						snake_target = pick_new_target(snake_target)
+						if snake_target.name.contains("Player"):
+							pass # move along 
+						else:
+							snake_target = pick_new_target(snake_target) # make this so theres a otpion to target the player!!!!!!!!!!!!!!!
 						timer_up = false
 						
 						
@@ -256,6 +261,9 @@ func _physics_process(delta: float) -> void:
 					move_segments_back_normal()
 					snake_state = "patrol"
 					ensnare_state = "path"
+					# need to reset variable so that it can find the player again 
+					found_player = false # so the signal can find a new player 
+					locked_on_player = true # 
 			
 		"vore": # were not doing this in this kind of game 
 			pass 
