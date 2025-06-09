@@ -44,8 +44,9 @@ func spawn_player(spawn_position :Vector3,num :int):
 	var new_player :SubViewportContainer = load("res://Scenes/player_spawn.tscn").instantiate()
 	new_player.name = "controller" + str(num)
 	$GridContainer.columns = 2
-	add_child(new_player)
-	var player_1_handle :CharacterBody3D = get_node(new_player.name + "/SubViewport/Player")
+	$GridContainer.add_child(new_player)
+	var path_player_1 = "GridContainer/" + new_player.name + "/SubViewport/Player"
+	var player_1_handle :CharacterBody3D = get_node(path_player_1)
 	var sub_viewport_sizing :SubViewport = get_node(new_player.name + "/SubViewport")
 	player_1_handle.global_position = spawn_position
 	
