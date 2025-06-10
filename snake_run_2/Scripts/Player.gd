@@ -33,6 +33,11 @@ var audio_toggle :bool = false
 @onready var top_container_handle :SubViewportContainer = get_node("../..")
 var event : Vector2 
 var previous_event :Vector2 = Vector2(0,0)
+var player_id
+
+# controller stuff
+var Joy_sensativity :float = 0.05
+var joy_y_accum:float = 0
 
 func _ready():
 	camera = $rotation_helper/Camera3D
@@ -50,7 +55,9 @@ func _ready():
 	$AudioStreamPlayer3D.play()
 	$AudioStreamPlayer3D.stream_paused = true
 	$AudioStreamPlayer3D.pitch_scale = .8
-		
+	
+	player_id = find_id()
+	print("the player identified is ", player_id)
 
 
 
@@ -59,23 +66,30 @@ func _ready():
 func _process(delta: float) -> void:
 	
 
-	
-	event = top_container_handle.mouse_event
-	
-	if previous_event == event:
+	if player_id == "0": # then its the regular player with mouse and keybaord 
+		event = top_container_handle.mouse_event
+		
+		if previous_event == event:
+			event = Vector2(0,0)
+		else:
+			previous_event = event
+		
+		rotation_helper.rotate_x(deg_to_rad(event.y * MOUSE_SENSITIVITY * -1))
+		self.rotate_y(deg_to_rad(event.x * MOUSE_SENSITIVITY * -1))
+
+		var camera_rot = rotation_helper.rotation
+		camera_rot.x = clampf(camera_rot.x, -1.4, 1.4)
+		rotation_helper.rotation = camera_rot
+		
 		event = Vector2(0,0)
 	else:
-		previous_event = event
+		var look_stick_angle :Vector2 = Input.get_vector("look_left_p"+player_id,"look_right_p"+player_id,"look_up_p"+player_id,"look_down_p"+player_id)
+		print(look_stick_angle)
+		joy_y_accum = look_stick_angle.y * Joy_sensativity
+		rotation_helper.rotate_x(joy_y_accum * -1)
+		#joystick left right
+		self.rotate_y(look_stick_angle.x * Joy_sensativity * -1)
 	
-	rotation_helper.rotate_x(deg_to_rad(event.y * MOUSE_SENSITIVITY * -1))
-	self.rotate_y(deg_to_rad(event.x * MOUSE_SENSITIVITY * -1))
-
-	var camera_rot = rotation_helper.rotation
-	camera_rot.x = clampf(camera_rot.x, -1.4, 1.4)
-	rotation_helper.rotation = camera_rot
-	
-	event = Vector2(0,0)
-
 
 
 func _physics_process(delta):
@@ -229,3 +243,10 @@ func _on_body_entered(body: Node3D) -> void:
 		else:
 			can_play_walk = true
 			audio_toggle = true
+			
+			
+func find_id() ->String:
+	var id = "0"
+	if self.get_parent().get_parent().name.contains("1"):
+		id = str(1)
+	return id
