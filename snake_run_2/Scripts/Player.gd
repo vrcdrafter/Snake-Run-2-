@@ -4,6 +4,7 @@ const ACCEL = 10
 const DEACCEL = 30
 
 const SPEED = 5.0
+const SPEED_CONTROLLER = 7.0
 const SPRINT_MULT = 2
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.06
@@ -36,7 +37,7 @@ var previous_event :Vector2 = Vector2(0,0)
 var player_id
 
 # controller stuff
-var Joy_sensativity :float = 0.05
+var Joy_sensativity :float = 0.004
 var joy_y_accum:float = 0
 
 func _ready():
@@ -84,7 +85,7 @@ func _process(delta: float) -> void:
 		event = Vector2(0,0)
 	else:
 		var look_stick_angle :Vector2 = Input.get_vector("look_left_p"+player_id,"look_right_p"+player_id,"look_up_p"+player_id,"look_down_p"+player_id)
-		print(look_stick_angle)
+		
 		joy_y_accum = look_stick_angle.y * Joy_sensativity
 		rotation_helper.rotate_x(joy_y_accum * -1)
 		#joystick left right
@@ -118,26 +119,45 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with a custom keymap depending on your control scheme. These strings default to the arrow keys layout.
-	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * accel * delta
-	if Input.is_key_pressed(KEY_SHIFT):
-		direction = direction * SPRINT_MULT
-		$AudioStreamPlayer3D.pitch_scale = 1.2
-	else:
-		$AudioStreamPlayer3D.pitch_scale = .8
+	if player_id == "0":
+		var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * accel * delta
+		if Input.is_key_pressed(KEY_SHIFT):
+			direction = direction * SPRINT_MULT
+			$AudioStreamPlayer3D.pitch_scale = 1.2
+		else:
+			$AudioStreamPlayer3D.pitch_scale = .8
 
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		if direction:
+			velocity.x = direction.x * SPEED
+			velocity.z = direction.z * SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+			velocity.z = move_toward(velocity.z, 0, SPEED)
+		if direction.length() > 0 and can_play_walk:
+			$AudioStreamPlayer3D.stream_paused = false
+		else:
+			$AudioStreamPlayer3D.stream_paused = true
+			
+		move_and_slide()
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
-	if direction.length() > 0 and can_play_walk:
-		$AudioStreamPlayer3D.stream_paused = false
-	else:
-		$AudioStreamPlayer3D.stream_paused = true
+		var input_dir = Input.get_vector("pan_left_p"+player_id, "pan_right_p"+player_id, "move_forward_p"+player_id, "move_backward_p"+player_id)
 		
-	move_and_slide()
+		
+		
+		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * accel * delta
+		if Input.is_key_pressed(KEY_SHIFT) or Input.is_action_pressed("sprint_p"+player_id):
+			direction = direction * SPRINT_MULT
+			# speed up animations too 
+
+		if direction:
+			velocity.x = direction.x * SPEED_CONTROLLER
+			velocity.z = direction.z * SPEED_CONTROLLER
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED_CONTROLLER)
+			velocity.z = move_toward(velocity.z, 0, SPEED_CONTROLLER)
+
+		move_and_slide()
 	
 	if ensnared:
 		time+= delta
