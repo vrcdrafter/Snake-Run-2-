@@ -96,15 +96,16 @@ func _physics_process(delta: float) -> void:
 				snake_state = "chase"
 				locked_on_player = false # meaning I dont want you to switch to other players 
 			else:
-				if non_player_target_distance < 1 and not snake_target.is_in_group("A"):
+				if non_player_target_distance < 1 and not snake_target.is_in_group("A"): # meaning its just a way point 
 					# pick new object
 					snake_target = pick_new_target(snake_target)
 				# if condition if its a animated object 
 				if non_player_target_distance < 1 and snake_target.is_in_group("A"):
 					# its a animated spot run an animated ensnar 
 					snake_state = "ensnare_anim"
-					
-				
+				if non_player_target_distance > 4 and snake_target.is_in_group("Player") and locked_on_player:
+					print("player too far away , abandont chase ")
+					snake_target = pick_new_target(snake_target)
 		"ensnare":
 			var ennarement_done :bool = false
 			
@@ -146,8 +147,8 @@ func _physics_process(delta: float) -> void:
 			
 		"chase": # chase if for only if your after the plaer 
 			#find something to patrol to 
-			aggressivness = 6
-			movement_speed = 6
+			aggressivness = 3
+			movement_speed = 3
 			#
 			
 			#now for chase you need to be tracking  the found player detected in Patrol 
@@ -249,7 +250,7 @@ func _physics_process(delta: float) -> void:
 						
 						# also pick new target ( made a function ) 
 						if snake_target.name.contains("Player"):
-							pass # move along 
+							snake_state = "chase"
 						else:
 							snake_target = pick_new_target(snake_target) # make this so theres a otpion to target the player!!!!!!!!!!!!!!!
 						timer_up = false

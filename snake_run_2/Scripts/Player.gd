@@ -8,8 +8,8 @@ const SPEED_CONTROLLER = 7.0
 const SPRINT_MULT = 2
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.06
-@onready var Game_over :Control = get_node("../../../SubViewportContainer/SubViewport/Node3D/Control")
-@onready var Game_over_timer :Timer = get_node("../../../SubViewportContainer/SubViewport/Node3D/Game_over_timer")
+@onready var Game_over :Control = get_node("../../../../SubViewportContainer/SubViewport/Node3D/Control")
+@onready var Game_over_timer :Timer = get_node("../../../../SubViewportContainer/SubViewport/Node3D/Game_over_timer")
 # Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -143,7 +143,8 @@ func _physics_process(delta):
 	else:
 		var input_dir = Input.get_vector("pan_left_p"+player_id, "pan_right_p"+player_id, "move_forward_p"+player_id, "move_backward_p"+player_id)
 		
-		
+		if Input.is_action_just_pressed("jump_p"+player_id) and is_on_floor() and (snakes_around_you < 2):
+			velocity.y = JUMP_VELOCITY
 		
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * accel * delta
 		if Input.is_key_pressed(KEY_SHIFT) or Input.is_action_pressed("sprint_p"+player_id):
@@ -169,7 +170,6 @@ func _physics_process(delta):
 			
 
 func _on_button_button_down():
-
 	
 	emit_signal("remove_mouse")
 	GlobalVars.game_started = true
@@ -185,7 +185,6 @@ func slow_move_back(pos:Vector3, delta:float, move_strength:float):
 	self.position = self.position.lerp(pos, delta * move_strength)
 	
 	
-
 func wave(amplitude:float, freq:int, time:float, delta):
 		
 		freq = 1
@@ -227,7 +226,7 @@ func remake_connections():
 	timer_handle.connect("timeout",timer_callable)
 	game_over_button_handle.connect("pressed",reset_level)
 	
-
+	
 	# walking audio connection 
 	if GlobalVars.next_level == "res://Scenes/level_4.tscn":
 		print("your in level 4")
