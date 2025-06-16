@@ -234,8 +234,10 @@ func _physics_process(delta: float) -> void:
 						
 						# you need to skip some of these frames too . 
 						
-						
-						transform_onestart = true # reset this so it can grab the next transform when the time comes . 
+						if found_player:
+							pass
+						else:
+							transform_onestart = true # reset this so it can grab the next transform when the time comes . 
 						snake_state = "patrol"
 						# reset the ensnare state too 
 						ensnare_state = "path"

@@ -34,7 +34,7 @@ var audio_toggle :bool = false
 @onready var top_container_handle :SubViewportContainer = get_node("../..")
 var event : Vector2 
 var previous_event :Vector2 = Vector2(0,0)
-var player_id
+@export var player_id = null
 
 # controller stuff
 var Joy_sensativity :float = 0.004
@@ -120,8 +120,11 @@ func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with a custom keymap depending on your control scheme. These strings default to the arrow keys layout.
 	if player_id == "0":
-		var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		
+		var input_dir :Vector2 = Input.get_vector("player_initial_left", "player_initial_right", "player_initial_forward", "player_initial_backwards")
 		direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * accel * delta
+		if input_dir.length() > 0 :
+			print("taking some input", input_dir)
 		if Input.is_key_pressed(KEY_SHIFT):
 			direction = direction * SPRINT_MULT
 			$AudioStreamPlayer3D.pitch_scale = 1.2
@@ -198,8 +201,9 @@ func wave(amplitude:float, freq:int, time:float, delta):
 
 func _on_game_over_timer_timeout():
 	print("ten seconds up ")
-	Game_over.visible = true
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	# were not doing this anymore 
+	#Game_over.visible = true
+	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) # were 
 
 
 func _on_button_pressed():

@@ -34,9 +34,9 @@ func assess_controllers():
 func act_on_connection(_device, _connected):
 	print("hey you connected something, it was ",_device, " its plugged in ",_connected)
 	# if more controllerd added after scene started shift number +1 
-	if _device == 1:
+	if _device == 0:
 		print("you have one controller")
-		
+		print("This is the joy name ", Input.get_joy_info(0))
 		spawn_player($spawn_point_1.global_position,1)
 
 
