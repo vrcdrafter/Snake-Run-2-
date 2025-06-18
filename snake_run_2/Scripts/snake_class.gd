@@ -336,7 +336,7 @@ func initialize_ensnarment_curve():
 func move_segments_along_path(delta,speed_new :float) -> bool:
 	for i in snake_vertibrea.size():
 		follow_path_array[i].progress += speed_new *delta
-	
+	print(follow_path_array[0].progress)
 	if follow_path_array[0].progress_ratio > .99:
 		
 		return true
@@ -385,7 +385,7 @@ func find_target_animation(target_local :Node3D ) ->String:
 func make_anim_timer() -> Timer: # at startup makes a timer in the tree
 	timer_move_on = Timer.new()
 	timer_move_on.name = "move_on"
-	timer_move_on.wait_time = 15
+	timer_move_on.wait_time = 10
 	add_child(timer_move_on)
 	timer_move_on.one_shot = true
 	# make connection to timer right away 
