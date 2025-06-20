@@ -8,6 +8,7 @@ const SPEED_CONTROLLER = 7.0
 const SPRINT_MULT = 2
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.06
+@onready var animation_tree_new :AnimationTree = get_node("AnimationTree")
 @onready var Game_over :Control = get_node("../../../../SubViewportContainer/SubViewport/Node3D/Control")
 @onready var Game_over_timer :Timer = get_node("../../../../SubViewportContainer/SubViewport/Node3D/Game_over_timer")
 # Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
@@ -37,7 +38,7 @@ var previous_event :Vector2 = Vector2(0,0)
 @export var player_id = null
 
 # controller stuff
-var Joy_sensativity :float = 0.004
+var Joy_sensativity :float = 2.0
 var joy_y_accum:float = 0
 
 func _ready():
@@ -64,9 +65,16 @@ func _ready():
 
 
 	
-func _process(delta: float) -> void:
-	
 
+
+
+func _physics_process(delta):
+	
+	if Input.is_action_just_pressed("shoot"):
+		print("fired")
+		animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	
+	
 	if player_id == "0": # then its the regular player with mouse and keybaord 
 		event = top_container_handle.mouse_event
 		
@@ -86,14 +94,12 @@ func _process(delta: float) -> void:
 	else:
 		var look_stick_angle :Vector2 = Input.get_vector("look_left_p"+player_id,"look_right_p"+player_id,"look_up_p"+player_id,"look_down_p"+player_id)
 		
-		joy_y_accum = look_stick_angle.y * Joy_sensativity
+		joy_y_accum = look_stick_angle.y * Joy_sensativity * delta
 		rotation_helper.rotate_x(joy_y_accum * -1)
 		#joystick left right
-		self.rotate_y(look_stick_angle.x * Joy_sensativity * -1)
+		self.rotate_y(look_stick_angle.x * Joy_sensativity * -1 * delta)
 	
-
-
-func _physics_process(delta):
+	
 	var moving = false
 	# Add the gravity. Pulls value from project settings.
 	if not is_on_floor():

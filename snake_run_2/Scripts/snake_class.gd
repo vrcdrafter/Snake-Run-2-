@@ -336,7 +336,7 @@ func initialize_ensnarment_curve():
 func move_segments_along_path(delta,speed_new :float) -> bool:
 	for i in snake_vertibrea.size():
 		follow_path_array[i].progress += speed_new *delta
-	print(follow_path_array[0].progress)
+
 	if follow_path_array[0].progress_ratio > .99:
 		
 		return true
