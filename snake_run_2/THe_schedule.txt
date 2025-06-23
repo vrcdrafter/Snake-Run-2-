@@ -1,0 +1,28 @@
+Tasks to do in Snakerun 
+
+
+#1 get gun anmation , 
+	done
+#2 build shoot mechanic 
+	have a bullet spawn that is a real time bullet . 
+
+#3 make so player can ragdoll 
+#4 make so snake can ragdoll
+
+#5 make so player can do damage 
+#6 make so snake can do damage
+
+# 7 make item pickup 
+
+[
+
+Now your ready to build a level 
+
+First level Jungle , Coins , Jewels , treasure , Super Soakers 
+
+]
+
+
+( stretch enhancments easy fruit) 
+make so there is a retreat . 
+( add a way for enemy to hit the player and throw them ) 
