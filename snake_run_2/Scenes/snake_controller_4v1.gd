@@ -84,7 +84,7 @@ func _physics_process(delta: float) -> void:
 				# its a animated spot run an animated ensnar 
 				snake_state = "ensnare_anim"			
 		"ensnare_anim": # meaning animated ensnarement
-			
+
 
 			
 			# need to find right curve to use 
@@ -96,6 +96,7 @@ func _physics_process(delta: float) -> void:
 			# if at some point the player gets too close resume chase 
 			var ennarement_done :bool = false
 			match ensnare_state:
+			
 				"path":
 					make_ensnarement_curve(ensnarement_points,tri_array,snake_target,animation_curve)
 					move_segments_to_path()
@@ -111,6 +112,14 @@ func _physics_process(delta: float) -> void:
 						# means the prey esaped 
 						ensnare_state = "abort_dynamic"
 				"run_animation":
+					var local_target_distance :float = (snake_target.global_position - self.global_position).length() # this is the true snake to player at this point
+					# need a real discernent here , are you discovering the player but ensnared on a random object , or already around the player and the player escaped?
+					if snake_target.name.contains("Player") and local_target_distance > 8:
+						
+						timer_up = true
+					if found_player and not snake_target.name.contains("Player"): 
+						timer_up = true
+
 					bone_overriding = false
 					skel.clear_bones_global_pose_override()
 					if transform_onestart:
@@ -127,10 +136,14 @@ func _physics_process(delta: float) -> void:
 					if timer_up:
 						# you need to skip some of these frames too . 
 						ensnare_state = "abort_static"
+						
 				"abort_static":
 					abort_universal_reset()
 					self.global_transform = transform_save# # this is a PROBLEM PROBLEM , be careful where abort comes form 
-					snake_target = pick_new_target(snake_target) # make this so theres a otpion to target the player!!!!!!!!!!!!!!!
+					if snake_target.name.contains("Player"):
+						pass # make this so theres a otpion to target the player!!!!!!!!!!!!!!!
+					else:
+						snake_target = pick_new_target(snake_target)
 				"abort_dynamic":
 					abort_universal_reset()
 		"chase":

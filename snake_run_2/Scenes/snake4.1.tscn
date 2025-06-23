@@ -25,7 +25,7 @@ bones/4/scale = Vector3(1, 1, 1)
 bones/5/rotation = Quaternion(-0.0181826, -2.52344e-18, -2.34117e-16, 0.999835)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="."]
-transform = Transform3D(1, -6.64246e-08, 2.14031e-06, 2.11981e-06, -0.110584, -0.993877, 3.02699e-07, 0.993867, -0.110585, 7.92943e-09, -0.0250267, -0.535618)
+transform = Transform3D(1, -6.64243e-08, 2.14031e-06, 2.11981e-06, -0.110584, -0.993878, 3.02698e-07, 0.993867, -0.110585, 7.92943e-09, -0.0250267, -0.535618)
 bone_name = "jaw"
 bone_idx = 3
 use_external_skeleton = true
@@ -35,29 +35,24 @@ external_skeleton = NodePath("../snake_hefty_animated_4/snake_export/Skeleton3D"
 transform = Transform3D(1, 2.07467e-06, 2.108e-06, -2.20139e-06, 0.0460952, 0.998937, 1.9753e-06, -0.998937, 0.0460953, -2.37555e-08, 0.245639, 0.0187225)
 
 [node name="Skeleton3D" parent="BoneAttachment3D/tounge_1/tounge_phantom_001" index="0"]
-bones/0/position = Vector3(0.022968, 0.0691641, 0.0511826)
-bones/0/rotation = Quaternion(0.934065, -0.109679, 0.109955, 0.321563)
-bones/1/rotation = Quaternion(-0.239151, 7.75067e-05, -0.0615915, 0.969027)
-bones/2/rotation = Quaternion(-0.139843, -0.000764179, -0.0374594, 0.989465)
-bones/3/rotation = Quaternion(-0.0765934, 0.000827263, -0.0213455, 0.996834)
-bones/4/rotation = Quaternion(-0.0352433, -0.000410001, -0.010522, 0.999323)
+bones/1/rotation = Quaternion(0.0012576, 4.37076e-08, -5.44694e-10, 0.999999)
+bones/2/rotation = Quaternion(-0.0203948, -4.37024e-08, 8.83353e-09, 0.999792)
+bones/3/rotation = Quaternion(0.0387265, 6.39135e-14, -1.84662e-08, 0.99925)
+bones/4/rotation = Quaternion(-0.0389364, 6.38863e-14, 1.85663e-08, 0.999242)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(-0.0423063, 0.000401855, -0.0130392, 0.99902)
-bones/6/rotation = Quaternion(-0.0101706, -0.000117388, -0.00487226, 0.999936)
-bones/7/rotation = Quaternion(-0.01067, 9.98772e-05, -0.00410902, 0.999935)
-bones/8/rotation = Quaternion(-0.00688965, -5.44725e-05, -0.00523411, 0.999963)
-bones/9/rotation = Quaternion(-0.00114156, 7.39787e-06, -0.00159238, 0.999998)
+bones/5/rotation = Quaternion(0.0308045, -4.16531e-17, -1.46887e-08, 0.999525)
+bones/6/rotation = Quaternion(-0.0240866, -9.71727e-17, 1.14854e-08, 0.99971)
+bones/7/rotation = Quaternion(0.024299, 4.96555e-14, -1.15867e-08, 0.999705)
+bones/9/rotation = Quaternion(0.00467293, -4.37109e-08, -2.02396e-09, 0.999989)
 bones/9/scale = Vector3(1, 1, 1)
-bones/10/rotation = Quaternion(0.00388225, 2.04346e-05, -0.00383672, 0.999985)
-bones/11/rotation = Quaternion(-0.000421044, -2.96555e-05, -0.0011501, 0.999999)
-bones/12/rotation = Quaternion(0.0117177, 2.04656e-05, -0.00129377, 0.999931)
+bones/10/rotation = Quaternion(0.00532609, -7.10588e-14, -2.53968e-09, 0.999986)
+bones/11/rotation = Quaternion(-0.025781, 7.11057e-14, 1.22933e-08, 0.999668)
+bones/12/rotation = Quaternion(0.0157842, 4.37059e-08, -6.83653e-09, 0.999875)
 bones/12/scale = Vector3(1, 1, 1)
-bones/13/rotation = Quaternion(0.00158374, -4.49557e-09, -0.00013431, 0.999999)
-bones/14/rotation = Quaternion(0.0215255, 1.96123e-05, -0.00204381, 0.999766)
-bones/15/rotation = Quaternion(0.00354309, -1.95607e-06, -0.000130365, 0.999994)
-bones/16/rotation = Quaternion(0.0322213, 2.20166e-06, -0.000142459, 0.999481)
-bones/17/rotation = Quaternion(0.0173428, 3.24711e-06, 0.000317239, 0.99985)
-bones/18/rotation = Quaternion(0.029615, -1.19006e-09, 0.000576679, 0.999561)
+bones/14/rotation = Quaternion(0.00961442, -4.37094e-08, -4.16425e-09, 0.999954)
+bones/15/rotation = Quaternion(-0.0149904, -2.13187e-14, 7.14796e-09, 0.999888)
+bones/16/rotation = Quaternion(0.0154758, 1.0657e-13, -7.37942e-09, 0.99988)
+bones/17/rotation = Quaternion(-0.0100999, 4.37091e-08, 4.37451e-09, 0.999949)
 
 [node name="AnimationPlayer" parent="BoneAttachment3D/tounge_1" index="1"]
 script = ExtResource("4_4llle")

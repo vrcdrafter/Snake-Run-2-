@@ -175,7 +175,7 @@ func move_segments_to_path():
 		tri_array[i].rotation_degrees = Vector3(0,0,0)
 		
 		#follow_path_array[i].set_progress(i*bone_length*1.1) # may need this backwards, MICROSOFT AI < PLEASE HELP HERE > 
-		follow_path_array[i].set_progress((snake_vertibrea.size() - 1 - i) * bone_length * 1.1)
+		follow_path_array[i].set_progress((snake_vertibrea.size() - 1 - i) * bone_length )
 		follow_path_array[i].global_rotation.z = deg_to_rad(0)
 func move_segments_back_normal():
 	var tri_pos :Array[Transform3D] 
