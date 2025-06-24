@@ -334,8 +334,8 @@ handle_input_locally = false
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("3_w2vjh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.934, 8.47839, 0)
+[node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_1_001"] instance=ExtResource("3_w2vjh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.7402, 8.47839, 0)
 
 [editable path="SubViewportContainer/SubViewport/Node3D/Snake"]
 [editable path="SubViewportContainer/SubViewport/Node3D/Snake/snake_hefty_animated_4"]

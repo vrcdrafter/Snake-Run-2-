@@ -112,14 +112,20 @@ func _physics_process(delta: float) -> void:
 						# means the prey esaped 
 						ensnare_state = "abort_dynamic"
 				"run_animation":
-					var local_target_distance :float = (snake_target.global_position - self.global_position).length() # this is the true snake to player at this point
-					# need a real discernent here , are you discovering the player but ensnared on a random object , or already around the player and the player escaped?
-					if snake_target.name.contains("Player") and local_target_distance > 8:
+					var local_target_distance_self :float = (snake_target.global_position - self.global_position).length() # this is the true snake to player at this point
+					var local_target_distance_tri :float = (snake_target.global_position - tri_array[0].global_position).length() 
+					var discernment_distance :float = 0 
+					if local_target_distance_self > local_target_distance_tri:
+						discernment_distance = local_target_distance_tri
+					else:
+						discernment_distance = local_target_distance_self
+					
+					if snake_target.name.contains("Player") and discernment_distance > 3:
 						
 						timer_up = true
 					if found_player and not snake_target.name.contains("Player"): 
 						timer_up = true
-
+						
 					bone_overriding = false
 					skel.clear_bones_global_pose_override()
 					if transform_onestart:
@@ -129,7 +135,7 @@ func _physics_process(delta: float) -> void:
 						transform_onestart = false
 					# check to see if player gets close 
 
-					if onestart:
+					if onestart and not snake_target.name.contains("Player"):  #do not run this if you have a player 
 						timer_move_on.start() # start the timer for how long to be there .
 						onestart = false
 					

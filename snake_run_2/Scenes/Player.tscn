@@ -275,9 +275,9 @@ tracks/9/keys = PackedFloat32Array(0, 1, -0.688325, 0.00440798, -0.00176121, 0.7
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ae0t8"]
 _data = {
+&"sidestep_left": SubResource("Animation_28wcd"),
 &"shoot_gun_no_tail": ExtResource("4_dewec"),
-&"run": SubResource("Animation_3qult"),
-&"sidestep_left": SubResource("Animation_28wcd")
+&"run": SubResource("Animation_3qult")
 }
 
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_dewec"]
