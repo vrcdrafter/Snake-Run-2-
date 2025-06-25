@@ -64,18 +64,23 @@ func _ready():
 
 
 
+func _input(event: InputEvent) -> void:
 	
+	if Input.is_action_just_pressed("ui_cancel"):
+		get_tree().quit()
 
 
 
 func _physics_process(delta):
 	
-	if Input.is_action_just_pressed("shoot"):
-		print("fired")
-		animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
 	
 	
 	if player_id == "0": # then its the regular player with mouse and keybaord 
+		
+		if Input.is_action_just_pressed("shoot"):
+			print("fired")
+			animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 		event = top_container_handle.mouse_event
 		
 		if previous_event == event:
@@ -92,6 +97,12 @@ func _physics_process(delta):
 		
 		event = Vector2(0,0)
 	else:
+		
+		if Input.is_action_just_pressed("shoot_p" + player_id):
+			
+			animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+			
+		
 		var look_stick_angle :Vector2 = Input.get_vector("look_left_p"+player_id,"look_right_p"+player_id,"look_up_p"+player_id,"look_down_p"+player_id)
 		
 		joy_y_accum = look_stick_angle.y * Joy_sensativity * delta
