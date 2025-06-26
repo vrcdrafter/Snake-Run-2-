@@ -81,6 +81,7 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("shoot"):
 			print("fired")
 			animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+			spawn_bullet(delta)
 		event = top_container_handle.mouse_event
 		
 		if previous_event == event:
@@ -290,3 +291,21 @@ func find_id() ->String:
 	if self.get_parent().get_parent().name.contains("1"):
 		id = str(1)
 	return id
+	
+	
+func spawn_bullet(delta :float):
+	var bullet :MeshInstance3D = MeshInstance3D.new()
+	var triangle_mesh :PrismMesh = PrismMesh.new()
+	triangle_mesh.size = Vector3(.5,.5,.5)
+	bullet.mesh = triangle_mesh
+	
+	var pt1 :Marker3D = get_node("BoneAttachment3D/Marker3D")
+	var pt2 :Marker3D = get_node("BoneAttachment3D/Marker3D2")
+	var origin :Vector3 = pt1.global_position
+	var dir :Vector3 = (pt2.global_position - pt1.global_position).normalized()
+	
+	get_tree().root.add_child(bullet)
+	bullet.global_position = origin
+	bullet.global_position += dir *delta
+	
+	
