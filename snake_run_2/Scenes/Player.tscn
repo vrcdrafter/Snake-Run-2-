@@ -330,10 +330,13 @@ surface_material_override/0 = SubResource("StandardMaterial3D_gntrk")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0985931, 0)
 
 [node name="Camera3D" type="Camera3D" parent="rotation_helper"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.839707, -0.223605)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.839707, -0.266109)
 
 [node name="Marker3D" type="Marker3D" parent="rotation_helper"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.830576, -0.00245167)
+
+[node name="Marker3D_shoot" type="Marker3D" parent="rotation_helper"]
+transform = Transform3D(0.0126428, 0.102686, -0.994634, -0.0254841, -0.994357, -0.102981, -0.999595, 0.0266493, -0.00995446, 0.095716, 0.664086, -0.989683)
 
 [node name="AudioListener3D" type="AudioListener3D" parent="."]
 
@@ -580,9 +583,3 @@ external_skeleton = NodePath("../source_fox/Armature (Mecha g)/Skeleton3D")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="BoneAttachment3D"]
 transform = Transform3D(0.868523, 0.370576, 0.329151, 0.311056, 0.109504, -0.944063, -0.385891, 0.922325, -0.0201629, -0.0629671, 0.422319, 0.116695)
 mesh = SubResource("PrismMesh_megsn")
-
-[node name="Marker3D" type="Marker3D" parent="BoneAttachment3D"]
-transform = Transform3D(1, 2.98023e-08, -3.72529e-09, 0, 1, 0, 3.72529e-09, -3.72529e-09, 1, -0.0847925, 0.80869, 0.0656837)
-
-[node name="Marker3D2" type="Marker3D" parent="BoneAttachment3D"]
-transform = Transform3D(1, 2.98023e-08, -4.65661e-09, 0, 1, 0, 3.72529e-09, 3.72529e-09, 1, 0.019542, 0.516852, 0.0546062)

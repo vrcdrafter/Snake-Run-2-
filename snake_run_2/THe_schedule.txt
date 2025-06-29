@@ -4,7 +4,7 @@ Tasks to do in Snakerun
 #1 get gun anmation , 
 	done
 #2 build shoot mechanic 
-	have a bullet spawn that is a real time bullet . 
+	done
 
 #3 make so player can ragdoll 
 #4 make so snake can ragdoll

@@ -41,6 +41,9 @@ var previous_event :Vector2 = Vector2(0,0)
 var Joy_sensativity :float = 2.0
 var joy_y_accum:float = 0
 
+# bullet stuff
+var bullet_scene :PackedScene = preload("res://Scenes/bullet.tscn")
+
 func _ready():
 	camera = $rotation_helper/Camera3D
 	rotation_helper = $rotation_helper
@@ -102,6 +105,7 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("shoot_p" + player_id):
 			
 			animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+			spawn_bullet(delta)
 			
 		
 		var look_stick_angle :Vector2 = Input.get_vector("look_left_p"+player_id,"look_right_p"+player_id,"look_up_p"+player_id,"look_down_p"+player_id)
@@ -294,18 +298,18 @@ func find_id() ->String:
 	
 	
 func spawn_bullet(delta :float):
-	var bullet :MeshInstance3D = MeshInstance3D.new()
-	var triangle_mesh :PrismMesh = PrismMesh.new()
-	triangle_mesh.size = Vector3(.5,.5,.5)
-	bullet.mesh = triangle_mesh
 	
-	var pt1 :Marker3D = get_node("BoneAttachment3D/Marker3D")
-	var pt2 :Marker3D = get_node("BoneAttachment3D/Marker3D2")
-	var origin :Vector3 = pt1.global_position
-	var dir :Vector3 = (pt2.global_position - pt1.global_position).normalized()
 	
-	get_tree().root.add_child(bullet)
-	bullet.global_position = origin
-	bullet.global_position += dir *delta
+	var bullet_instance :Node3D = bullet_scene.instantiate()
+
+
+	var pt1 :Marker3D = get_node("rotation_helper/Marker3D_shoot")
+
+	var transform_end_of_gun :Transform3D = pt1.global_transform
+
+	bullet_instance.global_transform = transform_end_of_gun
+	
+	get_tree().root.add_child(bullet_instance)
+
 	
 	
