@@ -465,3 +465,12 @@ func found_prey(player_to_chase,test):
 	found_player = true
 	print("found something to chase ",player_to_chase.name)
 	target_player = player_to_chase
+
+func widen_cull_margin():
+	var all_stuff :Array = self.find_children("*")
+	for child :Node  in all_stuff:
+
+		
+		if child.is_class("MeshInstance3D"):
+			print("found a mesh ")
+			child.extra_cull_margin = 80

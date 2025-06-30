@@ -53,6 +53,8 @@ func _ready() -> void:
 	var make_timer :Timer = make_anim_timer()
 	
 	connect_player_signals()
+	
+	widen_cull_margin()
 
 func _physics_process(delta: float) -> void:
 	

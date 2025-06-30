@@ -296,7 +296,6 @@ filter_enabled = true
 filters = ["Armature (Mecha g)/Skeleton3D:arm_l", "Armature (Mecha g)/Skeleton3D:arm_r", "Armature (Mecha g)/Skeleton3D:elbow_l", "Armature (Mecha g)/Skeleton3D:elbow_r", "Armature (Mecha g)/Skeleton3D:hang_l", "Armature (Mecha g)/Skeleton3D:hang_r", "Armature (Mecha g)/Skeleton3D:shoulder_l", "Armature (Mecha g)/Skeleton3D:shoulder_r"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_bhhdu"]
-graph_offset = Vector2(-238.698, -84.7458)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_dewec")
 nodes/Add2/position = Vector2(260, -40)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_nn08x")
@@ -327,7 +326,7 @@ mesh = SubResource("CapsuleMesh_kyqiw")
 surface_material_override/0 = SubResource("StandardMaterial3D_gntrk")
 
 [node name="rotation_helper" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0985931, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00536369, 0.0738814, 0.0281899)
 
 [node name="Camera3D" type="Camera3D" parent="rotation_helper"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.839707, -0.266109)
@@ -549,13 +548,15 @@ bones/27/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 bones/27/scale = Vector3(1, 1, 1)
 
 [node name="Cube_001" type="MeshInstance3D" parent="source_fox/Armature (Mecha g)/Skeleton3D"]
+visible = false
 mesh = SubResource("ArrayMesh_jooxh")
 skin = SubResource("Skin_1phln")
 
 [node name="bend" type="SkeletonIK3D" parent="source_fox/Armature (Mecha g)/Skeleton3D"]
-transform = Transform3D(1, -1.96451e-10, 0, -6.62112e-10, 1, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(1, 5.23869e-10, 0, 2.5575e-09, 1, 0, 0, -9.31323e-10, 1, -7.93231e-05, -0.0183764, 0.000202451)
 root_bone = &"Spine"
-tip_bone = &"Head"
+tip_bone = &"Chest"
+override_tip_basis = false
 target_node = NodePath("../../../../rotation_helper/Marker3D")
 script = ExtResource("3_gntrk")
 
@@ -574,7 +575,7 @@ parameters/OneShot/internal_active = false
 parameters/OneShot/request = 0
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="."]
-transform = Transform3D(0.167981, 0.0972904, -0.980978, 0.926606, 0.324027, 0.190807, 0.336427, -0.941032, -0.0357194, 0.095716, 0.566678, -0.197808)
+transform = Transform3D(0.171976, 0.102905, -0.979712, 0.914019, 0.354263, 0.197655, 0.367414, -0.929466, -0.0331323, 0.0966723, 0.572576, -0.175346)
 bone_name = "hang_r"
 bone_idx = 12
 use_external_skeleton = true

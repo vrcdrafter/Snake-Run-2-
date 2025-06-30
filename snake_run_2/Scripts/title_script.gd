@@ -67,7 +67,7 @@ func _on_level_2_button_down() -> void:
 
 
 func _on_level_1_button_down() -> void:
-	GlobalVars.next_level = "res://Scenes/MainScene.tscn"
+	GlobalVars.next_level = "res://Scenes/experimetal_snake_ground_4V0.tscn"
 	get_tree().change_scene_to_file("res://Scenes/loading.tscn")
 	setup_level()
 

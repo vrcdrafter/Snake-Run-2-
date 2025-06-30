@@ -74,7 +74,7 @@ func _input(event: InputEvent) -> void:
 
 
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	
 
 	
@@ -149,9 +149,6 @@ func _physics_process(delta):
 			print("taking some input", input_dir)
 		if Input.is_key_pressed(KEY_SHIFT):
 			direction = direction * SPRINT_MULT
-			$AudioStreamPlayer3D.pitch_scale = 1.2
-		else:
-			$AudioStreamPlayer3D.pitch_scale = .8
 
 		if direction:
 			velocity.x = direction.x * SPEED
@@ -159,11 +156,7 @@ func _physics_process(delta):
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
-		if direction.length() > 0 and can_play_walk:
-			$AudioStreamPlayer3D.stream_paused = false
-		else:
-			$AudioStreamPlayer3D.stream_paused = true
-			
+
 		move_and_slide()
 	else:
 		var input_dir = Input.get_vector("pan_left_p"+player_id, "pan_right_p"+player_id, "move_forward_p"+player_id, "move_backward_p"+player_id)
