@@ -102,12 +102,14 @@ func _physics_process(delta: float) -> void:
 				"path":
 					make_ensnarement_curve(ensnarement_points,tri_array,snake_target,animation_curve)
 					move_segments_to_path()
+					snake_state = "null"
 					ensnare_state = "run"
 				"run":
 					var local_target_distance :float = (snake_target.global_position - tri_array[0].global_position).length()
 					twist_triangles(0)
 					if local_target_distance < 4: # keep trying to ensnare 
 						ennarement_done = move_segments_along_path(delta,3)
+						snake_state = "null"
 						if ennarement_done:
 							ensnare_state = "run_animation"
 					else:
@@ -174,6 +176,9 @@ func _physics_process(delta: float) -> void:
 			if target_distance < 1: 
 				snake_state = "ensnare_anim"
 			
+			
+		"null":
+			pass
 
 
 	if bone_overriding:
