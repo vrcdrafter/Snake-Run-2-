@@ -108,7 +108,7 @@ func follower(delta :float, body_segment_pimitived :Array[MeshInstance3D], bone_
 			pass
 		else:
 			body_segment_pimitived[i].look_at(body_segment_pimitived[i-1].global_position)
-			if ((body_segment_pimitived[i-1].global_position - body_segment_pimitived[i].global_position).length() > bone_length):
+			if (body_segment_pimitived[i-1].global_position.distance_to(body_segment_pimitived[i].global_position) > bone_length):
 				body_segment_pimitived[i].global_position = body_segment_pimitived[i].global_position.lerp(body_segment_pimitived[i-1].global_position,delta * movement_speed)
 
 func calc_length(skeleton :Skeleton3D):
@@ -157,7 +157,10 @@ func make_ensnarement_curve(ensnarement_data :PackedVector3Array, body_segment_p
 			curve.add_point((ensnarement_data[i]) + (magic_numver).rotated(Vector3(0,1,0),deg_to_rad(rotation_global_y * -1)) + Vector3(0,-.7,0)) 
 	ensarement_path.curve = curve
 
-func move_segments_to_path():
+func move_segments_to_path(offset_head):
+	# measure head and how far up it is on the path 
+	
+	
 	# need to make follow paths and put the meshes in each one 
 	
 	for i in snake_vertibrea.size(): #EXCLUDE THE TWO EYES AND JAW
@@ -174,8 +177,8 @@ func move_segments_to_path():
 		tri_array[i].transform.origin = Vector3(0,0,0)
 		tri_array[i].rotation_degrees = Vector3(0,0,0)
 		
-		#follow_path_array[i].set_progress(i*bone_length*1.1) # may need this backwards, MICROSOFT AI < PLEASE HELP HERE > 
-		follow_path_array[i].set_progress((snake_vertibrea.size() - 1 - i) * bone_length )
+		# need to set the head at the offset
+		follow_path_array[i].set_progress(((snake_vertibrea.size() - 1 - i) * bone_length) + offset_head )
 		follow_path_array[i].global_rotation.z = deg_to_rad(0)
 func move_segments_back_normal():
 	var tri_pos :Array[Transform3D] 
@@ -334,6 +337,9 @@ func initialize_ensnarment_curve():
 	add_child(ensarement_path)
 	
 func move_segments_along_path(delta,speed_new :float) -> bool:
+	
+	
+	
 	for i in snake_vertibrea.size():
 		follow_path_array[i].progress += speed_new *delta
 

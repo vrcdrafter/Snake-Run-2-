@@ -101,7 +101,11 @@ func _physics_process(delta: float) -> void:
 			
 				"path":
 					make_ensnarement_curve(ensnarement_points,tri_array,snake_target,animation_curve)
-					move_segments_to_path()
+					var head_position :Vector3 = tri_array[0].global_position
+					var local_point :Vector3 = ensarement_path.to_local(head_position)
+					var loval_point2 :Vector3 = self.to_local(head_position)
+					var offset_head :float = curve.get_closest_offset(head_position)
+					move_segments_to_path(offset_head)
 					snake_state = "null"
 					ensnare_state = "run"
 				"run":
