@@ -104,16 +104,16 @@ func _physics_process(delta: float) -> void:
 					var head_position :Vector3 = tri_array[0].global_position
 					var local_point :Vector3 = ensarement_path.to_local(head_position)
 					var loval_point2 :Vector3 = self.to_local(head_position)
-					var offset_head :float = curve.get_closest_offset(head_position)
+					var offset_head :float = curve.get_closest_offset(local_point)
 					move_segments_to_path(offset_head)
-					snake_state = "null"
+					
 					ensnare_state = "run"
 				"run":
 					var local_target_distance :float = (snake_target.global_position - tri_array[0].global_position).length()
 					twist_triangles(0)
 					if local_target_distance < 4: # keep trying to ensnare 
 						ennarement_done = move_segments_along_path(delta,3)
-						snake_state = "null"
+						
 						if ennarement_done:
 							ensnare_state = "run_animation"
 					else:

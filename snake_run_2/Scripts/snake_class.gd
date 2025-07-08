@@ -178,7 +178,7 @@ func move_segments_to_path(offset_head):
 		tri_array[i].rotation_degrees = Vector3(0,0,0)
 		
 		# need to set the head at the offset
-		follow_path_array[i].set_progress(((snake_vertibrea.size() - 1 - i) * bone_length) + offset_head )
+		follow_path_array[i].set_progress(offset_head - (bone_length * i))
 		follow_path_array[i].global_rotation.z = deg_to_rad(0)
 func move_segments_back_normal():
 	var tri_pos :Array[Transform3D] 
