@@ -80,6 +80,8 @@ var found_player :bool = false
 var player_to_chase :Node3D
 var target_player :Node3D
 
+var bone_simulation_phys : PhysicalBoneSimulator3D = PhysicalBoneSimulator3D.new()
+
 func _init() -> void:
 
 
@@ -266,6 +268,7 @@ func make_tris():
 		tri_array[i].transform = skeleton.get_bone_global_pose(snake_vertibrea[i]) #EXCLUDE THE TWO EYES AND JAW
 		add_child.call_deferred(tri_array[i]) #EXCLUDE THE TWO EYES AND JAW
 		
+		
 		if hide_triangles:
 			tri_array[i].hide()
 			
@@ -277,6 +280,30 @@ func make_tris():
 	# does not belong here but find that animion player 
 	snake_animations = find_child("Anim*") # note this may be a problem if there is two animation players
 	
+
+func add_colission_shapes():
+	
+
+	for i in snake_vertibrea.size(): #EXCLUDE THE TWO EYES AND JAw
+		var bone_attachment_hit :BoneAttachment3D = BoneAttachment3D.new()
+		skeleton.add_child(bone_attachment_hit)
+		var name = skeleton.get_bone_name(i)
+		bone_attachment_hit.bone_name = name
+		var colission_shape :CapsuleShape3D = CapsuleShape3D.new()
+		colission_shape.height = .2
+		colission_shape.radius = .2
+		
+		var colis_area :Area3D = Area3D.new()
+		var colission_snake_shape :CollisionShape3D = CollisionShape3D.new()
+		
+		bone_attachment_hit.add_child(colis_area)
+		colis_area.position = skeleton.get_bone_pose_position(i)
+		colis_area.name = "hitbox" + str(i)
+		colis_area.add_child(colission_snake_shape)
+		colission_snake_shape.shape = colission_shape
+		
+		# migth need to connect now all them areas . 
+
 
 # navigation stuff 
 func velocity_computed(safe_velocity: Vector3) -> void:
@@ -484,14 +511,14 @@ func widen_cull_margin():
 			
 func make_physical_skeleton():
 		
-	var skel_root : PhysicalBoneSimulator3D = PhysicalBoneSimulator3D.new()
 	
-	skeleton.add_child(skel_root)
+	
+	skeleton.add_child(bone_simulation_phys)
 	
 	for i in skeleton.get_bone_count():
 		var one_physical_bone :PhysicalBone3D = PhysicalBone3D.new()
 		
-		skel_root.add_child(one_physical_bone)
+		bone_simulation_phys.add_child(one_physical_bone)
 		
 
 		var name = skeleton.get_bone_name(i)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://dgpjxoygnvyy4"]
+[gd_scene load_steps=20 format=4 uid="uid://dgpjxoygnvyy4"]
 
 [ext_resource type="Script" path="res://Scripts/Junk_Player.gd" id="1_dewec"]
 [ext_resource type="AudioStream" uid="uid://cuyxmyq2gsq54" path="res://sounds/walk.wav" id="2_q4r38"]
@@ -6,11 +6,10 @@
 [ext_resource type="Animation" uid="uid://dicb15ogu14j" path="res://Resources/shoot_gun_no_tail.res" id="4_dewec"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_euj4i"]
+radius = 0.3
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kyqiw"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gntrk"]
-albedo_color = Color(0.386197, 0.380789, 1, 1)
+radius = 0.3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b2s4u"]
 resource_name = "Material.001"
@@ -323,7 +322,6 @@ shape = SubResource("CapsuleShape3D_euj4i")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="body"]
 visible = false
 mesh = SubResource("CapsuleMesh_kyqiw")
-surface_material_override/0 = SubResource("StandardMaterial3D_gntrk")
 
 [node name="rotation_helper" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00536369, 0.0738814, 0.0281899)

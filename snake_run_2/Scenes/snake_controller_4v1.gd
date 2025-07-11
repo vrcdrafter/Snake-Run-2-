@@ -58,14 +58,14 @@ func _ready() -> void:
 	
 	widen_cull_margin()
 	
-	make_physical_skeleton()
-
+	#make_physical_skeleton()
+	
+	add_colission_shapes()
+	
 func _physics_process(delta: float) -> void:
 	
 	snake_wave_pysics_process(delta) # initialize the snake wavyness
-	
-	if Input.is_action_pressed("ui_accept"):
-		snake_state = "null"
+
 	# have snake start to chase target 
 	match snake_state:
 		"patrol":
@@ -102,18 +102,21 @@ func _physics_process(delta: float) -> void:
 					animation_curve = all_animation_curves[i]
 			# if at some point the player gets too close resume chase 
 			var ennarement_done :bool = false
+			
 			match ensnare_state:
 			
 				"path":
+					bone_simulation_phys.active = false
 					make_ensnarement_curve(ensnarement_points,tri_array,snake_target,animation_curve)
 					var head_position :Vector3 = tri_array[0].global_position
 					var local_point :Vector3 = ensarement_path.to_local(head_position)
 					var loval_point2 :Vector3 = self.to_local(head_position)
 					var offset_head :float = curve.get_closest_offset(local_point)
 					move_segments_to_path(offset_head)
-					
+					emit_signal("ensnared")
 					ensnare_state = "run"
 				"run":
+					
 					var local_target_distance :float = (snake_target.global_position - tri_array[0].global_position).length()
 					twist_triangles(0)
 					if local_target_distance < 4: # keep trying to ensnare 
@@ -125,6 +128,7 @@ func _physics_process(delta: float) -> void:
 						# means the prey esaped 
 						ensnare_state = "abort_dynamic"
 				"run_animation":
+					bone_simulation_phys.active = true
 					var local_target_distance_self :float = (snake_target.global_position - self.global_position).length() # this is the true snake to player at this point
 					var local_target_distance_tri :float = (snake_target.global_position - tri_array[0].global_position).length() 
 					var discernment_distance :float = 0 
