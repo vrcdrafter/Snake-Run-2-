@@ -480,3 +480,33 @@ func widen_cull_margin():
 		if child.is_class("MeshInstance3D"):
 			print("found a mesh ")
 			child.extra_cull_margin = 80
+			
+			
+func make_physical_skeleton():
+		
+	var skel_root : PhysicalBoneSimulator3D = PhysicalBoneSimulator3D.new()
+	
+	skeleton.add_child(skel_root)
+	
+	for i in skeleton.get_bone_count():
+		var one_physical_bone :PhysicalBone3D = PhysicalBone3D.new()
+		
+		skel_root.add_child(one_physical_bone)
+		
+
+		var name = skeleton.get_bone_name(i)
+		one_physical_bone.bone_name = name
+		var rest_bone :Transform3D = skeleton.get_bone_global_rest(i)
+		one_physical_bone.transform = rest_bone
+		
+		var capsule_mesh :CapsuleShape3D = CapsuleShape3D.new()
+		if not name.contains("Neck"):
+			capsule_mesh.height = .05
+			capsule_mesh.radius = .05
+		else:
+			capsule_mesh.height = .2
+			capsule_mesh.radius = .2
+		var colission_shape :CollisionShape3D = CollisionShape3D.new()
+		colission_shape.shape = capsule_mesh
+		one_physical_bone.add_child(colission_shape)
+		one_physical_bone.joint_type = PhysicalBone3D.JOINT_TYPE_6DOF

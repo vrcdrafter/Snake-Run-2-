@@ -55,12 +55,15 @@ func _ready() -> void:
 	connect_player_signals()
 	
 	widen_cull_margin()
+	
+	make_physical_skeleton()
 
 func _physics_process(delta: float) -> void:
 	
 	snake_wave_pysics_process(delta) # initialize the snake wavyness
 	
-	
+	if Input.is_action_pressed("ui_accept"):
+		snake_state = "null"
 	# have snake start to chase target 
 	match snake_state:
 		"patrol":
@@ -182,7 +185,11 @@ func _physics_process(delta: float) -> void:
 			
 			
 		"null":
-			pass
+			
+			var test :PhysicalBoneSimulator3D = get_tree().root.find_child("*PhysicalBone*",true,false)
+			skel.physical_bones_start_simulation()
+			bone_overriding = false
+			
 
 
 	if bone_overriding:

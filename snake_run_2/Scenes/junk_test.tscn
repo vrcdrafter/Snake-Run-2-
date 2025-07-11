@@ -58,6 +58,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="Snake" parent="." groups=["snake"] instance=ExtResource("3_7ckba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.52916, 4.31555, 0)
+hide_triangles = true
 
 [node name="Skeleton3D" parent="Snake/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
