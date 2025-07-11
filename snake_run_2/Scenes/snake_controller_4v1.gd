@@ -27,6 +27,8 @@ var skip_frame :int = 1
 
 var willing_to_chase :bool = true
 
+var simlation_oneshot :bool = true
+
 
 func _ready() -> void:
 
@@ -186,9 +188,17 @@ func _physics_process(delta: float) -> void:
 			
 		"null":
 			
-			var test :PhysicalBoneSimulator3D = get_tree().root.find_child("*PhysicalBone*",true,false)
-			skel.physical_bones_start_simulation()
-			bone_overriding = false
+			
+			var test2 :Array[Node] = get_tree().root.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
+			if simlation_oneshot:
+				for each in test2:
+					if each.get_child_count() > 0:
+						each.physical_bones_start_simulation()
+						bone_overriding = false
+						simlation_oneshot = false
+						skel.clear_bones_global_pose_override()
+						
+
 			
 
 
