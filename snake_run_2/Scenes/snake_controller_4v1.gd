@@ -58,14 +58,17 @@ func _ready() -> void:
 	
 	widen_cull_margin()
 	
-	#make_physical_skeleton()
+	make_physical_skeleton()
 	
 	add_colission_shapes()
 	
 func _physics_process(delta: float) -> void:
 	
 	snake_wave_pysics_process(delta) # initialize the snake wavyness
+	if health < 0:
+		snake_state = "null"
 
+		#snake_state = "null"
 	# have snake start to chase target 
 	match snake_state:
 		"patrol":

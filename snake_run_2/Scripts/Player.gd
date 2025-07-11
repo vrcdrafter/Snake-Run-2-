@@ -146,7 +146,7 @@ func _physics_process(delta: float) -> void:
 		var input_dir :Vector2 = Input.get_vector("player_initial_left", "player_initial_right", "player_initial_forward", "player_initial_backwards")
 		direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * accel * delta
 		if input_dir.length() > 0 :
-			print("taking some input", input_dir)
+
 		if Input.is_key_pressed(KEY_SHIFT):
 			direction = direction * SPRINT_MULT
 

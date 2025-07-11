@@ -82,6 +82,8 @@ var target_player :Node3D
 
 var bone_simulation_phys : PhysicalBoneSimulator3D = PhysicalBoneSimulator3D.new()
 
+var health :int = 10
+
 func _init() -> void:
 
 
@@ -302,7 +304,11 @@ func add_colission_shapes():
 		colis_area.add_child(colission_snake_shape)
 		colission_snake_shape.shape = colission_shape
 		
+		var snake_took_hit :Callable = Callable(self,"_on_snake_hitbox_body_entered")
+		colis_area.area_entered.connect(Callable(snake_took_hit))
 		# migth need to connect now all them areas . 
+		colis_area.collision_layer = 1
+		colis_area.collision_mask = 2
 
 
 # navigation stuff 
@@ -537,3 +543,11 @@ func make_physical_skeleton():
 		colission_shape.shape = capsule_mesh
 		one_physical_bone.add_child(colission_shape)
 		one_physical_bone.joint_type = PhysicalBone3D.JOINT_TYPE_6DOF
+
+
+
+func _on_snake_hitbox_body_entered(test):
+	print(test)
+	print("something hit me ")
+	health -= 1
+	

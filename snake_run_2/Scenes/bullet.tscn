@@ -1,8 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccmuihl5ym6f4"]
+[gd_scene load_steps=4 format=3 uid="uid://ccmuihl5ym6f4"]
 
 [ext_resource type="Script" path="res://Scripts/bullet.gd" id="1_xjght"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_oduel"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xjght"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -15,5 +17,12 @@ script = ExtResource("1_xjght")
 [node name="Timer" type="Timer" parent="MeshInstance3D"]
 one_shot = true
 autostart = true
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+shape = SubResource("BoxShape3D_xjght")
 
 [connection signal="timeout" from="MeshInstance3D/Timer" to="MeshInstance3D" method="_on_timer_timeout"]
