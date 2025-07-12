@@ -82,7 +82,7 @@ var target_player :Node3D
 
 var bone_simulation_phys : PhysicalBoneSimulator3D = PhysicalBoneSimulator3D.new()
 
-var health :int = 10
+var health :int = 2
 
 func _init() -> void:
 
@@ -197,7 +197,7 @@ func move_segments_back_normal():
 		
 		
 
-# this functon needs a edit 
+# this functon needs a edit S
 func override_skeleton(skeleton_L :Skeleton3D): # need to changet this for two cases , one for ensnarement , one for chasing , right now only looks right for chasing !!!!!!!!!!!
 	for i in snake_vertibrea.size(): #EXCLUDE THE TWO EYES AND JAW
 		skeleton_L.set_bone_global_pose_override(snake_vertibrea[i], self.transform.inverse() * tri_array[i].global_transform * trans_prime, 1, true)

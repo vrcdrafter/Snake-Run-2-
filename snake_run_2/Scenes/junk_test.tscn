@@ -52,7 +52,12 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98367, 4.72269, -0.387559)
 
 [node name="green" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_1_001", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2307, 2.17535, -3.95116)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22027, 2.17535, 2.95113)
+mesh = SubResource("PrismMesh_ws20n")
+surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
+
+[node name="green2" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6089, 2.17535, 2.95113)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 

@@ -116,7 +116,8 @@ func _physics_process(delta: float) -> void:
 					var loval_point2 :Vector3 = self.to_local(head_position)
 					var offset_head :float = curve.get_closest_offset(local_point)
 					move_segments_to_path(offset_head)
-					emit_signal("ensnared")
+					if snake_target.name.contains("*Player*"):
+						emit_signal("ensnared")
 					ensnare_state = "run"
 				"run":
 					
@@ -129,6 +130,7 @@ func _physics_process(delta: float) -> void:
 							ensnare_state = "run_animation"
 					else:
 						# means the prey esaped 
+						
 						ensnare_state = "abort_dynamic"
 				"run_animation":
 					bone_simulation_phys.active = true
@@ -196,10 +198,12 @@ func _physics_process(delta: float) -> void:
 		"null":
 			
 			
-			var test2 :Array[Node] = get_tree().root.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
+			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
 			if simlation_oneshot:
+				
 				for each in test2:
 					if each.get_child_count() > 0:
+						bone_simulation_phys.active = true
 						each.physical_bones_start_simulation()
 						bone_overriding = false
 						simlation_oneshot = false
@@ -214,6 +218,7 @@ func _physics_process(delta: float) -> void:
 		
 		
 func abort_universal_reset():
+	
 	transform_onestart = true # reset this so it can grab the next transform when the time comes . 
 	onestart = true
 	bone_overriding = true
