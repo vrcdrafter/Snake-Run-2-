@@ -424,7 +424,7 @@ func find_target_animation(target_local :Node3D ) ->String:
 func make_anim_timer() -> Timer: # at startup makes a timer in the tree
 	timer_move_on = Timer.new()
 	timer_move_on.name = "move_on"
-	timer_move_on.wait_time = 10
+	timer_move_on.wait_time = 1
 	add_child(timer_move_on)
 	timer_move_on.one_shot = true
 	# make connection to timer right away 
@@ -492,7 +492,7 @@ func twist_triangles(value :float):
 func connect_player_signals(): #what this does is connect the players signals if there on the scene 
 	
 	var test
-	var all_player :Array[Node] = get_tree().root.find_children("Detection","Area3D",true,false)
+	var all_player :Array[Node] = self.find_children("Detection","Area3D",true,false) # what the FUCK are you doing , dont connect all the signals to this !!!!
 	var chase_callable :Callable = Callable(self, "found_prey")
 	
 	for each in all_player:

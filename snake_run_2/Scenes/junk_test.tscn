@@ -49,10 +49,10 @@ size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_1_001"] instance=ExtResource("1_3du67")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98367, 4.72269, -0.387559)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.71218, 4.72269, 9.0375)
 
 [node name="green" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_1_001", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22027, 2.17535, 2.95113)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.17461, 2.17535, 2.95113)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
@@ -63,7 +63,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="Snake" parent="." groups=["snake"] instance=ExtResource("3_7ckba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.52916, 4.31555, 0)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Snake/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)

@@ -7,11 +7,13 @@ Tasks to do in Snakerun
 	done
 
 #3 make so player can ragdoll 
+
 #4 make so snake can ragdoll
 	done
 
 #5 make so player can do damage 
 #6 make so snake can do damage
+	done
 
 # 7 make item pickup 
 

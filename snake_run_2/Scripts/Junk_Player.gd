@@ -152,9 +152,11 @@ func _physics_process(delta: float) -> void:
 		if direction:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
+			animation_tree_new.set("parameters/Blend2/blend_amount", 0)
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
+			animation_tree_new.set("parameters/Blend2/blend_amount", 1)
 
 		move_and_slide()
 	else:
@@ -171,9 +173,11 @@ func _physics_process(delta: float) -> void:
 		if direction:
 			velocity.x = direction.x * SPEED_CONTROLLER
 			velocity.z = direction.z * SPEED_CONTROLLER
+			animation_tree_new.set("parameters/Blend2/blend_amount", 0)
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED_CONTROLLER)
 			velocity.z = move_toward(velocity.z, 0, SPEED_CONTROLLER)
+			animation_tree_new.set("parameters/Blend2/blend_amount", 1)
 
 		move_and_slide()
 	

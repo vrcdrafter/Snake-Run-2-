@@ -115,8 +115,10 @@ func _physics_process(delta: float) -> void:
 					var local_point :Vector3 = ensarement_path.to_local(head_position)
 					var loval_point2 :Vector3 = self.to_local(head_position)
 					var offset_head :float = curve.get_closest_offset(local_point)
+					var total_curve_length = curve.get_baked_length()
 					move_segments_to_path(offset_head)
-					if snake_target.name.contains("*Player*"):
+					var name_sn = snake_target.name
+					if snake_target.name.contains("Player"):
 						emit_signal("ensnared")
 					ensnare_state = "run"
 				"run":
@@ -127,6 +129,7 @@ func _physics_process(delta: float) -> void:
 						ennarement_done = move_segments_along_path(delta,3)
 						
 						if ennarement_done:
+							move_segments_back_normal()
 							ensnare_state = "run_animation"
 					else:
 						# means the prey esaped 
