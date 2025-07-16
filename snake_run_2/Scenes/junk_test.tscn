@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://d4lmmdar48ovc"]
+[gd_scene load_steps=10 format=3 uid="uid://d4lmmdar48ovc"]
 
 [ext_resource type="PackedScene" uid="uid://dgpjxoygnvyy4" path="res://Scenes/Player.tscn" id="1_3du67"]
 [ext_resource type="Script" path="res://Scenes/sub_viewport_container_2.gd" id="1_envuj"]
 [ext_resource type="Script" path="res://Scripts/detect_controller_script.gd" id="1_nlxrt"]
 [ext_resource type="PackedScene" uid="uid://c1716s0ci3nkt" path="res://Scenes/snake4.1.tscn" id="3_7ckba"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="3_nlxrt"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_nlxrt"]
 vertices = PackedVector3Array(-14.5, 1.595, -14.5, -14.5, 1.595, 14.5, 14.5, 1.595, 14.5, 14.5, 1.595, -14.5)
@@ -50,6 +51,7 @@ render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_1_001"] instance=ExtResource("1_3du67")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.71218, 4.72269, 9.0375)
+script = ExtResource("3_nlxrt")
 
 [node name="green" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_1_001", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.17461, 2.17535, 2.95113)

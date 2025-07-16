@@ -71,6 +71,16 @@ func _input(event: InputEvent) -> void:
 	
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
+	
+	# This section controls your player camera. Sensitivity can be changed.
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		rotation_helper.rotate_x(deg_to_rad(event.relative.y * MOUSE_SENSITIVITY * -1))
+		self.rotate_y(deg_to_rad(event.relative.x * MOUSE_SENSITIVITY * -1))
+
+		var camera_rot = rotation_helper.rotation
+		camera_rot.x = clampf(camera_rot.x, -1.4, 1.4)
+		rotation_helper.rotation = camera_rot
+
 
 
 
@@ -83,28 +93,14 @@ func _physics_process(delta: float) -> void:
 		
 		if Input.is_action_just_pressed("shoot"):
 			print("fired")
-			animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+			#animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 			spawn_bullet(delta)
-		event = top_container_handle.mouse_event
-		
-		if previous_event == event:
-			event = Vector2(0,0)
-		else:
-			previous_event = event
-		
-		rotation_helper.rotate_x(deg_to_rad(event.y * MOUSE_SENSITIVITY * -1))
-		self.rotate_y(deg_to_rad(event.x * MOUSE_SENSITIVITY * -1))
 
-		var camera_rot = rotation_helper.rotation
-		camera_rot.x = clampf(camera_rot.x, -1.4, 1.4)
-		rotation_helper.rotation = camera_rot
-		
-		event = Vector2(0,0)
 	else:
 		
 		if Input.is_action_just_pressed("shoot_p" + player_id):
 			
-			animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+			#animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 			spawn_bullet(delta)
 			
 		
@@ -152,11 +148,11 @@ func _physics_process(delta: float) -> void:
 		if direction:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
-			animation_tree_new.set("parameters/Blend2/blend_amount", 0)
+			#animation_tree_new.set("parameters/Blend2/blend_amount", 0)
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
-			animation_tree_new.set("parameters/Blend2/blend_amount", 1)
+			#animation_tree_new.set("parameters/Blend2/blend_amount", 1)
 
 		move_and_slide()
 	else:
