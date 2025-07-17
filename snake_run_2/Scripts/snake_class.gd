@@ -84,6 +84,8 @@ var bone_simulation_phys : PhysicalBoneSimulator3D = PhysicalBoneSimulator3D.new
 
 var health :int = 2
 
+var physical_bone_ref :Array[PhysicalBone3D] 
+
 func _init() -> void:
 
 
@@ -328,12 +330,14 @@ func velocity_computed(safe_velocity: Vector3) -> void:
 	else:
 		tri_array[0].global_position = tri_array[0].global_position.move_toward(tri_array[0].global_position + safe_velocity, movement_delta)
 
+	
 	tri_array[0].look_at(tri_array[0].global_position + safe_velocity)
 	
 func nav_startup_ready():
 	
 	navigation_agent = NavigationAgent3D.new()
 	tri_array[0].add_child(navigation_agent)
+	#navigation_agent.path_postprocessing = NavigationPathQueryParameters3D.PATH_POSTPROCESSING_EDGECENTERED
 	
 	var _on_velocity_computed :Callable = Callable(self,"velocity_computed")
 	navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
@@ -543,6 +547,7 @@ func make_physical_skeleton():
 		colission_shape.shape = capsule_mesh
 		one_physical_bone.add_child(colission_shape)
 		one_physical_bone.joint_type = PhysicalBone3D.JOINT_TYPE_6DOF
+		physical_bone_ref.append(one_physical_bone)
 
 
 
@@ -550,4 +555,7 @@ func _on_snake_hitbox_body_entered(test):
 	print(test)
 	print("something hit me ")
 	health -= 1
+	
+	
+
 	

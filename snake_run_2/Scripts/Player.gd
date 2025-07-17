@@ -134,10 +134,7 @@ func _physics_process(delta: float) -> void:
 		accel = DEACCEL
 		moving = false
 
-	if snakes_around_you == 2:
-		if timer_oneshot:
-			Game_over_timer.start()
-			timer_oneshot = false
+
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with a custom keymap depending on your control scheme. These strings default to the arrow keys layout.
@@ -153,9 +150,11 @@ func _physics_process(delta: float) -> void:
 		if direction:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
+			animation_tree_new.set("parameters/Blend2/blend_amount", 0)
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
+			animation_tree_new.set("parameters/Blend2/blend_amount", 1)
 
 		move_and_slide()
 	else:
@@ -172,9 +171,11 @@ func _physics_process(delta: float) -> void:
 		if direction:
 			velocity.x = direction.x * SPEED_CONTROLLER
 			velocity.z = direction.z * SPEED_CONTROLLER
+			animation_tree_new.set("parameters/Blend2/blend_amount", 0)
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED_CONTROLLER)
 			velocity.z = move_toward(velocity.z, 0, SPEED_CONTROLLER)
+			animation_tree_new.set("parameters/Blend2/blend_amount", 1)
 
 		move_and_slide()
 	

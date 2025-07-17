@@ -211,6 +211,13 @@ func _physics_process(delta: float) -> void:
 						bone_overriding = false
 						simlation_oneshot = false
 						skel.clear_bones_global_pose_override()
+						# also make is to the snake collides with nothing ( might fall through floor ) 
+				for area_examined in physical_bone_ref:
+					area_examined.collision_mask = 7
+					area_examined.collision_layer = 7
+					area_examined.gravity_scale = 1
+					area_examined.mass = .1
+					
 						
 
 			
@@ -226,8 +233,13 @@ func abort_universal_reset():
 	onestart = true
 	bone_overriding = true
 	timer_up = false
-	snake_animations.stop()
-	snake_state = "patrol"
+	snake_animations.stop() 
+	var name_loca = snake_target.name
+	var name_player_local = target_player.name
+	if snake_target == target_player:
+		snake_state = "chase"
+	else :
+		snake_state = "patrol"
 	ensnare_state = "path"
 	
 	
