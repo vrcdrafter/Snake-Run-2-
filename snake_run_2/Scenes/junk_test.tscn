@@ -30,26 +30,32 @@ mesh = SubResource("BoxMesh_keui4")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.30826, 2.28229, -8.133)
+use_collision = true
 size = Vector3(5.20355, 5.56458, 8.18896)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.30778, 2.28229, -10.5831)
+use_collision = true
 size = Vector3(7.14377, 5.56458, 3.28882)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.30778, 2.28229, -2.38516)
+use_collision = true
 size = Vector3(7.14377, 5.56458, 3.28882)
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="NavigationRegion3D"]
 transform = Transform3D(-0.0144857, 0, 0.999895, 0, 1, 0, -0.999895, 0, -0.0144857, -11.1476, 2.28229, -2.38516)
+use_collision = true
 size = Vector3(7.14377, 5.56458, 3.28882)
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="NavigationRegion3D"]
 transform = Transform3D(0.968817, 0, 0.247777, 0, 1, 0, -0.247777, 0, 0.968817, -11.1476, 2.28229, 9.801)
+use_collision = true
 size = Vector3(7.14377, 5.56458, 3.28882)
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="NavigationRegion3D"]
 transform = Transform3D(0.968817, 0, 0.247777, 0, 1, 0, -0.247777, 0, 0.968817, -1.10633, 2.28229, 9.801)
+use_collision = true
 size = Vector3(7.14377, 5.56458, 3.28882)
 
 [node name="GridContainer" type="GridContainer" parent="."]

@@ -111,12 +111,9 @@ func _physics_process(delta: float) -> void:
 				"path":
 					bone_simulation_phys.active = false
 					make_ensnarement_curve(ensnarement_points,tri_array,snake_target,animation_curve)
-					var head_position :Vector3 = tri_array[0].global_position
-					var local_point :Vector3 = ensarement_path.to_local(head_position)
-					var loval_point2 :Vector3 = self.to_local(head_position)
-					var offset_head :float = curve.get_closest_offset(local_point)
+
 					var total_curve_length = curve.get_baked_length()
-					move_segments_to_path(offset_head)
+					move_segments_to_path(total_curve_length - animation_curve.get_baked_length()) # so this 14.6 is the added curve length 
 					var name_sn = snake_target.name
 					if snake_target.name.contains("Player"):
 						emit_signal("ensnared")

@@ -145,7 +145,7 @@ func make_ensnarement_curve(ensnarement_data :PackedVector3Array, body_segment_p
 	# add points to current curve , no rotation yet
 	# check if there is unique animation argument added , if so add those points to the curve 
 	if not anim_curve == null:
-		print(" I have some curves to process first ")
+		
 		# clear curve as is
 		
 		var points_anim :PackedVector3Array  = anim_curve.get_baked_points()
