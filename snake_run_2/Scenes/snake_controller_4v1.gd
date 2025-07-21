@@ -78,8 +78,8 @@ func _physics_process(delta: float) -> void:
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
 						# when you go into patrol , just skip a frame , see how bad it looks 
 						# just be casual agressivness 
-			aggressivness = 1
-			movement_speed = 1
+			aggressivness = 6
+			movement_speed = 3
 			#find something to patrol to 
 			set_movement_target(snake_target.global_position) # assigns target
 			nav_startup_physics_process(delta,tri_array[0]) #starts up the navigation server 
@@ -180,8 +180,8 @@ func _physics_process(delta: float) -> void:
 			snake_target = target_player
 			var target_name = snake_target.name
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
-			aggressivness = 4
-			movement_speed = 4
+			aggressivness = 5
+			movement_speed = 5
 			#find something to patrol to 
 			set_movement_target(snake_target.global_position) # assigns target
 			nav_startup_physics_process(delta,tri_array[0]) #starts up the navigation server 
@@ -232,7 +232,7 @@ func abort_universal_reset():
 	timer_up = false
 	snake_animations.stop() 
 	var name_loca = snake_target.name
-	var name_player_local = target_player.name
+	
 	if snake_target == target_player:
 		snake_state = "chase"
 	else :
