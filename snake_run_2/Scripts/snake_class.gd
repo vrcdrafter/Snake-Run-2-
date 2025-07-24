@@ -557,5 +557,44 @@ func _on_snake_hitbox_body_entered(test):
 	health -= 1
 	
 	
+	
+func make_transition_key(anim_player :AnimationPlayer, Skel :Skeleton3D):
+	
+	
+	var transition_animation :Animation = Animation.new()
+	var animation_libary :AnimationLibrary = anim_player.get_animation_library("")
+	
+	var number_of_bones :int= Skel.get_bone_count()
+	print("found this many bones",number_of_bones)
+	for i in number_of_bones:
+		if Skel.get_bone_name(i) == "Neck.004":
+			print(" its a head bone now")
+			transition_animation.add_track(Animation.TYPE_ROTATION_3D,0)
+			transition_animation.add_track(Animation.TYPE_POSITION_3D,1)
+			transition_animation.track_set_path(0,"Armature_001/Skeleton3D:" + Skel.get_bone_name(i)) # note these paths are wrong IDIOT !
+			transition_animation.track_set_path(1,"Armature_001/Skeleton3D:" + Skel.get_bone_name(i)) # note these paths are wrong IDIOT !
+			var head_rotation :Quaternion = Skel.get_bone_global_pose(0).basis.get_rotation_quaternion()
+			var head_posi :Vector3 = Skel.get_bone_global_pose(0).origin
+			print("quat", head_rotation)
+			transition_animation.rotation_track_insert_key(0,0.0,head_rotation)
+			transition_animation.position_track_insert_key(1,0.0,head_posi)
+			Skel.get_bone_global_pose(i)
+		else:
+			transition_animation.add_track(Animation.TYPE_ROTATION_3D,i+1)
+			
+			transition_animation.track_set_path(i+1,"Armature_001/Skeleton3D:" + Skel.get_bone_name(i)) # note these paths are wrong IDIOT !
+			
+			var bone_rotation :Quaternion = Skel.get_bone_pose_rotation(i+1)
+			transition_animation.rotation_track_insert_key(i+1,0.0,bone_rotation)
+			print("Armature_001/Skeleton3D:" + Skel.get_bone_name(i+1) + " had rotatoion " + str(bone_rotation))
+
+	
+	animation_libary.add_animation("transition_animation",transition_animation)
+	print(animation_libary.get_animation_list())
+	print(transition_animation.get_track_count())
+	animation_libary.resource_name = "test_new"
+	print("the name is ",animation_libary.resource_name)
+	var save_result = ResourceSaver.save(animation_libary,"res://" + animation_libary.resource_name + ".tres") # save the animation so I can dink with it . 
+	print(save_result)
 
 	

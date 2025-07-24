@@ -12,8 +12,9 @@ Tasks to do in Snakerun
 	done
 
 #5 make so player can do damage 
+	done 
 #6 make so snake can do damage
-	done
+	
 
 # 7 make item pickup 
 

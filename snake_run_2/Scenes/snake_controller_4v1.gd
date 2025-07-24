@@ -64,6 +64,9 @@ func _ready() -> void:
 	
 func _physics_process(delta: float) -> void:
 	
+
+	
+	
 	snake_wave_pysics_process(delta) # initialize the snake wavyness
 	if health < 0:
 		snake_state = "null"
