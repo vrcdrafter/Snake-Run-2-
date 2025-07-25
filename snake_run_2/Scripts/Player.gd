@@ -44,6 +44,10 @@ var joy_y_accum:float = 0
 # bullet stuff
 var bullet_scene :PackedScene = preload("res://Scenes/bullet.tscn")
 
+# health stuff 
+var health :int = 1000
+var death_oneshot :bool = false
+
 func _ready():
 	camera = $rotation_helper/Camera3D
 	rotation_helper = $rotation_helper
@@ -76,7 +80,9 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	
-
+	if death_oneshot:
+		$"source_fox/Armature (Mecha g)/Skeleton3D/PhysicalBoneSimulator3D".physical_bones_start_simulation()
+		print("you died")
 	
 	
 	if player_id == "0": # then its the regular player with mouse and keybaord 
@@ -180,13 +186,20 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 	
 	if ensnared:
+		# decrement health too 
+		health -= 1
 		time+= delta
+		print(health)
 		slow_move_back(ensnared_position,delta,wave(1,3,time,delta)+8.0)
 		
 		if ((ensnared_position-self.get_global_position()).length() > .58):
 			snakes_around_you = 0 
 			ensnared = false
 			
+		if health < 0:
+			death_oneshot = true
+			ensnared = false
+		
 
 func _on_button_button_down():
 	
