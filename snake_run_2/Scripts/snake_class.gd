@@ -37,7 +37,7 @@ var parent_rotation_deg :float
 var skeleton :Skeleton3D
 var SPEED :float = 10
 var target :Node3D
-
+var snake_target :Node3D = null
 var patrol_objects :Array[MeshInstance3D]
 
 var debug = false
@@ -502,12 +502,22 @@ func connect_player_signals(): #what this does is connect the players signals if
 	for each in all_player:
 		
 		each.connect("found_player",chase_callable.bind([player_to_chase,test]))
+		
+	var player_in_scene :Array  = get_tree().root.find_children("Player","CharacterBody3D",true,false)### attach all player connections so the snake is listening for player is dead 
+	print("found these")
+	var player_death_callable :Callable = Callable(self,"prey_dead")
 	
+	for each in player_in_scene:
+		each.connect("dead",player_death_callable)
 	
 func found_prey(player_to_chase,test):
 	found_player = true
 	print("found something to chase ",player_to_chase.name)
 	target_player = player_to_chase
+	
+func prey_dead():
+	found_player = false
+	snake_target = pick_new_target(snake_target)
 
 func widen_cull_margin():
 	var all_stuff :Array = self.find_children("*")

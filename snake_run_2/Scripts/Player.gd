@@ -45,8 +45,10 @@ var joy_y_accum:float = 0
 var bullet_scene :PackedScene = preload("res://Scenes/bullet.tscn")
 
 # health stuff 
-var health :int = 1000
+var health :int = 100
 var death_oneshot :bool = false
+
+signal dead 
 
 func _ready():
 	camera = $rotation_helper/Camera3D
@@ -85,121 +87,128 @@ func _physics_process(delta: float) -> void:
 		print("you died")
 	
 	
-	if player_id == "0": # then its the regular player with mouse and keybaord 
+	if not death_oneshot:
 		
-		if Input.is_action_just_pressed("shoot"):
-			print("fired")
-			animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-			spawn_bullet(delta)
-		event = top_container_handle.mouse_event
-		
-		if previous_event == event:
+		if player_id == "0": # then its the regular player with mouse and keybaord 
+			
+			if Input.is_action_just_pressed("shoot"):
+				print("fired")
+				animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+				spawn_bullet(delta)
+			event = top_container_handle.mouse_event
+			
+			if previous_event == event:
+				event = Vector2(0,0)
+			else:
+				previous_event = event
+			
+			rotation_helper.rotate_x(deg_to_rad(event.y * MOUSE_SENSITIVITY * -1))
+			self.rotate_y(deg_to_rad(event.x * MOUSE_SENSITIVITY * -1))
+
+			var camera_rot = rotation_helper.rotation
+			camera_rot.x = clampf(camera_rot.x, -1.4, 1.4)
+			rotation_helper.rotation = camera_rot
+			
 			event = Vector2(0,0)
 		else:
-			previous_event = event
-		
-		rotation_helper.rotate_x(deg_to_rad(event.y * MOUSE_SENSITIVITY * -1))
-		self.rotate_y(deg_to_rad(event.x * MOUSE_SENSITIVITY * -1))
-
-		var camera_rot = rotation_helper.rotation
-		camera_rot.x = clampf(camera_rot.x, -1.4, 1.4)
-		rotation_helper.rotation = camera_rot
-		
-		event = Vector2(0,0)
-	else:
-		
-		if Input.is_action_just_pressed("shoot_p" + player_id):
 			
-			animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-			spawn_bullet(delta)
+			if Input.is_action_just_pressed("shoot_p" + player_id):
+				
+				animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+				spawn_bullet(delta)
+				
 			
+			var look_stick_angle :Vector2 = Input.get_vector("look_left_p"+player_id,"look_right_p"+player_id,"look_up_p"+player_id,"look_down_p"+player_id)
+			
+			joy_y_accum = look_stick_angle.y * Joy_sensativity * delta
+			rotation_helper.rotate_x(joy_y_accum * -1)
+			#joystick left right
+			self.rotate_y(look_stick_angle.x * Joy_sensativity * -1 * delta)
 		
-		var look_stick_angle :Vector2 = Input.get_vector("look_left_p"+player_id,"look_right_p"+player_id,"look_up_p"+player_id,"look_down_p"+player_id)
 		
-		joy_y_accum = look_stick_angle.y * Joy_sensativity * delta
-		rotation_helper.rotate_x(joy_y_accum * -1)
-		#joystick left right
-		self.rotate_y(look_stick_angle.x * Joy_sensativity * -1 * delta)
-	
-	
-	var moving = false
-	# Add the gravity. Pulls value from project settings.
-	if not is_on_floor():
-		velocity.y -= gravity * delta
+		var moving = false
+		# Add the gravity. Pulls value from project settings.
+		if not is_on_floor():
+			velocity.y -= gravity * delta
 
-	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
-	# This just controls acceleration. Don't touch it.
-	var accel
-	if dir.dot(velocity) > 0:
-		accel = ACCEL
-		moving = true
-	else:
-		accel = DEACCEL
-		moving = false
-
-
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with a custom keymap depending on your control scheme. These strings default to the arrow keys layout.
-	if player_id == "0":
-		
-		var input_dir :Vector2 = Input.get_vector("player_initial_left", "player_initial_right", "player_initial_forward", "player_initial_backwards")
-		direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * accel * delta
-
-
-		if Input.is_key_pressed(KEY_SHIFT):
-			direction = direction * SPRINT_MULT
-
-		if direction:
-			velocity.x = direction.x * SPEED
-			velocity.z = direction.z * SPEED
-			animation_tree_new.set("parameters/Blend2/blend_amount", 0)
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-			velocity.z = move_toward(velocity.z, 0, SPEED)
-			animation_tree_new.set("parameters/Blend2/blend_amount", 1)
-
-		move_and_slide()
-	else:
-		var input_dir = Input.get_vector("pan_left_p"+player_id, "pan_right_p"+player_id, "move_forward_p"+player_id, "move_backward_p"+player_id)
-		
-		if Input.is_action_just_pressed("jump_p"+player_id) and is_on_floor() and (snakes_around_you < 2):
+		# Handle Jump.
+		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
-		
-		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * accel * delta
-		if Input.is_key_pressed(KEY_SHIFT) or Input.is_action_pressed("sprint_p"+player_id):
-			direction = direction * SPRINT_MULT
-			# speed up animations too 
 
-		if direction:
-			velocity.x = direction.x * SPEED_CONTROLLER
-			velocity.z = direction.z * SPEED_CONTROLLER
-			animation_tree_new.set("parameters/Blend2/blend_amount", 0)
+		# This just controls acceleration. Don't touch it.
+		var accel
+		if dir.dot(velocity) > 0:
+			accel = ACCEL
+			moving = true
 		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED_CONTROLLER)
-			velocity.z = move_toward(velocity.z, 0, SPEED_CONTROLLER)
-			animation_tree_new.set("parameters/Blend2/blend_amount", 1)
-
-		move_and_slide()
-	
-	if ensnared:
-		# decrement health too 
-		health -= 1
-		time+= delta
-		print(health)
-		slow_move_back(ensnared_position,delta,wave(1,3,time,delta)+8.0)
-		
-		if ((ensnared_position-self.get_global_position()).length() > .58):
-			snakes_around_you = 0 
-			ensnared = false
+			accel = DEACCEL
+			moving = false
 			
-		if health < 0:
-			death_oneshot = true
-			ensnared = false
+		# Get the input direction and handle the movement/deceleration.
+		# As good practice, you should replace UI actions with a custom keymap depending on your control scheme. These strings default to the arrow keys layout.
+		if player_id == "0":
+			
+			var input_dir :Vector2 = Input.get_vector("player_initial_left", "player_initial_right", "player_initial_forward", "player_initial_backwards")
+			direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * accel * delta
+
+
+			if Input.is_key_pressed(KEY_SHIFT):
+				direction = direction * SPRINT_MULT
+
+			if direction:
+				velocity.x = direction.x * SPEED
+				velocity.z = direction.z * SPEED
+				animation_tree_new.set("parameters/Blend2/blend_amount", 0)
+			else:
+				velocity.x = move_toward(velocity.x, 0, SPEED)
+				velocity.z = move_toward(velocity.z, 0, SPEED)
+				animation_tree_new.set("parameters/Blend2/blend_amount", 1)
+
+			move_and_slide()
+		else:
+			var input_dir = Input.get_vector("pan_left_p"+player_id, "pan_right_p"+player_id, "move_forward_p"+player_id, "move_backward_p"+player_id)
+			
+			if Input.is_action_just_pressed("jump_p"+player_id) and is_on_floor() and (snakes_around_you < 2):
+				velocity.y = JUMP_VELOCITY
+			
+			var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * accel * delta
+			if Input.is_key_pressed(KEY_SHIFT) or Input.is_action_pressed("sprint_p"+player_id):
+				direction = direction * SPRINT_MULT
+				# speed up animations too 
+
+			if direction:
+				velocity.x = direction.x * SPEED_CONTROLLER
+				velocity.z = direction.z * SPEED_CONTROLLER
+				animation_tree_new.set("parameters/Blend2/blend_amount", 0)
+			else:
+				velocity.x = move_toward(velocity.x, 0, SPEED_CONTROLLER)
+				velocity.z = move_toward(velocity.z, 0, SPEED_CONTROLLER)
+				animation_tree_new.set("parameters/Blend2/blend_amount", 1)
+
+			move_and_slide()
 		
+		if ensnared:
+			# decrement health too 
+			health -= 1
+			time+= delta
+			print(health)
+			slow_move_back(ensnared_position,delta,wave(1,3,time,delta)+8.0)
+			
+			if ((ensnared_position-self.get_global_position()).length() > .58):
+				snakes_around_you = 0 
+				ensnared = false
+				
+			if health < 0:
+				death_oneshot = true
+				ensnared = false
+				# turn off ability to be detected by snake 
+				collision_layer = 0
+				print("the colission should be off now ")
+				emit_signal("dead")
+				
+	else:
+		#move camera to death position . 
+		$rotation_helper/Camera3D.global_transform = $rotation_helper/Camera3D.global_transform.interpolate_with($Marker3D.global_transform,1)
 
 func _on_button_button_down():
 	

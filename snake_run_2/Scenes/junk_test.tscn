@@ -545,8 +545,8 @@ tracks/36/keys = PackedFloat32Array(0, 1, -0.0696616, -0.00194259, -0.122155, 0.
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yvxjx"]
 _data = {
-&"anim_ensnare_1_001": SubResource("Animation_ey8di"),
-&"test_anim_1": SubResource("Animation_cm50r")
+"anim_ensnare_1_001": SubResource("Animation_ey8di"),
+"test_anim_1": SubResource("Animation_cm50r")
 }
 
 [sub_resource type="Animation" id="Animation_nlxrt"]
@@ -1346,9 +1346,9 @@ tracks/37/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3x3by"]
 resource_name = "test"
 _data = {
-&"anim_ensnare_1_001": SubResource("Animation_nlxrt"),
-&"transition_animation": SubResource("Animation_rwyx4"),
-&"test_anim_1": SubResource("Animation_ws20n")
+"anim_ensnare_1_001": SubResource("Animation_nlxrt"),
+"test_anim_1": SubResource("Animation_ws20n"),
+"transition_animation": SubResource("Animation_rwyx4")
 }
 
 [node name="Node" type="Node"]
@@ -1485,8 +1485,8 @@ bones/36/rotation = Quaternion(-0.408406, -6.42449e-08, -0.21474, 0.887182)
 
 [node name="AnimationPlayer" parent="Snake/snake_hefty_animated_4" index="3"]
 libraries = {
-&"": SubResource("AnimationLibrary_yvxjx"),
-&"test": SubResource("AnimationLibrary_3x3by")
+"": SubResource("AnimationLibrary_yvxjx"),
+"test": SubResource("AnimationLibrary_3x3by")
 }
 
 [node name="BoneAttachment3D" parent="Snake" index="1"]

@@ -3,7 +3,7 @@ var ensnare_state :String = "path"
 var snake_state :String = "patrol"
 @onready var player :CharacterBody3D = get_node("../../../../GridContainer/SubViewportContainer2/SubViewport/Player")
 @onready var test_mesh :MeshInstance3D = get_node("../MeshInstance3D")
-var snake_target :Node3D = null
+
 
 @onready var skel :Skeleton3D
 var all_animation_curves :Array[Curve3D]
