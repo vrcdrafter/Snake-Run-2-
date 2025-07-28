@@ -49,6 +49,7 @@ var health :int = 100
 var death_oneshot :bool = false
 
 signal dead 
+var player_ensnared :Node3D
 
 func _ready():
 	camera = $rotation_helper/Camera3D
@@ -187,7 +188,7 @@ func _physics_process(delta: float) -> void:
 
 			move_and_slide()
 		
-		if ensnared:
+		if ensnared: # remember ensnared needs to be player indendent , plain signals is not good enough 
 			# decrement health too 
 			health -= 1
 			time+= delta
@@ -215,11 +216,12 @@ func _on_button_button_down():
 	emit_signal("remove_mouse")
 	GlobalVars.game_started = true
 
-func _on_snake_ensnared():
-	print("should be ensnared")
-	ensnared = true
-	ensnared_position = self.get_global_position() # may want a different position , 
-	snakes_around_you += 1
+func _on_snake_ensnared(player_ensnared,test):
+	print("should be ensnared",player_ensnared)
+	if self.name == player_ensnared.name:
+		ensnared = true
+		ensnared_position = self.get_global_position() # may want a different position , 
+		snakes_around_you += 1
 
 func slow_move_back(pos:Vector3, delta:float, move_strength:float):
 	var current_position = self.get_global_position() # get the position 
@@ -263,8 +265,10 @@ func remake_connections():
 	var callable_ensnare = Callable(self, "_on_snake_ensnared")
 	var timer_callable = Callable(self, "_on_game_over_timer_timeout")
 	var reset_level = Callable(self,"_on_button_pressed")
+	var test
 	for n in range(all_snakes.size()):
-		all_snakes[n].connect("ensnared",callable_ensnare)
+		
+		all_snakes[n].connect("ensnared",callable_ensnare.bind([player_ensnared,test]))
 #	timer_handle.connect("timeout",timer_callable)
 #	game_over_button_handle.connect("pressed",reset_level)
 	

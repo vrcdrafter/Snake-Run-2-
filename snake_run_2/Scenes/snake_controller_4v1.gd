@@ -119,7 +119,7 @@ func _physics_process(delta: float) -> void:
 					move_segments_to_path(total_curve_length - animation_curve.get_baked_length()) # so this 14.6 is the added curve length 
 					var name_sn = snake_target.name
 					if snake_target.name.contains("Player"):
-						emit_signal("ensnared")
+						ensnared.emit(snake_target)
 					ensnare_state = "run"
 				"run":
 					
