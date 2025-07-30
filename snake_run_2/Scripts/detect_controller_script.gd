@@ -2,7 +2,7 @@ extends Node
 
 
 var ping_controllers :bool = true 
-
+signal player_added
 
 func _ready() -> void:
 	
@@ -49,5 +49,7 @@ func spawn_player(spawn_position :Vector3,num :int):
 	var player_1_handle :CharacterBody3D = get_node(path_player_1)
 	var sub_viewport_sizing :SubViewport = get_node(new_player.name + "/SubViewport")
 	player_1_handle.global_position = spawn_position
+
+	emit_signal("player_added")
 	
 	

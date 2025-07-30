@@ -331,7 +331,7 @@ func velocity_computed(safe_velocity: Vector3) -> void:
 		tri_array[0].global_position = tri_array[0].global_position.move_toward(tri_array[0].global_position + safe_velocity, movement_delta)
 
 	
-	tri_array[0].look_at(tri_array[0].global_position + safe_velocity)
+	tri_array[0].look_at(tri_array[0].global_position + safe_velocity,Vector3.UP)
 	
 func nav_startup_ready():
 	
@@ -506,9 +506,12 @@ func connect_player_signals(): #what this does is connect the players signals if
 	var player_in_scene :Array  = get_tree().root.find_children("Player","CharacterBody3D",true,false)### attach all player connections so the snake is listening for player is dead 
 	print("found these")
 	var player_death_callable :Callable = Callable(self,"prey_dead")
+	var remake_connections_callable :Callable = Callable(self,"re_do_connections")
 	
 	for each in player_in_scene:
 		each.connect("dead",player_death_callable)
+	
+		
 	
 func found_prey(player_to_chase,test):
 	found_player = true
@@ -608,3 +611,15 @@ func make_transition_key(anim_player :AnimationPlayer, Skel :Skeleton3D):
 	print(save_result)
 
 	
+	
+func game_manager_connect_sripts():
+	
+		var game_manager = get_tree().root.get_child(1)
+		game_manager.connect("player_added",Callable(self,"check_players"))
+		
+func check_players():
+	var player_in_scene :Array  = get_tree().root.find_children("Player","CharacterBody3D",true,false)### attach all player connections so the snake is listening for player is dead 
+	print("found these")
+	var player_death_callable :Callable = Callable(self,"prey_dead")
+	for each in player_in_scene:
+		each.connect("dead",player_death_callable)

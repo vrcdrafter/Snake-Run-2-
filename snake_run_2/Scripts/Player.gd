@@ -51,6 +51,8 @@ var death_oneshot :bool = false
 signal dead 
 var player_ensnared :Node3D
 
+signal player_added
+
 func _ready():
 	camera = $rotation_helper/Camera3D
 	rotation_helper = $rotation_helper
@@ -70,6 +72,7 @@ func _ready():
 	
 	player_id = find_id()
 	print("the player identified is ", player_id)
+	
 
 
 
@@ -217,8 +220,8 @@ func _on_button_button_down():
 	GlobalVars.game_started = true
 
 func _on_snake_ensnared(player_ensnared,test):
-	print("should be ensnared",player_ensnared)
-	if self.name == player_ensnared.name:
+	print("should be ensnared ",player_ensnared.name)
+	if self == player_ensnared:
 		ensnared = true
 		ensnared_position = self.get_global_position() # may want a different position , 
 		snakes_around_you += 1

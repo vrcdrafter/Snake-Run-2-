@@ -62,6 +62,8 @@ func _ready() -> void:
 	
 	add_colission_shapes()
 	
+	game_manager_connect_sripts()
+	
 func _physics_process(delta: float) -> void:
 	
 
