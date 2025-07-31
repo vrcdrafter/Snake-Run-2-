@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cty2blbsnp16o"]
+[gd_scene load_steps=14 format=3 uid="uid://cty2blbsnp16o"]
 
 [ext_resource type="Script" path="res://Scripts/detect_controller_script.gd" id="1_1rm5b"]
 [ext_resource type="Script" path="res://Scenes/sub_viewport_container_2.gd" id="2_i4sut"]
@@ -23,6 +23,10 @@ alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 cull_mode = 2
 albedo_texture = ExtResource("7_hortj")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hortj"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_671yy"]
 
 [node name="Node" type="Node"]
 script = ExtResource("1_1rm5b")
@@ -591,6 +595,17 @@ surface_material_override/0 = SubResource("StandardMaterial3D_671yy")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.624984, 0.780638, 0, -0.780638, -0.624984, 0, 25.0278, 0)
 light_energy = 0.518
+
+[node name="treasure" type="Node3D" parent="."]
+
+[node name="Area3D" type="Area3D" parent="treasure"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.48025, 11.8096, 65.4808)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="treasure/Area3D"]
+shape = SubResource("SphereShape3D_hortj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="treasure/Area3D"]
+mesh = SubResource("SphereMesh_671yy")
 
 [editable path="Snake"]
 [editable path="Snake/snake_hefty_animated_4"]

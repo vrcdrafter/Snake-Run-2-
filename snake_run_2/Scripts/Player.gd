@@ -9,8 +9,7 @@ const SPRINT_MULT = 2
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.06
 @onready var animation_tree_new :AnimationTree = get_node("AnimationTree")
-@onready var Game_over :Control = get_node("../../../../SubViewportContainer/SubViewport/Node3D/Control")
-@onready var Game_over_timer :Timer = get_node("../../../../SubViewportContainer/SubViewport/Node3D/Game_over_timer")
+
 # Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -53,6 +52,8 @@ var player_ensnared :Node3D
 
 signal player_added
 
+@onready var ray :RayCast3D = get_node("BoneAttachment3D/MeshInstance3D/RayCast3D")
+
 func _ready():
 	camera = $rotation_helper/Camera3D
 	rotation_helper = $rotation_helper
@@ -85,6 +86,8 @@ func _input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	
+	check_ray()
 	
 	if death_oneshot:
 		$"source_fox/Armature (Mecha g)/Skeleton3D/PhysicalBoneSimulator3D".physical_bones_start_simulation()
@@ -257,13 +260,7 @@ func remake_connections():
 	
 	var all_snakes :Array = get_tree().get_nodes_in_group("snake")
 	print("all _snakes", all_snakes)
-	
 
-	
-
-	var timer_handle :Timer = get_tree().root.get_node("Node/SubViewportContainer/SubViewport/Node3D/Game_over_timer")
-
-	var game_over_button_handle :Button = get_node("../../../../SubViewportContainer/SubViewport/Node3D/Control/Button")
 	var callable_mouse_button = Callable(self,"_on_button_button_down")
 	var callable_ensnare = Callable(self, "_on_snake_ensnared")
 	var timer_callable = Callable(self, "_on_game_over_timer_timeout")
@@ -335,4 +332,10 @@ func spawn_bullet(delta :float):
 	get_tree().root.add_child(bullet_instance)
 
 	
-	
+func check_ray():
+	if ray.is_colliding():
+		var collider = ray.get_collider()
+		
+		if collider is Area3D:
+
+			print("found a treasure", collider.name)

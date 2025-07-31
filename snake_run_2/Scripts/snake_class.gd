@@ -4,17 +4,6 @@ class_name Snake
 
 @export var aggressivness :float = 1.0
 
-@export var anglex :float = 0
-@export var angley :float = 0
-@export var anglez :float = 0
-
-@onready var sliderx :VSlider = get_node("../X_axis")
-@onready var slidery :VSlider = get_node("../y_axis")
-@onready var sliderz :VSlider = get_node("../z_axis")
-
-@onready var disp_x :TextEdit = get_node("../x_display")
-@onready var disp_y :TextEdit = get_node("../y_display")
-@onready var disp_z :TextEdit = get_node("../z_display")
 
 @export var hide_triangles :bool = false
 var ensarement_path :Path3D
@@ -90,7 +79,7 @@ func _init() -> void:
 
 
 	
-	print("ran this too")
+
 	if debug:
 		var snake_node :Node3D = find_child("sn*")
 		var name = snake_node.name
@@ -103,8 +92,7 @@ func _init() -> void:
 		parent_basis = parent_node.global_transform
 		parent_rotation_deg = parent_node.rotation_degrees.y
 	else:
-		print("ran this in else")
-		print_tree_pretty()
+		pass
 	
 
 func follower(delta :float, body_segment_pimitived :Array[MeshInstance3D], bone_length :float):
@@ -342,12 +330,13 @@ func nav_startup_ready():
 	var _on_velocity_computed :Callable = Callable(self,"velocity_computed")
 	navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
 	
+
+	
 func nav_startup_physics_process(delta,head_object :MeshInstance3D):
 			# Do not query when the map has never synchronized and is empty.
 	if NavigationServer3D.map_get_iteration_id(navigation_agent.get_navigation_map()) == 0:
 		return
-	if navigation_agent.is_navigation_finished():
-		return
+
 
 	movement_delta = movement_speed * delta
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
@@ -459,13 +448,15 @@ func spine_bones() -> PackedInt32Array:
 		if skeleton.get_bone_name(i).contains("Neck"):
 			all_spine_bones.append(i)
 		else:
-			print("skipped one ")
+			pass
 	return all_spine_bones
 
 
 func initilaize_spine_bones():
 	snake_vertibrea = spine_bones()
 	# this is the global . 
+	
+
 	
 func make_reaction_timer() -> Timer: # this is a timer so the snake does not change its decision too fast when it start to ensnarre 
 	timer_move_on2 = Timer.new()
@@ -504,7 +495,7 @@ func connect_player_signals(): #what this does is connect the players signals if
 		each.connect("found_player",chase_callable.bind([player_to_chase,test]))
 		
 	var player_in_scene :Array  = get_tree().root.find_children("Player","CharacterBody3D",true,false)### attach all player connections so the snake is listening for player is dead 
-	print("found these")
+
 	var player_death_callable :Callable = Callable(self,"prey_dead")
 	var remake_connections_callable :Callable = Callable(self,"re_do_connections")
 	
@@ -515,7 +506,7 @@ func connect_player_signals(): #what this does is connect the players signals if
 	
 func found_prey(player_to_chase,test):
 	found_player = true
-	print("found something to chase ",player_to_chase.name)
+
 	target_player = player_to_chase
 	
 func prey_dead():
@@ -528,7 +519,7 @@ func widen_cull_margin():
 
 		
 		if child.is_class("MeshInstance3D"):
-			print("found a mesh ")
+			
 			child.extra_cull_margin = 80
 			
 			
@@ -565,8 +556,7 @@ func make_physical_skeleton():
 
 
 func _on_snake_hitbox_body_entered(test):
-	print(test)
-	print("something hit me ")
+
 	health -= 1
 	
 	
@@ -578,17 +568,17 @@ func make_transition_key(anim_player :AnimationPlayer, Skel :Skeleton3D):
 	var animation_libary :AnimationLibrary = anim_player.get_animation_library("")
 	
 	var number_of_bones :int= Skel.get_bone_count()
-	print("found this many bones",number_of_bones)
+
 	for i in number_of_bones:
 		if Skel.get_bone_name(i) == "Neck.004":
-			print(" its a head bone now")
+
 			transition_animation.add_track(Animation.TYPE_ROTATION_3D,0)
 			transition_animation.add_track(Animation.TYPE_POSITION_3D,1)
 			transition_animation.track_set_path(0,"Armature_001/Skeleton3D:" + Skel.get_bone_name(i)) # note these paths are wrong IDIOT !
 			transition_animation.track_set_path(1,"Armature_001/Skeleton3D:" + Skel.get_bone_name(i)) # note these paths are wrong IDIOT !
 			var head_rotation :Quaternion = Skel.get_bone_global_pose(0).basis.get_rotation_quaternion()
 			var head_posi :Vector3 = Skel.get_bone_global_pose(0).origin
-			print("quat", head_rotation)
+
 			transition_animation.rotation_track_insert_key(0,0.0,head_rotation)
 			transition_animation.position_track_insert_key(1,0.0,head_posi)
 			Skel.get_bone_global_pose(i)
@@ -599,16 +589,15 @@ func make_transition_key(anim_player :AnimationPlayer, Skel :Skeleton3D):
 			
 			var bone_rotation :Quaternion = Skel.get_bone_pose_rotation(i+1)
 			transition_animation.rotation_track_insert_key(i+1,0.0,bone_rotation)
-			print("Armature_001/Skeleton3D:" + Skel.get_bone_name(i+1) + " had rotatoion " + str(bone_rotation))
+
 
 	
 	animation_libary.add_animation("transition_animation",transition_animation)
-	print(animation_libary.get_animation_list())
-	print(transition_animation.get_track_count())
+
 	animation_libary.resource_name = "test_new"
-	print("the name is ",animation_libary.resource_name)
+
 	var save_result = ResourceSaver.save(animation_libary,"res://" + animation_libary.resource_name + ".tres") # save the animation so I can dink with it . 
-	print(save_result)
+
 
 	
 	
@@ -619,7 +608,7 @@ func game_manager_connect_sripts():
 		
 func check_players():
 	var player_in_scene :Array  = get_tree().root.find_children("Player","CharacterBody3D",true,false)### attach all player connections so the snake is listening for player is dead 
-	print("found these")
+
 	var player_death_callable :Callable = Callable(self,"prey_dead")
 	for each in player_in_scene:
 		each.connect("dead",player_death_callable)

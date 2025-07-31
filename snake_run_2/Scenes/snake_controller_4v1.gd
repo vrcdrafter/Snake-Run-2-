@@ -1,7 +1,7 @@
 extends Snake
 var ensnare_state :String = "path"
 var snake_state :String = "patrol"
-@onready var player :CharacterBody3D = get_node("../../../../GridContainer/SubViewportContainer2/SubViewport/Player")
+
 @onready var test_mesh :MeshInstance3D = get_node("../MeshInstance3D")
 
 
@@ -18,8 +18,7 @@ var transform_save :Transform3D
 # list of oneshots 
 var snake_ensnare_oneshot :bool = true
 
-# slider bar
-@onready var slidex :VSlider = get_node("../X_axis")
+
 
 # RENDERING INCREMENTER , OK THIS IS A WIERD ONE , 
 #THIS IS THE VARIABLE THAT KEEPS TRACK OF WHAT FRAMES TO SKIP 
@@ -119,7 +118,7 @@ func _physics_process(delta: float) -> void:
 
 					var total_curve_length = curve.get_baked_length()
 					move_segments_to_path(total_curve_length - animation_curve.get_baked_length()) # so this 14.6 is the added curve length 
-					var name_sn = snake_target.name
+				
 					if snake_target.name.contains("Player"):
 						ensnared.emit(snake_target)
 					ensnare_state = "run"
@@ -183,7 +182,7 @@ func _physics_process(delta: float) -> void:
 			found_player = false
 			# make it so the target is the player 			snake_target = target_player
 			snake_target = target_player
-			var target_name = snake_target.name
+		
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
 			aggressivness = 5
 			movement_speed = 5
