@@ -22,6 +22,7 @@ transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 cull_mode = 2
+shading_mode = 0
 albedo_texture = ExtResource("7_hortj")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_hortj"]

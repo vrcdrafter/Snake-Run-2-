@@ -75,6 +75,10 @@ var health :int = 2
 
 var physical_bone_ref :Array[PhysicalBone3D] 
 
+var nav_mesh_calc_time :float = .2
+var time_accumulator :float = 0 
+var next_path_position :Vector3
+
 func _init() -> void:
 
 
@@ -336,10 +340,13 @@ func nav_startup_physics_process(delta,head_object :MeshInstance3D):
 			# Do not query when the map has never synchronized and is empty.
 	if NavigationServer3D.map_get_iteration_id(navigation_agent.get_navigation_map()) == 0:
 		return
-
-
+	
 	movement_delta = movement_speed * delta
-	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
+	time_accumulator += delta
+	if time_accumulator > nav_mesh_calc_time:
+		next_path_position = navigation_agent.get_next_path_position()
+		time_accumulator = 0
+	
 	var new_velocity: Vector3 = head_object.global_position.direction_to(next_path_position) * movement_delta
 	if navigation_agent.avoidance_enabled:
 		navigation_agent.set_velocity(new_velocity)
