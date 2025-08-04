@@ -2,7 +2,7 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_cnhyp"]
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D2" type="Node3D"]
 
 [node name="Area3D" type="Area3D" parent="."]
 

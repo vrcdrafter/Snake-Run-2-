@@ -14,6 +14,7 @@ var animation_transiton_points :PackedVector3Array
 var all_transition_curves :Array[Curve3D]
 var rotate_heper :Array[Node3D]
 var tri_array :Array[MeshInstance3D]
+var sway_head :MeshInstance3D
 var area_array :Array[Area3D]
 var Segment_colission_array :Array[CollisionShape3D]
 var follow_path_array :Array[PathFollow3D] 
@@ -105,9 +106,16 @@ func follower(delta :float, body_segment_pimitived :Array[MeshInstance3D], bone_
 		if i == 0: # meaning its the first piece, THE HEAD , note the head is already the green triangle and needs to follow nothing 
 			pass
 		else:
-			body_segment_pimitived[i].look_at(body_segment_pimitived[i-1].global_position)
-			if (body_segment_pimitived[i-1].global_position.distance_to(body_segment_pimitived[i].global_position) > bone_length):
-				body_segment_pimitived[i].global_position = body_segment_pimitived[i].global_position.lerp(body_segment_pimitived[i-1].global_position,delta * movement_speed)
+			
+			if i == 1:
+				body_segment_pimitived[i].look_at(sway_head.global_position)
+				if (sway_head.global_position.distance_to(body_segment_pimitived[i].global_position) > bone_length):
+					body_segment_pimitived[i].global_position = body_segment_pimitived[i].global_position.lerp(sway_head.global_position,delta * movement_speed)
+			else:
+				
+				body_segment_pimitived[i].look_at(body_segment_pimitived[i-1].global_position)
+				if (body_segment_pimitived[i-1].global_position.distance_to(body_segment_pimitived[i].global_position) > bone_length):
+					body_segment_pimitived[i].global_position = body_segment_pimitived[i].global_position.lerp(body_segment_pimitived[i-1].global_position,delta * movement_speed)
 
 func calc_length(skeleton :Skeleton3D):
 	var bone_length
@@ -194,7 +202,10 @@ func move_segments_back_normal():
 # this functon needs a edit S
 func override_skeleton(skeleton_L :Skeleton3D): # need to changet this for two cases , one for ensnarement , one for chasing , right now only looks right for chasing !!!!!!!!!!!
 	for i in snake_vertibrea.size(): #EXCLUDE THE TWO EYES AND JAW
-		skeleton_L.set_bone_global_pose_override(snake_vertibrea[i], self.transform.inverse() * tri_array[i].global_transform * trans_prime, 1, true)
+		if i == 0:
+			skeleton_L.set_bone_global_pose_override(snake_vertibrea[i], self.transform.inverse() * sway_head.global_transform * trans_prime, 1, true)
+		else:
+			skeleton_L.set_bone_global_pose_override(snake_vertibrea[i], self.transform.inverse() * tri_array[i].global_transform * trans_prime, 1, true)
 		#so the self.transform.inverse()  is what makes the snake note mobile and cane be moved anywhere around the scene 
 
 	
@@ -252,15 +263,26 @@ func make_tris():
 		# add triangles
 		tri_array.append(MeshInstance3D.new())
 		var triangle_mesh :PrismMesh = PrismMesh.new()
+		var triangle_mesh_small :PrismMesh = PrismMesh.new()
+		triangle_mesh_small.size = Vector3(.2, .2, .2)
+
 		triangle_mesh.size = Vector3(.5,.5,.5)
 		tri_array[i].mesh = triangle_mesh
 		
 		tri_array[i].name = "body"+str(i)
 		var new_mat :StandardMaterial3D = StandardMaterial3D.new()
 		new_mat.albedo_color = Color(0,1,0,0)
+		
+		var new_mat2 :StandardMaterial3D = StandardMaterial3D.new()
+		new_mat2.albedo_color = Color(1,0,0,0)
+		
+		sway_head = MeshInstance3D.new()
+		
+		sway_head.mesh = triangle_mesh_small
+		sway_head.set_surface_override_material(0,new_mat2)
 		tri_array[0].set_surface_override_material(0,new_mat)
-		
-		
+		tri_array[0].add_child(sway_head)
+		sway_head.position = Vector3(0,0,0)
 		tri_array[i].transform = skeleton.get_bone_global_pose(snake_vertibrea[i]) #EXCLUDE THE TWO EYES AND JAW
 		add_child.call_deferred(tri_array[i]) #EXCLUDE THE TWO EYES AND JAW
 		
@@ -307,20 +329,10 @@ func add_colission_shapes():
 
 # navigation stuff 
 func velocity_computed(safe_velocity: Vector3) -> void:
-	
-	
-	
-	var new_velocity = tri_array[0].global_position.move_toward(tri_array[0].global_position + safe_velocity, movement_delta)
-	# need to include the wavyness of snake
-	
-	if new_velocity.length() != 0:
-		var perpendicular :Vector3 = Vector3(-safe_velocity.x/safe_velocity.length(),0.0,safe_velocity.z/safe_velocity.length())
-		var waving_perpendicular :Vector3 = perpendicular.normalized() * wave_thing
-		
-		tri_array[0].global_position = new_velocity + waving_perpendicular
-	
-	else:
-		tri_array[0].global_position = tri_array[0].global_position.move_toward(tri_array[0].global_position + safe_velocity, movement_delta)
+
+	sway_head.position = Vector3(wave_thing* 20,0,0)
+
+	tri_array[0].global_position = tri_array[0].global_position.move_toward(tri_array[0].global_position + safe_velocity, movement_delta)
 
 	
 	tri_array[0].look_at(tri_array[0].global_position + safe_velocity,Vector3.UP)

@@ -82,7 +82,7 @@ func _physics_process(delta: float) -> void:
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
 						# when you go into patrol , just skip a frame , see how bad it looks 
 						# just be casual agressivness 
-			aggressivness = 6
+			aggressivness = 12
 			movement_speed = 3
 			#find something to patrol to 
 			set_movement_target(snake_target.global_position) # assigns target

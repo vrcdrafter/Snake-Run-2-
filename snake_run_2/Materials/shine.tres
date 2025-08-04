@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bkt64se33y38w"]
+
+[ext_resource type="Shader" path="res://Materials/shine.gdshader" id="1_31ixs"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_31ixs")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/cycle_interval = 2.5
+shader_parameter/shine_speed = 3.0
+shader_parameter/shine_width = 5.0
+shader_parameter/shine_angle_x = 0.0
+shader_parameter/shine_angle_y = 0.0
+shader_parameter/shine_angle_z = 0.0
