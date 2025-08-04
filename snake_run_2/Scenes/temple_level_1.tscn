@@ -62,7 +62,7 @@ script = ExtResource("2_i4sut")
 
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_1_001"] instance=ExtResource("3_udigb")]
@@ -602,7 +602,7 @@ light_energy = 0.518
 
 [node name="treasure" type="Node3D" parent="."]
 
-[node name="Area3D" type="Area3D" parent="treasure"]
+[node name="Area3D" type="Area3D" parent="treasure" groups=["item"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.48025, 9.62037, 65.4808)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="treasure/Area3D"]

@@ -1347,8 +1347,8 @@ tracks/37/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
 resource_name = "test"
 _data = {
 &"anim_ensnare_1_001": SubResource("Animation_nlxrt"),
-&"test_anim_1": SubResource("Animation_ws20n"),
-&"transition_animation": SubResource("Animation_rwyx4")
+&"transition_animation": SubResource("Animation_rwyx4"),
+&"test_anim_1": SubResource("Animation_ws20n")
 }
 
 [node name="Node" type="Node"]

@@ -347,9 +347,9 @@ func spawn_bullet(delta :float):
 	
 func check_ray(delta):
 	if ray.is_colliding():
-		var collider = ray.get_collider()
+		var collider :Node = ray.get_collider()
 		
-		if collider is Area3D:
+		if collider.is_in_group("item"):
 			can_pickup_item = true
 			animation_tree_new.set("parameters/select/add_amount", 1)
 			animation_tree_new.set("parameters/Add2/add_amount", 0)
