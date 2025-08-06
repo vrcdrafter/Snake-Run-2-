@@ -28,6 +28,9 @@ var willing_to_chase :bool = true
 
 var simlation_oneshot :bool = true
 
+var death_accumulator :float = 0 
+var death_timer :float = 3
+
 
 func _ready() -> void:
 
@@ -204,7 +207,7 @@ func _physics_process(delta: float) -> void:
 			
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
 			if simlation_oneshot:
-				
+				dead_snake.emit(self)
 				for each in test2:
 					if each.get_child_count() > 0:
 						bone_simulation_phys.active = true
@@ -219,7 +222,13 @@ func _physics_process(delta: float) -> void:
 					area_examined.gravity_scale = 1
 					area_examined.mass = .1
 					
-						
+			death_accumulator += delta
+			if death_accumulator > death_timer:
+				for area_examined in physical_bone_ref:
+					area_examined.collision_mask = 8
+					area_examined.collision_layer = 8
+					area_examined.gravity_scale = .5
+					area_examined.mass = .1
 
 			
 

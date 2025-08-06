@@ -64,6 +64,7 @@ var timer_up2 :bool = false
 var snake_vertibrea :PackedInt32Array
 
 signal ensnared(player_id :Node3D)
+signal dead_snake(snake_id :Node3D)
 
 # for finding players 
 var found_player :bool = false
