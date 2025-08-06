@@ -108,6 +108,7 @@ func _physics_process(delta: float) -> void:
 			if Input.is_action_just_pressed("shoot"):
 				if can_pickup_item:
 					examined_item.queue_free()
+					$ProgressBar.value += 1
 				else:
 					animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 					spawn_bullet(delta)
@@ -132,7 +133,9 @@ func _physics_process(delta: float) -> void:
 				
 				if can_pickup_item:
 					examined_item.queue_free()
-					
+					$ProgressBar.value += 1
+
+			
 				else:
 					animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 					spawn_bullet(delta)

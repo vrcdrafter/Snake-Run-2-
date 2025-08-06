@@ -84,7 +84,7 @@ mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green7" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_1_001", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.3059, 14.7827, -65.2135)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.3059, 13.5304, -65.2135)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
@@ -99,7 +99,7 @@ mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green5" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_1_001", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.1466, 10.2989, -45.8844)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.1466, 9.50328, -45.8844)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
@@ -134,12 +134,12 @@ mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green15" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_1_001", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74.5444, 9.77961, -42.6276)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74.5444, 9.07051, -42.6276)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green16" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_1_001", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.7334, 6.93689, -37.193)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.7334, 6.0441, -37.193)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
@@ -609,6 +609,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.48025, 9.62037, 65.4808)
 shape = SubResource("SphereShape3D_hortj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="treasure/Area3D"]
+material_override = ExtResource("8_671yy")
+material_overlay = SubResource("StandardMaterial3D_xqhwl")
+mesh = SubResource("SphereMesh_671yy")
+
+[node name="Area3D2" type="Area3D" parent="treasure" groups=["item"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.866067, 10.235, 64.4198)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="treasure/Area3D2"]
+shape = SubResource("SphereShape3D_hortj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="treasure/Area3D2"]
 material_override = ExtResource("8_671yy")
 material_overlay = SubResource("StandardMaterial3D_xqhwl")
 mesh = SubResource("SphereMesh_671yy")

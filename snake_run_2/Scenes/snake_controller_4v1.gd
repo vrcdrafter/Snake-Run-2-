@@ -214,8 +214,8 @@ func _physics_process(delta: float) -> void:
 						skel.clear_bones_global_pose_override()
 						# also make is to the snake collides with nothing ( might fall through floor ) 
 				for area_examined in physical_bone_ref:
-					area_examined.collision_mask = 7
-					area_examined.collision_layer = 7
+					area_examined.collision_mask = 9
+					area_examined.collision_layer = 9
 					area_examined.gravity_scale = 1
 					area_examined.mass = .1
 					

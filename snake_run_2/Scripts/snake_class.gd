@@ -41,7 +41,7 @@ var movement_delta: float
 var time :float = 0
 var snake_wavyness :float = .01
 var wave_thing :float = 0
-
+var wave_strength_narrow :float
 
 # for snapping snake to triangles 
 
@@ -330,8 +330,17 @@ func add_colission_shapes():
 # navigation stuff 
 func velocity_computed(safe_velocity: Vector3) -> void:
 
-	sway_head.position = Vector3(wave_thing* 20,0,0)
 
+	var distance = tri_array[0].get_child(0).global_position.distance_to(snake_target.global_position)
+
+	if distance < 3: # start clamping
+		wave_strength_narrow = clamp(wave_thing,distance * -1 ,distance)
+	else: 
+		wave_strength_narrow = 1
+
+
+	sway_head.position = Vector3(wave_thing* 20 * wave_strength_narrow,0,0)
+	
 	tri_array[0].global_position = tri_array[0].global_position.move_toward(tri_array[0].global_position + safe_velocity, movement_delta)
 
 	
