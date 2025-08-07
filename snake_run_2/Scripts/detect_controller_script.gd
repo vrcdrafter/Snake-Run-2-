@@ -4,6 +4,10 @@ extends Node
 var ping_controllers :bool = true 
 signal player_added
 
+var accumulator :float = 0 
+var time_to_check :float = 2
+
+
 func _ready() -> void:
 	
 	var callable = Callable(self, "act_on_connection")
@@ -16,12 +20,20 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	
+	
+	
 	Input.joy_connection_changed
 	
 	
 	if ping_controllers:
 		assess_controllers()
 		ping_controllers = false
+		
+	# check connections 
+	accumulator += delta
+	if accumulator > time_to_check:
+		poll_all_snakes_connections()
+		accumulator = 0
 
 
 
@@ -53,3 +65,20 @@ func spawn_player(spawn_position :Vector3,num :int):
 	emit_signal("player_added")
 	
 	
+	
+func poll_all_snakes_connections():
+	
+	var all_snakes :Array = get_tree().get_nodes_in_group("snake")
+	
+	for each in all_snakes:
+		if not each.is_connected("snake_removed",Callable(self,"add_new_snake")):
+			each.connect("snake_removed",Callable(self,"add_new_snake"))
+	
+	
+func add_new_snake():
+	
+	var spawn_points :Array[Node] = $snake_spawn_points.get_children()
+	var random_spawn_point = spawn_points[randi() % spawn_points.size()]
+	var new_snake = preload("res://Scenes/snake4.1.tscn").instantiate()
+	new_snake.global_position = random_spawn_point.global_position
+	add_child(new_snake)

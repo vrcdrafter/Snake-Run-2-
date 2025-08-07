@@ -548,7 +548,6 @@ func widen_cull_margin():
 
 		
 		if child.is_class("MeshInstance3D"):
-			
 			child.extra_cull_margin = 80
 			
 			

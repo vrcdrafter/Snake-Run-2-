@@ -62,7 +62,7 @@ script = ExtResource("2_i4sut")
 
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_1_001"] instance=ExtResource("3_udigb")]
@@ -150,7 +150,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="Snake" parent="." groups=["snake"] instance=ExtResource("4_hortj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.3685, 9.03512, 59.4976)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Snake/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -194,7 +193,6 @@ transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -
 
 [node name="Snake2" parent="." groups=["snake"] instance=ExtResource("4_hortj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.96791, 9.03512, 59.5881)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Snake2/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -238,7 +236,6 @@ transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -
 
 [node name="Snake3" parent="." groups=["snake"] instance=ExtResource("4_hortj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.504, 5.32842, 68.2842)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Snake3/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -282,7 +279,6 @@ transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -
 
 [node name="Snake4" parent="." groups=["snake"] instance=ExtResource("4_hortj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4702, 4.32074, 59.5881)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Snake4/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -326,7 +322,6 @@ transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -
 
 [node name="Snake5" parent="." groups=["snake"] instance=ExtResource("4_hortj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.1942, 10.6957, -10.995)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Snake5/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -370,7 +365,6 @@ transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -
 
 [node name="Snake6" parent="." groups=["snake"] instance=ExtResource("4_hortj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6035, 7.00592, -31.0801)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Snake6/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -414,7 +408,6 @@ transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -
 
 [node name="Snake7" parent="." groups=["snake"] instance=ExtResource("4_hortj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.78595, 7.42454, -27.7645)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Snake7/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -458,7 +451,6 @@ transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -
 
 [node name="Snake8" parent="." groups=["snake"] instance=ExtResource("4_hortj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.8438, 24.9595, 59.8008)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Snake8/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -502,7 +494,6 @@ transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -
 
 [node name="Snake9" parent="." groups=["snake"] instance=ExtResource("4_hortj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.2164, 17.3177, 27.2319)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Snake9/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -546,7 +537,6 @@ transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -
 
 [node name="Snake10" parent="." groups=["snake"] instance=ExtResource("4_hortj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.6579, 8.74521, 27.3223)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Snake10/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -599,6 +589,11 @@ surface_material_override/0 = SubResource("StandardMaterial3D_671yy")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.624984, 0.780638, 0, -0.780638, -0.624984, 0, 25.0278, 0)
 light_energy = 0.518
+
+[node name="snake_spawn_points" type="Node3D" parent="."]
+
+[node name="Marker3D" type="Marker3D" parent="snake_spawn_points"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.42746, 9.59972, 65.5282)
 
 [node name="treasure" type="Node3D" parent="."]
 

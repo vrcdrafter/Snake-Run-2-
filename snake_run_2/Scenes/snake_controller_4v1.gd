@@ -31,6 +31,7 @@ var simlation_oneshot :bool = true
 var death_accumulator :float = 0 
 var death_timer :float = 3
 
+signal snake_removed
 
 func _ready() -> void:
 
@@ -207,7 +208,7 @@ func _physics_process(delta: float) -> void:
 			
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
 			if simlation_oneshot:
-				dead_snake.emit(self)
+				dead_snake.emit($BoneAttachment3D/tounge_1)
 				for each in test2:
 					if each.get_child_count() > 0:
 						bone_simulation_phys.active = true
@@ -229,8 +230,11 @@ func _physics_process(delta: float) -> void:
 					area_examined.collision_layer = 8
 					area_examined.gravity_scale = .5
 					area_examined.mass = .1
-
+			if death_accumulator > death_timer + 3:
+				emit_signal("snake_removed")
+				self.queue_free()
 			
+				
 
 
 	if bone_overriding:

@@ -64,6 +64,9 @@ var check_stuf_timer :float = .5
 var health_accumulator :float = 0
 var health_decrement_timer :float = .1
 
+var remake_connections_accuulator :float = 0 
+var timer_remake_connections :float = 2
+
 
 func _ready():
 	camera = $rotation_helper/Camera3D
@@ -98,7 +101,15 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	
+	
+	remake_connections_accuulator += delta
+	if remake_connections_accuulator > timer_remake_connections:
+		remake_connections_accuulator = 0 
+		remake_connections()
+	
 	check_ray(delta)
+	
+	
 	
 	if death_oneshot:
 		$"source_fox/Armature (Mecha g)/Skeleton3D/PhysicalBoneSimulator3D".physical_bones_start_simulation()
@@ -138,7 +149,6 @@ func _physics_process(delta: float) -> void:
 				if can_pickup_item:
 					examined_item.queue_free()
 					$ProgressBar.value += 1
-
 			
 				else:
 					animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
@@ -290,7 +300,7 @@ func _on_button_pressed():
 func remake_connections():
 	
 	var all_snakes :Array = get_tree().get_nodes_in_group("snake")
-	print("all _snakes", all_snakes)
+	
 
 	var callable_mouse_button = Callable(self,"_on_button_button_down")
 	var callable_ensnare = Callable(self, "_on_snake_ensnared")
@@ -299,10 +309,11 @@ func remake_connections():
 	var callable_dead_snake = Callable(self,"turn_off_ensnared")
 	var test
 	var test2
-	for n in range(all_snakes.size()):
-		
-		all_snakes[n].connect("ensnared",callable_ensnare.bind([player_ensnared,test]))
-		all_snakes[n].connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
+	for n in all_snakes:
+		print(n.name, "ic connected", n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,test])), all_snakes.size())
+		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,test])):
+			n.connect("ensnared",callable_ensnare.bind([player_ensnared,test]))
+			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
 #	timer_handle.connect("timeout",timer_callable)
 #	game_over_button_handle.connect("pressed",reset_level)
 	
@@ -314,16 +325,6 @@ func remake_connections():
 		var walk_callable :Callable = Callable(self, "audio_function")
 		audio_handle.body_entered.connect(_on_body_entered)
 
-
-
-func _on_camper_area_reconnect_snakes() -> void:
-	print("pleace reconenct everything")
-	remake_connections()
-
-
-func _on_node_3d_reconnect_snakes() -> void:
-	print("pleace reconenct everything")
-	remake_connections()
 	
 	
 func setup_level():
