@@ -1,0 +1,22 @@
+# Blender 4.2.0 MTL File: 'Gold_local.blend'
+# www.blender.org
+
+newmtl Material
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Users/mhawley/Desktop/github_stuff/Snake-Run-2-/snake_run_2/level_data/treasure_pack/gold_texture_blob.png
+
+newmtl gold_blob
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2

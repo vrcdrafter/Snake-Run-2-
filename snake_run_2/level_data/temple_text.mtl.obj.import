@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b6435jpea4gky"
+path="res://.godot/imported/temple_text.mtl.obj-8825a0473fbf1d004484f5e89a97c6e2.mesh"
+
+[deps]
+
+files=["res://.godot/imported/temple_text.mtl.obj-8825a0473fbf1d004484f5e89a97c6e2.mesh"]
+
+source_file="res://level_data/temple_text.mtl.obj"
+dest_files=["res://.godot/imported/temple_text.mtl.obj-8825a0473fbf1d004484f5e89a97c6e2.mesh", "res://.godot/imported/temple_text.mtl.obj-8825a0473fbf1d004484f5e89a97c6e2.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

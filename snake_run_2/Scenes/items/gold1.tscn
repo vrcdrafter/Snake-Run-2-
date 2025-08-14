@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://ck2n0oi2noe2x"]
+
+[ext_resource type="Material" uid="uid://bkt64se33y38w" path="res://Materials/shine.tres" id="1_k7iwp"]
+[ext_resource type="Texture2D" uid="uid://bct7k56w0xmef" path="res://level_data/treasure_pack/home_brew/gold_texture_blob.png" id="2_ln3cr"]
+[ext_resource type="ArrayMesh" uid="uid://djb7cj605owew" path="res://level_data/treasure_pack/home_brew/Gold_local.obj" id="3_u08va"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hortj"]
+radius = 1.42228
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oswuc"]
+shading_mode = 0
+albedo_texture = ExtResource("2_ln3cr")
+
+[node name="Area3D" type="Area3D" groups=["item"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_hortj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_k7iwp")
+material_overlay = SubResource("StandardMaterial3D_oswuc")
+mesh = ExtResource("3_u08va")

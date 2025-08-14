@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://djb7cj605owew"
+path="res://.godot/imported/Gold_local.obj-bca4ce8f0ca1e8a5a136b957481731fc.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Gold_local.obj-bca4ce8f0ca1e8a5a136b957481731fc.mesh"]
+
+source_file="res://level_data/treasure_pack/home_brew/Gold_local.obj"
+dest_files=["res://.godot/imported/Gold_local.obj-bca4ce8f0ca1e8a5a136b957481731fc.mesh", "res://.godot/imported/Gold_local.obj-bca4ce8f0ca1e8a5a136b957481731fc.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
