@@ -342,9 +342,9 @@ tracks/9/keys = PackedFloat32Array(0, 1, -0.688325, 0.00440798, -0.00176121, 0.7
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ae0t8"]
 _data = {
 &"sidestep_left": SubResource("Animation_28wcd"),
-&"IDLE_FOX": ExtResource("5_5ixxa"),
-&"shoot_gun_no_tail": ExtResource("4_dewec"),
 &"run": SubResource("Animation_3qult"),
+&"shoot_gun_no_tail": ExtResource("4_dewec"),
+&"IDLE_FOX": ExtResource("5_5ixxa"),
 &"select_animation": ExtResource("6_nn08x")
 }
 

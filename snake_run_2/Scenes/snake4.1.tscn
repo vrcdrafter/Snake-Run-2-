@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/snake_sight.gd" id="5_o881f"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ajh1n"]
-size = Vector3(6, 1, 13)
+size = Vector3(6, 1, 19)
 
 [node name="Snake" type="Node3D" groups=["snake"]]
 script = ExtResource("1_lyc1r")
@@ -63,7 +63,7 @@ transform = Transform3D(1, 2.12876e-06, 3.06718e-07, -6.94289e-08, -0.110585, 0.
 script = ExtResource("5_o881f")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BoneAttachment3D/Detection"]
-transform = Transform3D(1, -1.93264e-12, -4.79883e-12, 1.9329e-12, 1, 6.03426e-07, 4.68603e-12, -6.03502e-07, 1, 0.0693388, -1.32344e-06, 5.65597)
+transform = Transform3D(1, -1.93264e-12, -4.79883e-12, 1.9329e-12, 1, 6.03412e-07, 4.68603e-12, -6.03502e-07, 1, 0.0693388, -3.13372e-06, 2.65597)
 shape = SubResource("BoxShape3D_ajh1n")
 
 [connection signal="body_entered" from="BoneAttachment3D/Detection" to="BoneAttachment3D/Detection" method="_on_body_entered"]

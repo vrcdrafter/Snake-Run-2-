@@ -121,9 +121,13 @@ func _physics_process(delta: float) -> void:
 		if player_id == "0": # then its the regular player with mouse and keybaord 
 			
 			if Input.is_action_just_pressed("shoot"):
+				
 				if can_pickup_item:
-					examined_item.queue_free()
-					$ProgressBar.value += 1
+					if examined_item == null:
+						pass
+					else:
+						examined_item.queue_free()
+						$ProgressBar.value += 1
 				else:
 					animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 					spawn_bullet(delta)
@@ -370,13 +374,15 @@ func spawn_bullet(delta :float):
 func check_ray(delta):
 	if ray.is_colliding():
 		var collider :Node = ray.get_collider()
-		
-		if collider.is_in_group("item"):
-			can_pickup_item = true
-			animation_tree_new.set("parameters/select/add_amount", 1)
-			animation_tree_new.set("parameters/Add2/add_amount", 0)
-			examined_item = collider
-			check_stuf_timer_accum = 0
+		if collider == null:
+			pass
+		else:
+			if collider.is_in_group("item"):
+				can_pickup_item = true
+				animation_tree_new.set("parameters/select/add_amount", 1)
+				animation_tree_new.set("parameters/Add2/add_amount", 0)
+				examined_item = collider
+				check_stuf_timer_accum = 0
 	else:
 		check_stuf_timer_accum += delta
 	
