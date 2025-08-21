@@ -3,5 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://cg58c8clf4va8" path="res://textures/rock_texture_jungle.png" id="1_crohf"]
 
 [resource]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
 shading_mode = 0
 albedo_texture = ExtResource("1_crohf")

@@ -67,6 +67,9 @@ var health_decrement_timer :float = .1
 var remake_connections_accuulator :float = 0 
 var timer_remake_connections :float = 2
 
+# audio bools 
+var play_walk_once :bool = true
+
 
 func _ready():
 	camera = $rotation_helper/Camera3D
@@ -129,6 +132,7 @@ func _physics_process(delta: float) -> void:
 						examined_item.queue_free()
 						$ProgressBar.value += 1
 				else:
+					$AudioStreamPlayer2.play()
 					animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 					spawn_bullet(delta)
 			event = top_container_handle.mouse_event
@@ -197,10 +201,15 @@ func _physics_process(delta: float) -> void:
 				direction = direction * SPRINT_MULT
 
 			if direction:
+				if play_walk_once:
+					$AudioStreamPlayer.play()
+					play_walk_once = false
 				velocity.x = direction.x * SPEED
 				velocity.z = direction.z * SPEED
 				animation_tree_new.set("parameters/Blend2/blend_amount", 0)
 			else:
+				play_walk_once = true
+				$AudioStreamPlayer.stop()
 				velocity.x = move_toward(velocity.x, 0, SPEED)
 				velocity.z = move_toward(velocity.z, 0, SPEED)
 				animation_tree_new.set("parameters/Blend2/blend_amount", 1)
