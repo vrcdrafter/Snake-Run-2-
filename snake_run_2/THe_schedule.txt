@@ -7,24 +7,24 @@ Tasks to do in Snakerun
 	done
 
 #3 make so player can ragdoll 
-
+        done
 #4 make so snake can ragdoll
 	done
 
 #5 make so player can do damage 
 	done 
 #6 make so snake can do damage
-	
+	done
 
 # 7 make item pickup 
 
-[
+[      done 
 
 Now your ready to build a level 
 
 First level Jungle , Coins , Jewels , treasure , Super Soakers 
 
-]
+]  done , least one item . 
 
 
 ( stretch enhancments easy fruit) 

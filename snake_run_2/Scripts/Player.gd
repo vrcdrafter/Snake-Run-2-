@@ -124,19 +124,17 @@ func _physics_process(delta: float) -> void:
 		if player_id == "0": # then its the regular player with mouse and keybaord 
 			
 			if Input.is_action_just_pressed("shoot"):
-				
-				if can_pickup_item:
-					if examined_item == null:
-						pass
-					else:
-						examined_item.queue_free()
-						$ProgressBar.value += 1
-				else:
-					$AudioStreamPlayer2.play()
-					animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-					spawn_bullet(delta)
+				handle_shoot(delta)
 			event = top_container_handle.mouse_event
 			
+			# run a reload if you want 
+			if $AnimatedSprite2D2.frame !=0:
+				if Input.is_action_just_pressed("reload"):
+					animation_tree_new.set("parameters/reload/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+					if $AnimatedSprite2D2.frame != 0:
+						$AnimatedSprite2D2.frame -= 1 # decrement that frame
+				
+				
 			if previous_event == event:
 				event = Vector2(0,0)
 			else:
@@ -150,18 +148,12 @@ func _physics_process(delta: float) -> void:
 			rotation_helper.rotation = camera_rot
 			
 			event = Vector2(0,0)
-		else:
-			
+		else:			
 			if Input.is_action_just_pressed("shoot_p" + player_id):
+				handle_shoot(delta)
 				
-				if can_pickup_item:
-					examined_item.queue_free()
-					$ProgressBar.value += 1
-			
-				else:
-					animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-					spawn_bullet(delta)
-				
+			if Input.is_action_just_pressed("reload_p" + player_id):
+				animation_tree_new.set("parameters/reload/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 			
 			var look_stick_angle :Vector2 = Input.get_vector("look_left_p"+player_id,"look_right_p"+player_id,"look_up_p"+player_id,"look_down_p"+player_id)
 			
@@ -392,6 +384,9 @@ func check_ray(delta):
 				animation_tree_new.set("parameters/Add2/add_amount", 0)
 				examined_item = collider
 				check_stuf_timer_accum = 0
+				if collider.is_in_group("ammo"):
+					$AnimatedSprite2D2.frame = 3
+					
 	else:
 		check_stuf_timer_accum += delta
 	
@@ -400,3 +395,30 @@ func check_ray(delta):
 		animation_tree_new.set("parameters/select/add_amount", 0)
 		animation_tree_new.set("parameters/Add2/add_amount", 1)
 		examined_item = null
+		
+func add_ammo():
+	
+	$AnimatedSprite2D.frame = 0
+	
+func handle_shoot(delta :float):
+					
+	if can_pickup_item:
+		if examined_item == null:
+			pass
+		else:
+			$got_item.play()
+			examined_item.queue_free()
+			$ProgressBar.value += 1
+	else:
+		$AnimatedSprite2D.frame += 1
+		
+		if $AnimatedSprite2D.frame == 19:
+			$empty_clip.play()
+		else:
+			spawn_bullet(delta)
+			$AudioStreamPlayer2.play()
+			animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+			
+func play_reload_sound():
+	$reload.play()
+	

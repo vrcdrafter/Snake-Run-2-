@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://duj445gwmyx3u"]
+
+[ext_resource type="Material" uid="uid://bkt64se33y38w" path="res://Materials/shine.tres" id="1_30f5b"]
+[ext_resource type="Texture2D" uid="uid://frbhhechj3gx" path="res://textures/ammo.png" id="2_30f5b"]
+[ext_resource type="ArrayMesh" uid="uid://cdi3plip8grbd" path="res://level_data/ammo.obj" id="3_g43mk"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hortj"]
+radius = 0.614698
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p42wv"]
+shading_mode = 0
+albedo_texture = ExtResource("2_30f5b")
+
+[node name="Area3D" type="Area3D" groups=["ammo", "item"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_hortj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_30f5b")
+material_overlay = SubResource("StandardMaterial3D_p42wv")
+mesh = ExtResource("3_g43mk")
