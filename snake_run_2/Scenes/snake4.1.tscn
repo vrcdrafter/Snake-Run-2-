@@ -71,7 +71,7 @@ script = ExtResource("5_o881f")
 transform = Transform3D(1, -1.93264e-12, -4.79883e-12, 1.9329e-12, 1, 6.03412e-07, 4.68603e-12, -6.03502e-07, 1, 0.0693388, -3.13372e-06, 2.65597)
 shape = SubResource("BoxShape3D_ajh1n")
 
-[connection signal="body_entered" from="BoneAttachment3D/Detection" to="BoneAttachment3D/Detection" method="_on_body_entered"]
+[connection signal="area_entered" from="BoneAttachment3D/Detection" to="BoneAttachment3D/Detection" method="_on_area_entered"]
 
 [editable path="snake_hefty_animated_4"]
 [editable path="BoneAttachment3D/tounge_1"]

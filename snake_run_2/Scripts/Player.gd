@@ -70,6 +70,9 @@ var timer_remake_connections :float = 2
 # audio bools 
 var play_walk_once :bool = true
 
+@onready var sound_shape :CollisionShape3D = get_node("Sound_area/CollisionShape3D")
+var box_shape :BoxShape3D
+
 
 func _ready():
 	camera = $rotation_helper/Camera3D
@@ -91,6 +94,12 @@ func _ready():
 	player_id = find_id()
 	print("the player identified is ", player_id)
 	
+	box_shape = sound_shape.shape
+	if box_shape is BoxShape3D:
+		box_shape.size = Vector3(5, 5, 5)  # Set to desired size
+		print("set")
+		
+
 
 
 
@@ -103,7 +112,12 @@ func _input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	
+	var dec_size = box_shape.size.x - 5 * delta
+	#print("size of box", dec_size)
+	if dec_size < 5:
+		pass
+	else:
+		box_shape.size = Vector3(dec_size,dec_size,dec_size)
 	
 	remake_connections_accuulator += delta
 	if remake_connections_accuulator > timer_remake_connections:
@@ -415,6 +429,8 @@ func handle_shoot(delta :float):
 		if $AnimatedSprite2D.frame == 19:
 			$empty_clip.play()
 		else:
+			# make it so its loud 
+			box_shape.size = Vector3(20,20,20)
 			spawn_bullet(delta)
 			$AudioStreamPlayer2.play()
 			animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)

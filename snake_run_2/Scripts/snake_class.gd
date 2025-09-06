@@ -159,7 +159,7 @@ func make_ensnarement_curve(ensnarement_data :PackedVector3Array, body_segment_p
 	# of no unique animation add points to regular ensarment
 	else:
 		for i in ensnarement_data.size():
-			var parent_thing :Node3D= get_node("..")
+
 			var magic_numver :Vector3 = target.global_position - position_global
 			curve.add_point((ensnarement_data[i]) + (magic_numver).rotated(Vector3(0,1,0),deg_to_rad(rotation_global_y * -1)) + Vector3(0,-.7,0)) 
 	ensarement_path.curve = curve
