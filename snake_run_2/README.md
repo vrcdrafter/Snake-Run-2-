@@ -1,18 +1,14 @@
-# Mirror3D
+To do list . 
 
-[![Godot Asset Library](https://img.shields.io/github/v/release/Joy-less/Mirror3D.svg?style=flat-square&label=Godot%20Asset%20Library&logo=godotengine)](https://godotengine.org/asset-library/asset/3983)
+Need to integrate a better algo for slither . 
 
-A customizable 3D mirror for Godot 4.
 
-The mirror uses a `SubViewport` and a moving `Camera3D` to create a realistic and easy-to-use mirror effect.
+Firste inegrate follower_2  to class . 
 
-<img src="https://raw.githubusercontent.com/Joy-less/Mirror3D/main/Images/Example1.png" width="800" />
+Then turn off the snake mesh and see what happens . 
 
-## Usage
+Try to align up so the points run just fine on its own curve  , apply transfomration . 
 
-Just drop the addon into your project and instantiate `Mirror3D.tscn`.
+, do this through point transforms at the head position . Remember your doing this all on your own curve that is just always there . it never goes away . behind the head . 
 
-## Credits
-
-Thanks to [Norodix/GodotMirror](https://github.com/Norodix/GodotMirror) for the original mirror system.
-Heavily modified by Joyless.
+The biggest problem we have is when we go from ensarement back to slither , that can be tricky . 

@@ -81,6 +81,16 @@ var nav_mesh_calc_time :float = .2
 var time_accumulator :float = 0 
 var next_path_position :Vector3
 
+# follower curve variables 
+var last_position: Vector3
+var distance_accumulator: float = 0.0
+var curve_length_accumulator: float = 0.0
+var drop_interval: float = 0.01  # meters
+var remove_interval: float = 8.0  # meters
+var path_slither :Path3D
+var slither_follow_array :Array[PathFollow3D]
+var slither_curve :Curve3D
+
 func _init() -> void:
 
 
@@ -640,3 +650,89 @@ func check_players():
 	var player_death_callable :Callable = Callable(self,"prey_dead")
 	for each in player_in_scene:
 		each.connect("dead",player_death_callable)
+		
+		
+func follower_curve(head :Node3D, snake_path :Path3D):
+	var current_position = head.global_position
+	var frame_distance = current_position.distance_to(last_position)
+	distance_accumulator += frame_distance
+	if distance_accumulator >= drop_interval:
+		
+		var local_position = snake_path.to_local(head.global_position)
+		snake_path.curve.add_point(local_position)
+		distance_accumulator = 0.0
+		curve_length_accumulator += drop_interval  # assume each drop adds ~drop_interval
+	if curve_length_accumulator >= remove_interval and snake_path.curve.get_point_count() > 0:
+		var first_point = snake_path.curve.get_point_position(0)
+		var second_point = snake_path.curve.get_point_position(1) if snake_path.curve.get_point_count() > 1 else first_point
+		var removed_distance = first_point.distance_to(second_point)
+		snake_path.curve.remove_point(0)
+		curve_length_accumulator -= removed_distance
+	last_position = current_position
+	
+func initialize_slither_path():
+	path_slither = Path3D.new()
+	path_slither.name = "slither_path"
+	slither_curve = Curve3D.new()
+	path_slither.curve = slither_curve
+	# you need to initliaze the curve whereverr the snake is 
+
+	
+	add_child(path_slither)
+	for each in snake_vertibrea.size():
+		# add a follow path 
+		var local_follow :PathFollow3D = PathFollow3D.new()
+		
+		path_slither.add_child(local_follow)
+		slither_follow_array.append(local_follow)
+		
+	remove_interval = bone_length * snake_vertibrea.size()
+	print("snake is this long", remove_interval)
+	
+func move_tris_to_slither(triangles :Array[MeshInstance3D]):
+	var count = triangles.size()
+	 # because we dont want to use the lead triangle as the follower
+	for each in slither_follow_array:
+		# skip the 0th triangle through 
+		if count == 1:
+			pass
+		else:
+			triangles[count-1].transform = Transform3D.IDENTITY
+			each.add_child(triangles[count-1])
+			
+			# need to modify the progress too 
+			var name_local = slither_follow_array[count -1 ].name
+			slither_follow_array[count-1].progress = count - 1 * bone_length
+			var lenght_local = path_slither.curve.get_baked_length()
+			print("progress set on ", name_local, " also its ", slither_follow_array[count-1].progress)
+			count -=1
+	print("done")
+		
+func inialize_slither_curve(slither_curve :Curve3D,snake_skeleton :Skeleton3D, slither_path :Path3D):
+	var bones_poses :Array[Vector3]
+	slither_curve.clear_points()
+	for i in snake_skeleton.get_bone_count():
+		var one_transform :Transform3D = self.transform * snake_skeleton.get_bone_global_pose(i)
+		var point :Vector3 = one_transform.origin
+		bones_poses.append(point)
+		var local_point = slither_path.to_local(point) 
+		slither_curve.add_point(local_point)
+	var cure_lenght_local = slither_curve.get_baked_length()
+	print("hi")
+	
+	
+func follower_curve_2(head :Node3D, snake_path :Path3D):
+	var current_position = head.global_position
+	var frame_distance = current_position.distance_to(last_position)
+	distance_accumulator += frame_distance
+	#print(distance_accumulator)
+	if distance_accumulator >= drop_interval:
+		var local_position = snake_path.to_local(head.global_position)
+		snake_path.curve.add_point(local_position)
+		
+		distance_accumulator = 0
+	last_position = current_position
+	
+	if snake_path.curve.get_baked_length() > spine_bones().size() * bone_length:
+		snake_path.curve.remove_point(0)
+	

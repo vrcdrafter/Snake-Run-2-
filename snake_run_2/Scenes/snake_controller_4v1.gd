@@ -67,6 +67,12 @@ func _ready() -> void:
 	
 	game_manager_connect_sripts()
 	
+	initialize_slither_path()
+	
+	inialize_slither_curve(slither_curve,skel,path_slither)
+	
+	move_tris_to_slither(tri_array)
+	print("thats done ")
 func _physics_process(delta: float) -> void:
 	
 
@@ -75,7 +81,7 @@ func _physics_process(delta: float) -> void:
 	snake_wave_pysics_process(delta) # initialize the snake wavyness
 	if health < 0:
 		snake_state = "null"
-
+	
 		#snake_state = "null"
 	# have snake start to chase target 
 	match snake_state:
@@ -91,8 +97,19 @@ func _physics_process(delta: float) -> void:
 			#find something to patrol to 
 			set_movement_target(snake_target.global_position) # assigns target
 			nav_startup_physics_process(delta,tri_array[0]) #starts up the navigation server 
-			#start tris following eachother
-			follower(delta,tri_array,bone_length)
+			
+			
+			var start_time = Time.get_ticks_usec()
+			#follower(delta,tri_array,bone_length)
+			follower_curve(sway_head,path_slither)
+			#follower_curve_2(sway_head,path_slither)
+			#move_tris_forward()
+			var end_time = Time.get_ticks_usec()
+			var elapsed_time_usec = end_time - start_time
+			print("Function took: ", elapsed_time_usec, " microseconds")
+			
+			
+			
 			# if condition if its just a relay point
 			if target_distance < 1 and not snake_target.is_in_group("A"): # meaning its just a way point 
 				# pick new object
@@ -100,7 +117,8 @@ func _physics_process(delta: float) -> void:
 			# if condition if its a animated object 
 			if target_distance < 1 and snake_target.is_in_group("A"):
 				# its a animated spot run an animated ensnar 
-				snake_state = "ensnare_anim"			
+				snake_state = "ensnare_anim"
+			
 		"ensnare_anim": # meaning animated ensnarement
 
 
@@ -234,7 +252,8 @@ func _physics_process(delta: float) -> void:
 				emit_signal("snake_removed")
 				self.queue_free()
 			
-				
+		"null2":
+			pass
 
 
 	if bone_overriding:

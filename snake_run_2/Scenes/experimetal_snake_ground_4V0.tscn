@@ -49,7 +49,7 @@ script = ExtResource("3_tylgm")
 
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_1_001"] instance=ExtResource("3_w2vjh")]
@@ -173,62 +173,62 @@ spot_range = 44.426
 spot_attenuation = 0.170755
 spot_angle = 42.2129
 
-[node name="green" type="MeshInstance3D" parent="Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+[node name="green" type="MeshInstance3D" parent="Node3D" groups=["patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.17805, 2.17535, -3.95116)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_ubood")
 
-[node name="yellpw" type="MeshInstance3D" parent="Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+[node name="yellpw" type="MeshInstance3D" parent="Node3D" groups=["patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.62858, 1.91779, 2.36374)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_2lqy7")
 
-[node name="green2" type="MeshInstance3D" parent="Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+[node name="green2" type="MeshInstance3D" parent="Node3D" groups=["patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1346, 2.17535, -3.95116)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_ubood")
 
-[node name="yellpw2" type="MeshInstance3D" parent="Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+[node name="yellpw2" type="MeshInstance3D" parent="Node3D" groups=["patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.684, 1.91779, 2.36374)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_2lqy7")
 
-[node name="green3" type="MeshInstance3D" parent="Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+[node name="green3" type="MeshInstance3D" parent="Node3D" groups=["patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.3478, 2.17535, -3.95116)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_ubood")
 
-[node name="yellpw3" type="MeshInstance3D" parent="Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+[node name="yellpw3" type="MeshInstance3D" parent="Node3D" groups=["patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.8973, 1.91779, 2.36374)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_2lqy7")
 
-[node name="green4" type="MeshInstance3D" parent="Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+[node name="green4" type="MeshInstance3D" parent="Node3D" groups=["patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.3478, 2.17535, -23.7648)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_ubood")
 
-[node name="yellpw4" type="MeshInstance3D" parent="Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+[node name="yellpw4" type="MeshInstance3D" parent="Node3D" groups=["patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.8973, 1.91779, -17.4499)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_2lqy7")
 
-[node name="green5" type="MeshInstance3D" parent="Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+[node name="green5" type="MeshInstance3D" parent="Node3D" groups=["patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.34782, 2.17535, -23.7648)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_ubood")
 
-[node name="yellpw5" type="MeshInstance3D" parent="Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+[node name="yellpw5" type="MeshInstance3D" parent="Node3D" groups=["patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.89729, 1.91779, -17.4499)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_2lqy7")
 
-[node name="green6" type="MeshInstance3D" parent="Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+[node name="green6" type="MeshInstance3D" parent="Node3D" groups=["patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6522, 2.17535, -23.7648)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_ubood")
 
-[node name="yellpw6" type="MeshInstance3D" parent="Node3D" groups=["A", "anim_ensnare_1_001", "patrol_object"]]
+[node name="yellpw6" type="MeshInstance3D" parent="Node3D" groups=["patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.1027, 1.91779, -17.4499)
 mesh = SubResource("PrismMesh_7nt77")
 surface_material_override/0 = SubResource("StandardMaterial3D_2lqy7")
@@ -280,9 +280,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.42216, 1.97527, -16.9004)
 mesh = SubResource("TorusMesh_ubood")
 surface_material_override/0 = SubResource("StandardMaterial3D_w2vjh")
 
-[node name="Snake" parent="Node3D" groups=["snake"] instance=ExtResource("3_2lqy7")]
+[node name="Snake" parent="Node3D" instance=ExtResource("3_2lqy7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.52916, 4.31555, 0)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Node3D/Snake/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -324,9 +323,8 @@ bones/36/rotation = Quaternion(-0.408406, -6.42449e-08, -0.21474, 0.887182)
 [node name="BoneAttachment3D" parent="Node3D/Snake" index="1"]
 transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -0.921621, 0.250082, 0.889713, -0.381933, 0.622143, 1.03106, -1.1397)
 
-[node name="Snake2" parent="Node3D" groups=["snake"] instance=ExtResource("3_2lqy7")]
+[node name="Snake2" parent="Node3D" instance=ExtResource("3_2lqy7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57079, 4.31555, 0)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Node3D/Snake2/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -368,9 +366,8 @@ bones/36/rotation = Quaternion(-0.408406, -6.42449e-08, -0.21474, 0.887182)
 [node name="BoneAttachment3D" parent="Node3D/Snake2" index="1"]
 transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -0.921621, 0.250082, 0.889713, -0.381933, 0.622143, 1.03106, -1.1397)
 
-[node name="Snake3" parent="Node3D" groups=["snake"] instance=ExtResource("3_2lqy7")]
+[node name="Snake3" parent="Node3D" instance=ExtResource("3_2lqy7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.8407, 4.31555, 0)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Node3D/Snake3/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -412,9 +409,8 @@ bones/36/rotation = Quaternion(-0.408406, -6.42449e-08, -0.21474, 0.887182)
 [node name="BoneAttachment3D" parent="Node3D/Snake3" index="1"]
 transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -0.921621, 0.250082, 0.889713, -0.381933, 0.622143, 1.03106, -1.1397)
 
-[node name="Snake4" parent="Node3D" groups=["snake"] instance=ExtResource("3_2lqy7")]
+[node name="Snake4" parent="Node3D" instance=ExtResource("3_2lqy7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.7395, 4.31555, -10.8712)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Node3D/Snake4/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -456,9 +452,8 @@ bones/36/rotation = Quaternion(-0.408406, -6.42449e-08, -0.21474, 0.887182)
 [node name="BoneAttachment3D" parent="Node3D/Snake4" index="1"]
 transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -0.921621, 0.250082, 0.889713, -0.381933, 0.622143, 1.03106, -1.1397)
 
-[node name="Snake5" parent="Node3D" groups=["snake"] instance=ExtResource("3_2lqy7")]
+[node name="Snake5" parent="Node3D" instance=ExtResource("3_2lqy7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.739464, 4.31555, -10.8712)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Node3D/Snake5/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
@@ -500,9 +495,8 @@ bones/36/rotation = Quaternion(-0.408406, -6.42449e-08, -0.21474, 0.887182)
 [node name="BoneAttachment3D" parent="Node3D/Snake5" index="1"]
 transform = Transform3D(0.967723, -0.242387, 0.0690043, -0.0311813, -0.386858, -0.921621, 0.250082, 0.889713, -0.381933, 0.622143, 1.03106, -1.1397)
 
-[node name="Snake6" parent="Node3D" groups=["snake"] instance=ExtResource("3_2lqy7")]
+[node name="Snake6" parent="Node3D" instance=ExtResource("3_2lqy7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.739464, 4.31555, -26.5753)
-hide_triangles = true
 
 [node name="Skeleton3D" parent="Node3D/Snake6/snake_hefty_animated_4/snake_export" index="0"]
 bones/0/position = Vector3(0.505546, 0.903884, -0.704373)
