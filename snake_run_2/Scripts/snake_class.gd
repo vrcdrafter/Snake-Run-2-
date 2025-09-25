@@ -85,7 +85,7 @@ var next_path_position :Vector3
 var last_position: Vector3
 var distance_accumulator: float = 0.0
 var curve_length_accumulator: float = 0.0
-var drop_interval: float = 0.01  # meters
+var drop_interval: float = 2 # meters
 var remove_interval: float = 8.0  # meters
 var path_slither :Path3D
 var slither_follow_array :Array[PathFollow3D]
@@ -188,9 +188,11 @@ func move_segments_to_path(offset_head):
 		
 	# move each segment into array 
 	for i in snake_vertibrea.size(): #EXCLUDE THE TWO EYES AND JAW
-
-		remove_child(tri_array[i])
-		follow_path_array[i].add_child(tri_array[i])
+		var tri_parrent_name = tri_array[i].get_parent().name
+		var tri_path = tri_array[i].get_path()
+		tri_array[i].reparent(follow_path_array[i],false)
+		
+		
 		tri_array[i].transform.origin = Vector3(0,0,0)
 		tri_array[i].rotation_degrees = Vector3(0,0,0)
 		
@@ -343,9 +345,11 @@ func velocity_computed(safe_velocity: Vector3) -> void:
 
 
 	var distance = tri_array[0].get_child(0).global_position.distance_to(snake_target.global_position)
-
+	print(wave_strength_narrow)
 	if distance < 3: # start clamping
-		wave_strength_narrow = clamp(wave_thing,distance * -1 ,distance)
+		
+		wave_strength_narrow = clamp(wave_thing,0,distance)
+		print("narrowing ",wave_strength_narrow)
 	else: 
 		wave_strength_narrow = 1
 
@@ -691,6 +695,7 @@ func initialize_slither_path():
 	
 func move_tris_to_slither(triangles :Array[MeshInstance3D]):
 	var count = triangles.size()
+	
 	 # because we dont want to use the lead triangle as the follower
 	for each in slither_follow_array:
 		# skip the 0th triangle through 
@@ -706,11 +711,13 @@ func move_tris_to_slither(triangles :Array[MeshInstance3D]):
 			var lenght_local = path_slither.curve.get_baked_length()
 			print("progress set on ", name_local, " also its ", slither_follow_array[count-1].progress)
 			count -=1
+			
 	print("done")
 		
 func inialize_slither_curve(slither_curve :Curve3D,snake_skeleton :Skeleton3D, slither_path :Path3D):
 	var bones_poses :Array[Vector3]
 	slither_curve.clear_points()
+	slither_curve.up_vector_enabled = false
 	for i in snake_skeleton.get_bone_count():
 		var one_transform :Transform3D = self.transform * snake_skeleton.get_bone_global_pose(i)
 		var point :Vector3 = one_transform.origin
@@ -720,6 +727,20 @@ func inialize_slither_curve(slither_curve :Curve3D,snake_skeleton :Skeleton3D, s
 	var cure_lenght_local = slither_curve.get_baked_length()
 	print("hi")
 	
+	
+func inialize_slither_curve2(slither_curve :Curve3D,snake_skeleton :Skeleton3D, slither_path :Path3D):
+	var bones_poses :Array[Vector3]
+	slither_curve.clear_points()
+	slither_curve.up_vector_enabled = false
+	for i in snake_skeleton.get_bone_count():
+		var one_transform :Transform3D = snake_target.transform * snake_skeleton.get_bone_global_pose(i)
+		var target_pos_l = snake_target.global_position
+		var point :Vector3 = one_transform.origin
+		bones_poses.append(point)
+		var local_point = slither_path.to_local(point) 
+		slither_curve.add_point(local_point)
+	var cure_lenght_local = slither_curve.get_baked_length()
+	print("hi")
 	
 func follower_curve_2(head :Node3D, snake_path :Path3D):
 	var current_position = head.global_position
@@ -735,4 +756,61 @@ func follower_curve_2(head :Node3D, snake_path :Path3D):
 	
 	if snake_path.curve.get_baked_length() > spine_bones().size() * bone_length:
 		snake_path.curve.remove_point(0)
-	
+		
+		
+func move_tris_to_slither2(triangles: Array[MeshInstance3D]):
+	var count = triangles.size()
+	var whole_snake_lenght = count * bone_length
+	if count <= 1:
+		return # Nothing to do if there's only one triangle
+	for i in range(count - 1, 0, -1): # Skip the lead triangle at index 0
+		var triangle = triangles[i]
+		triangle.transform = Transform3D.IDENTITY
+		var follower = slither_follow_array[i]
+		follower.add_child(triangle)
+		# Set progress based on bone length
+		var count_up = abs(i - count) +1
+		var progress = (float(count_up * bone_length) / whole_snake_lenght)
+		follower.progress_ratio = progress
+
+		print("progress set on ", follower.name, " also its ", follower.progress)
+		print("done")
+		
+		
+
+func force_tris_catch_up(triangles: Array[MeshInstance3D]):
+	var count = triangles.size()
+	var whole_snake_lenght = count * bone_length
+	if count <= 1:
+		return # Nothing to do if there's only one triangle
+	for i in range(count - 1, 0, -1): # Skip the lead triangle at index 0
+		var triangle = triangles[i]
+		triangle.transform = Transform3D.IDENTITY
+		var follower = slither_follow_array[i]
+		# Set progress based on bone length
+		var count_up = abs(i - count) +1
+		var progress = (float(count_up * bone_length) / whole_snake_lenght)
+		follower.progress_ratio = progress
+
+func sum(accum, number):
+	return accum + number
+
+
+func move_tris_to_slither_process(triangles: Array[MeshInstance3D],reverse :bool = false):
+	var count = triangles.size()
+	var whole_snake_lenght = count * bone_length
+	if count <= 1:
+		return # Nothing to do if there's only one triangle
+	for i in range(count - 1, 0, -1): # Skip the lead triangle at index 0
+
+		triangles[i].transform = Transform3D.IDENTITY
+		
+		tri_array[i].reparent(slither_follow_array[i],false)
+		var count_up :int
+		# Set progress based on bone length
+		if reverse:
+			count_up = i + 1
+		else:
+			count_up = abs(i - count) +1
+		var progress = (float(count_up * bone_length) / whole_snake_lenght)
+		slither_follow_array[i].progress_ratio = progress

@@ -33,6 +33,14 @@ var death_timer :float = 3
 
 signal snake_removed
 
+# timing stuff just for benchmark , you can delete these 
+# Put these at the top of your script
+var time_sum_usec: int = 0
+var time_count: int = 0
+var recent_times :Array =  []
+var max_samples := 60
+
+
 func _ready() -> void:
 
 	#initialize spine 
@@ -71,11 +79,19 @@ func _ready() -> void:
 	
 	inialize_slither_curve(slither_curve,skel,path_slither)
 	
-	move_tris_to_slither(tri_array)
+	move_tris_to_slither2(tri_array)
 	print("thats done ")
 func _physics_process(delta: float) -> void:
 	
-
+	if Input.is_action_just_pressed("slither_inc_fine"):
+		drop_interval = .1
+		force_tris_catch_up(tri_array)
+	if Input.is_action_just_pressed("slither_increment_medium"):
+		drop_interval = .5
+		force_tris_catch_up(tri_array)
+	if Input.is_action_just_pressed("slither_increment_course"):
+		drop_interval = 1
+		force_tris_catch_up(tri_array)
 	
 	
 	snake_wave_pysics_process(delta) # initialize the snake wavyness
@@ -83,6 +99,9 @@ func _physics_process(delta: float) -> void:
 		snake_state = "null"
 	
 		#snake_state = "null"
+	if Input.is_action_just_pressed("ui_accept"):
+		pass
+		#snake_state = "null2"
 	# have snake start to chase target 
 	match snake_state:
 		"patrol":
@@ -101,12 +120,18 @@ func _physics_process(delta: float) -> void:
 			
 			var start_time = Time.get_ticks_usec()
 			#follower(delta,tri_array,bone_length)
-			follower_curve(sway_head,path_slither)
-			#follower_curve_2(sway_head,path_slither)
+			#follower_curve(sway_head,path_slither)
+			follower_curve_2(sway_head,path_slither)
 			#move_tris_forward()
-			var end_time = Time.get_ticks_usec()
-			var elapsed_time_usec = end_time - start_time
-			print("Function took: ", elapsed_time_usec, " microseconds")
+			var elapsed :float = Time.get_ticks_usec() - start_time
+			# Maintain a rolling list of the last 60 samples
+			recent_times.append(elapsed)
+			if recent_times.size() > max_samples:
+				recent_times.remove_at(0)
+			# Print every 60 frames
+			if (Engine.get_process_frames() % 60) == 0 and recent_times.size() > 0:
+				var avg_recent = recent_times.reduce(sum,0) / recent_times.size()
+				print("Avg (last %d samples): %.1f μs" % [recent_times.size(), avg_recent])
 			
 			
 			
@@ -137,7 +162,7 @@ func _physics_process(delta: float) -> void:
 				"path":
 					bone_simulation_phys.active = false
 					make_ensnarement_curve(ensnarement_points,tri_array,snake_target,animation_curve)
-
+					
 					var total_curve_length = curve.get_baked_length()
 					move_segments_to_path(total_curve_length - animation_curve.get_baked_length()) # so this 14.6 is the added curve length 
 				
@@ -152,7 +177,10 @@ func _physics_process(delta: float) -> void:
 						ennarement_done = move_segments_along_path(delta,3)
 						
 						if ennarement_done:
-							move_segments_back_normal()
+							#inialize_slither_curve(slither_curve,skel,path_slither)
+							inialize_slither_curve2(slither_curve,skel,path_slither)
+							move_tris_to_slither_process(tri_array)
+							#move_segments_back_normal()
 							ensnare_state = "run_animation"
 					else:
 						# means the prey esaped 
@@ -192,8 +220,9 @@ func _physics_process(delta: float) -> void:
 						ensnare_state = "abort_static"
 						
 				"abort_static":
-					abort_universal_reset()
-					self.global_transform = transform_save# # this is a PROBLEM PROBLEM , be careful where abort comes form 
+					self.global_transform = transform_save
+					abort_universal_reset() # may need to switch this with line below
+					# # this is a PROBLEM PROBLEM , be careful where abort comes form 
 					if snake_target.name.contains("Player"):
 						pass # make this so theres a otpion to target the player!!!!!!!!!!!!!!!
 					else:
@@ -212,8 +241,8 @@ func _physics_process(delta: float) -> void:
 			set_movement_target(snake_target.global_position) # assigns target
 			nav_startup_physics_process(delta,tri_array[0]) #starts up the navigation server 
 			#start tris following eachother
-			follower(delta,tri_array,bone_length)
-			
+			#follower(delta,tri_array,bone_length)
+			follower_curve_2(sway_head,path_slither)
 			# chase is intereting because it stays here unless the target is far away , 
 			if target_distance > 8:
 				snake_state = "patrol"
@@ -261,8 +290,13 @@ func _physics_process(delta: float) -> void:
 		
 		
 func abort_universal_reset():
+	curve.clear_points()
+	#slither_curve_process(tri_array,slither_curve,path_slither)
+	inialize_slither_curve2(slither_curve,skel,path_slither)
+	move_tris_to_slither_process(tri_array,true)
 	
 	transform_onestart = true # reset this so it can grab the next transform when the time comes . 
+	
 	onestart = true
 	bone_overriding = true
 	timer_up = false
@@ -271,8 +305,10 @@ func abort_universal_reset():
 	
 	if snake_target == target_player:
 		snake_state = "chase"
+		
 	else :
 		snake_state = "patrol"
+		
 	ensnare_state = "path"
 	
 	

@@ -49,7 +49,7 @@ script = ExtResource("3_tylgm")
 
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 handle_input_locally = false
-size = Vector2i(1152, 648)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_1_001"] instance=ExtResource("3_w2vjh")]
