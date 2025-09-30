@@ -17,7 +17,7 @@ var transform_save :Transform3D
 
 # list of oneshots 
 var snake_ensnare_oneshot :bool = true
-
+var rough_start_oneshot :bool = true
 
 
 # RENDERING INCREMENTER , OK THIS IS A WIERD ONE , 
@@ -49,7 +49,7 @@ func _ready() -> void:
 	#make_tris() ( head tris is green ) 
 	make_tris()
 	# initialize the ensnarment points , basically the points where the snake wraps around . 
-	initialize_ensnarment_curve()
+
 	
 	initialize_timing_sway() # initializes the snakes wavyness with time 
 	
@@ -80,6 +80,8 @@ func _ready() -> void:
 	inialize_slither_curve(slither_curve,skel,path_slither)
 	
 	move_tris_to_slither2(tri_array)
+	
+	
 	print("thats done ")
 func _physics_process(delta: float) -> void:
 	
@@ -97,6 +99,7 @@ func _physics_process(delta: float) -> void:
 	snake_wave_pysics_process(delta) # initialize the snake wavyness
 	if health < 0:
 		snake_state = "null"
+	
 	
 		#snake_state = "null"
 	if Input.is_action_just_pressed("ui_accept"):
@@ -154,6 +157,8 @@ func _physics_process(delta: float) -> void:
 			for i in all_animation_curves.size():
 				if all_animation_curves[i].resource_name == target_animation:
 					animation_curve = all_animation_curves[i]
+			# extract all thos points from that found curve 
+			var animation_points = animation_curve.get_baked_points()
 			# if at some point the player gets too close resume chase 
 			var ennarement_done :bool = false
 			
@@ -161,26 +166,30 @@ func _physics_process(delta: float) -> void:
 			
 				"path":
 					bone_simulation_phys.active = false
-					make_ensnarement_curve(ensnarement_points,tri_array,snake_target,animation_curve)
-					
-					var total_curve_length = curve.get_baked_length()
-					move_segments_to_path(total_curve_length - animation_curve.get_baked_length()) # so this 14.6 is the added curve length 
-				
+					make_ensnarement_curve(animation_points,path_slither,snake_target,slither_curve)
+
+
 					if snake_target.name.contains("Player"):
 						ensnared.emit(snake_target)
+					# set up the triangles too along the path 
+					tri_array[0].reparent(slither_follow_array[0],true)
+					tri_array[0].transform = Transform3D.IDENTITY
+					slither_follow_array[0].progress = slither_follow_array[1].progress + bone_length
 					ensnare_state = "run"
+					
 				"run":
 					
 					var local_target_distance :float = (snake_target.global_position - tri_array[0].global_position).length()
 					twist_triangles(0)
-					if local_target_distance < 4: # keep trying to ensnare 
-						ennarement_done = move_segments_along_path(delta,3)
+					if local_target_distance < 100: # keep trying to ensnare 
+						# move tri array 0 so it moves too 
+						
+						ennarement_done = move_segments_along_path(delta,3,slither_follow_array)
 						
 						if ennarement_done:
 							#inialize_slither_curve(slither_curve,skel,path_slither)
-							inialize_slither_curve2(slither_curve,skel,path_slither)
-							move_tris_to_slither_process(tri_array)
-							#move_segments_back_normal()
+							
+							
 							ensnare_state = "run_animation"
 					else:
 						# means the prey esaped 
@@ -229,6 +238,9 @@ func _physics_process(delta: float) -> void:
 						snake_target = pick_new_target(snake_target)
 				"abort_dynamic":
 					abort_universal_reset()
+					
+				"null2":
+					pass
 		"chase":
 			found_player = false
 			# make it so the target is the player 			snake_target = target_player
@@ -290,10 +302,20 @@ func _physics_process(delta: float) -> void:
 		
 		
 func abort_universal_reset():
-	curve.clear_points()
+	slither_curve.clear_points()
 	#slither_curve_process(tri_array,slither_curve,path_slither)
-	inialize_slither_curve2(slither_curve,skel,path_slither)
-	move_tris_to_slither_process(tri_array,true)
+	# so the curve is gone , now you need to repopulat them 
+	# furst unparent the head so it doenst go crazy 
+	tri_array[0].reparent(tri_array[0].get_parent().get_parent().get_parent(),true)
+	#before you initialize the curve 
+	#move triangles to skeleton 
+	var pos1 = tri_array[0].global_position
+	
+	
+	#move_tris_back_to_snake(tri_array) # does not work right here at this function 
+	var pos2 = tri_array[0].global_position
+	#inialize_slither_curve2(slither_curve,skel,path_slither)
+	#move_tris_to_slither_process(tri_array,true)
 	
 	transform_onestart = true # reset this so it can grab the next transform when the time comes . 
 	
@@ -304,12 +326,15 @@ func abort_universal_reset():
 	var name_loca = snake_target.name
 	
 	if snake_target == target_player:
-		snake_state = "chase"
+		#snake_state = "chase"
+		snake_state = "null2"
 		
 	else :
-		snake_state = "patrol"
+		#snake_state = "patrol"
+		snake_state = "null2"
 		
-	ensnare_state = "path"
+	#ensnare_state = "path"
+	ensnare_state = "null2"
 	
 	
 	

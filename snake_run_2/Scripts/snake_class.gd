@@ -133,46 +133,15 @@ func calc_length(skeleton :Skeleton3D):
 	bone_length = (skeleton.get_bone_global_rest(0).origin - skeleton.get_bone_global_rest(1).origin).length()
 	return bone_length
 	
-func make_ensnarement_curve(ensnarement_data :PackedVector3Array, body_segment_pimitived :Array[MeshInstance3D],target :Node3D ,anim_curve :Curve3D = null):
-	# first check if the last argument is empty 
+func make_ensnarement_curve(ensnarement_data :PackedVector3Array, slither_path_node :Path3D,target :Node3D ,anim_curve :Curve3D = null):
+	# get points so there local 
 
 	# first make curve for all points where snake is at that moment 
+	for each in ensnarement_data:
+		var world_position = target.global_transform * each
+		var local_position = slither_path_node.to_local(world_position)
+		anim_curve.add_point(local_position)
 	
-	var node :Node3D = self
-	var transform_global :Transform3D = self.global_transform
-	var rotation_global_y :float = self.rotation_degrees.y
-	var position_global :Vector3 = self.global_position
-	var rotation_global :Vector3 = self.rotation
-	var points :Array[Vector3] 
-	# fetches the triangle positions of wherever the snake is at the time 
-	for i in range(body_segment_pimitived.size()):
-		points.append((body_segment_pimitived[i].global_position - position_global).rotated(Vector3(0,1,0),deg_to_rad(rotation_global_y * -1)))
-	curve.clear_points()
-	points.pop_front() # have no idea why I have to do this 
-	# 
-
-	for i in points.size():
-		curve.add_point(points[(points.size()-1)-i]) # add the points in revers
-	# add points to current curve , no rotation yet
-	# check if there is unique animation argument added , if so add those points to the curve 
-	if not anim_curve == null:
-		
-		# clear curve as is
-		
-		var points_anim :PackedVector3Array  = anim_curve.get_baked_points()
-		for i in points_anim.size():
-			# really wierd transform order ., I have no idea why 
-			curve.add_point(target.global_transform * points_anim[i] * self.global_transform) 
-			curve.set_point_tilt(i,deg_to_rad(45)) # why am I setting this manually 
-		# need to keep working here . 
-		
-	# of no unique animation add points to regular ensarment
-	else:
-		for i in ensnarement_data.size():
-
-			var magic_numver :Vector3 = target.global_position - position_global
-			curve.add_point((ensnarement_data[i]) + (magic_numver).rotated(Vector3(0,1,0),deg_to_rad(rotation_global_y * -1)) + Vector3(0,-.7,0)) 
-	ensarement_path.curve = curve
 
 func move_segments_to_path(offset_head):
 	# measure head and how far up it is on the path 
@@ -222,11 +191,11 @@ func override_skeleton(skeleton_L :Skeleton3D): # need to changet this for two c
 		#so the self.transform.inverse()  is what makes the snake note mobile and cane be moved anywhere around the scene 
 
 	
-func move_triangles_to_bones(tris :Array[Node3D]):
+func move_triangles_to_bones(tris :Array[MeshInstance3D]):
 	for i in snake_vertibrea.size(): #EXCLUDE THE TWO EYES AND JAW
 		
-		tris[i].global_transform = skeleton.get_bone_global_pose((snake_vertibrea.size()-1)-i) # go reverse
-		tris[i].global_position = tris[i].global_position  # may need to comment this out 
+		tris[i].global_transform = skeleton.global_transform * skeleton.get_bone_global_pose(i)
+		
 	
 func shift_rotate_points(points :PackedVector3Array, angle_deg :float, offset :Vector3):
 	var new_points :PackedVector3Array
@@ -405,17 +374,11 @@ func initialize_ensnarment_curve():
 	
 	add_child(ensarement_path)
 	
-func move_segments_along_path(delta,speed_new :float) -> bool:
-	
-	
-	
+func move_segments_along_path(delta,speed_new :float, path_rail_set :Array[PathFollow3D]) -> bool:
 	for i in snake_vertibrea.size():
-		follow_path_array[i].progress += speed_new *delta
-
-	if follow_path_array[0].progress_ratio > .99:
-		
+		path_rail_set[i].progress += speed_new *delta
+	if path_rail_set[0].progress_ratio > .99:		
 		return true
-		
 	else:
 		return false
 
@@ -803,14 +766,12 @@ func move_tris_to_slither_process(triangles: Array[MeshInstance3D],reverse :bool
 		return # Nothing to do if there's only one triangle
 	for i in range(count - 1, 0, -1): # Skip the lead triangle at index 0
 
-		triangles[i].transform = Transform3D.IDENTITY
-		
-		tri_array[i].reparent(slither_follow_array[i],false)
+		#triangles[i].transform = Transform3D.IDENTITY
 		var count_up :int
-		# Set progress based on bone length
-		if reverse:
-			count_up = i + 1
-		else:
-			count_up = abs(i - count) +1
+		count_up = abs(i - count) +1
 		var progress = (float(count_up * bone_length) / whole_snake_lenght)
 		slither_follow_array[i].progress_ratio = progress
+
+func move_tris_back_to_snake(tris :Array[MeshInstance3D]):
+	for i in tris.size():
+		tris[i].global_transform =  snake_target.global_transform * tris[i].global_transform
