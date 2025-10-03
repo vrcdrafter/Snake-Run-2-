@@ -77,7 +77,7 @@ var health :int = 2
 
 var physical_bone_ref :Array[PhysicalBone3D] 
 
-var nav_mesh_calc_time :float = .2
+var nav_mesh_calc_time :float = .1 #so this can get set high when the snakes are far away too  .
 var time_accumulator :float = 0 
 var next_path_position :Vector3
 
@@ -314,11 +314,12 @@ func velocity_computed(safe_velocity: Vector3) -> void:
 
 
 	var distance = tri_array[0].get_child(0).global_position.distance_to(snake_target.global_position)
-	print(wave_strength_narrow)
+	
 	if distance < 3: # start clamping
 		
 		wave_strength_narrow = clamp(wave_thing,0,distance)
-		print("narrowing ",wave_strength_narrow)
+		#print("narrowing ",wave_strength_narrow)
+		
 	else: 
 		wave_strength_narrow = 1
 
@@ -675,7 +676,7 @@ func move_tris_to_slither(triangles :Array[MeshInstance3D]):
 			print("progress set on ", name_local, " also its ", slither_follow_array[count-1].progress)
 			count -=1
 			
-	print("done")
+
 		
 func inialize_slither_curve(slither_curve :Curve3D,snake_skeleton :Skeleton3D, slither_path :Path3D):
 	var bones_poses :Array[Vector3]
@@ -703,7 +704,7 @@ func inialize_slither_curve2(slither_curve :Curve3D,snake_skeleton :Skeleton3D, 
 		var local_point = slither_path.to_local(point) 
 		slither_curve.add_point(local_point)
 	var cure_lenght_local = slither_curve.get_baked_length()
-	print("hi")
+
 	
 func follower_curve_2(head :Node3D, snake_path :Path3D):
 	var current_position = head.global_position
@@ -736,8 +737,7 @@ func move_tris_to_slither2(triangles: Array[MeshInstance3D]):
 		var progress = (float(count_up * bone_length) / whole_snake_lenght)
 		follower.progress_ratio = progress
 
-		print("progress set on ", follower.name, " also its ", follower.progress)
-		print("done")
+
 		
 		
 
@@ -775,3 +775,63 @@ func move_tris_to_slither_process(triangles: Array[MeshInstance3D],reverse :bool
 func move_tris_back_to_snake(tris :Array[MeshInstance3D]):
 	for i in tris.size():
 		tris[i].global_transform =  snake_target.global_transform * tris[i].global_transform
+		
+		
+func spread_tirangles_out(triangles: Array[MeshInstance3D]):
+	var count = triangles.size()
+	var whole_snake_lenght = count * bone_length
+	if count <= 1:
+		return # Nothing to do if there's only one triangle
+	for i in range(count - 1, 0, -1): # Skip the lead triangle at index 0
+		# Set progress based on bone length
+		var count_up = abs(i - count) +1
+		var count_down = i
+		var progress = (float(count_up * bone_length) / whole_snake_lenght)
+		slither_follow_array[i].progress_ratio = progress
+		
+func initialize_slither_curve_3(tris :Array[MeshInstance3D]):
+	for i in tris.size():
+		var point :Vector3 = tris[tris.size() - 1 -i].global_position
+		var local_point = path_slither.to_local(point) 
+		slither_curve.add_point(local_point)
+		
+func capture_triangle_transforms(tris: Array[MeshInstance3D]) -> Array[Transform3D]:
+	var transforms: Array[Transform3D] = []
+	for tri in tris:
+		transforms.append(tri.global_transform)
+	return transforms
+	
+func apply_triangle_transforms(tris: Array[MeshInstance3D],offset_transform: Transform3D = Transform3D.IDENTITY):
+	for each in tris:
+		var current_position = self.global_transform
+		var offset_inv = offset_transform.affine_inverse()
+		each.global_transform = offset_inv * current_position * each.transform
+		
+func move_triangles_out_of_path(tris :Array[MeshInstance3D]):
+	for each in tris:
+		each.reparent(each.get_parent().get_parent().get_parent(),true)
+		
+func move_triangles_in_path(tris :Array[MeshInstance3D]):
+	for i in tris.size():
+		if i == 0:
+			pass # skip the head 
+		else:
+			tris[i].transform = Transform3D.IDENTITY
+			tris[i].reparent(slither_follow_array[i],false)
+			
+func remake_curve_density(interval :float):
+	# the interval is the distance between points that we want . 
+	
+	var curve_length :float = slither_curve.get_baked_length()
+	var num_of_points_desired :int = int(curve_length / interval)
+	var dist_between_current_points :float = curve_length / slither_curve.point_count
+	var num_of_points_desired_between_segments = int(dist_between_current_points / interval)
+	var dense_points :PackedVector3Array = slither_curve.tessellate_even_length(num_of_points_desired_between_segments/2,.05)
+	
+	print(" i tessalated", dense_points.size())
+	
+	slither_curve.clear_points()
+	for each in dense_points:
+		slither_curve.add_point(each)
+
+	

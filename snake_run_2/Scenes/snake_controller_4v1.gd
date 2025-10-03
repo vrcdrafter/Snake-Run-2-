@@ -14,6 +14,7 @@ var bone_overriding :bool = true
 var onestart :bool = true
 var transform_onestart :bool = true
 var transform_save :Transform3D 
+var transform_save_target :Transform3D
 
 # list of oneshots 
 var snake_ensnare_oneshot :bool = true
@@ -82,12 +83,14 @@ func _ready() -> void:
 	move_tris_to_slither2(tri_array)
 	
 	
-	print("thats done ")
+	
 func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("slither_inc_fine"):
-		drop_interval = .1
+		
+		drop_interval = .05
 		force_tris_catch_up(tri_array)
+		
 	if Input.is_action_just_pressed("slither_increment_medium"):
 		drop_interval = .5
 		force_tris_catch_up(tri_array)
@@ -125,6 +128,7 @@ func _physics_process(delta: float) -> void:
 			#follower(delta,tri_array,bone_length)
 			#follower_curve(sway_head,path_slither)
 			follower_curve_2(sway_head,path_slither)
+			#print("the state is ",tri_array[1].get_parent().progress_ratio)
 			#move_tris_forward()
 			var elapsed :float = Time.get_ticks_usec() - start_time
 			# Maintain a rolling list of the last 60 samples
@@ -167,8 +171,10 @@ func _physics_process(delta: float) -> void:
 				"path":
 					bone_simulation_phys.active = false
 					make_ensnarement_curve(animation_points,path_slither,snake_target,slither_curve)
-
-
+					
+					# so the moment you make that cuve save that target transform 
+					transform_save_target = snake_target.global_transform
+					
 					if snake_target.name.contains("Player"):
 						ensnared.emit(snake_target)
 					# set up the triangles too along the path 
@@ -216,7 +222,9 @@ func _physics_process(delta: float) -> void:
 					if transform_onestart:
 						transform_save = self.global_transform # note this line needs to run once too 
 						snake_animations.play(target_animation)
-						self.global_transform = snake_target.global_transform
+						self.global_transform = transform_save_target # if this isnt handled properly , the snake launches the player !
+						var target_name_local = snake_target.name
+						
 						transform_onestart = false
 					# check to see if player gets close 
 
@@ -229,7 +237,7 @@ func _physics_process(delta: float) -> void:
 						ensnare_state = "abort_static"
 						
 				"abort_static":
-					self.global_transform = transform_save
+					
 					abort_universal_reset() # may need to switch this with line below
 					# # this is a PROBLEM PROBLEM , be careful where abort comes form 
 					if snake_target.name.contains("Player"):
@@ -301,20 +309,30 @@ func _physics_process(delta: float) -> void:
 		override_skeleton(skel)
 		
 		
+		
 func abort_universal_reset():
-	slither_curve.clear_points()
-	#slither_curve_process(tri_array,slither_curve,path_slither)
-	# so the curve is gone , now you need to repopulat them 
+	
 	# furst unparent the head so it doenst go crazy 
-	tri_array[0].reparent(tri_array[0].get_parent().get_parent().get_parent(),true)
+	#tri_array[0].reparent(tri_array[0].get_parent().get_parent().get_parent(),true)
 	#before you initialize the curve 
 	#move triangles to skeleton 
-	var pos1 = tri_array[0].global_position
 	
+	var triangle_orientation :Array[Transform3D] = capture_triangle_transforms(tri_array)
 	
-	#move_tris_back_to_snake(tri_array) # does not work right here at this function 
-	var pos2 = tri_array[0].global_position
-	#inialize_slither_curve2(slither_curve,skel,path_slither)
+	slither_curve.clear_points()
+	# move triangles out of paths 
+	move_triangles_out_of_path(tri_array)
+	#apply_triangle_transforms(tri_array,transform_save_target)
+	# move whole snake 
+	self.global_transform = transform_save
+	initialize_slither_curve_3(tri_array)
+	# make is dense 
+	#remake_curve_density(drop_interval)
+	
+	# so t1his curve has low density , make the density according to the travel setting 
+	move_triangles_in_path(tri_array)
+	
+	spread_tirangles_out(tri_array)
 	#move_tris_to_slither_process(tri_array,true)
 	
 	transform_onestart = true # reset this so it can grab the next transform when the time comes . 
@@ -324,17 +342,22 @@ func abort_universal_reset():
 	timer_up = false
 	snake_animations.stop() 
 	var name_loca = snake_target.name
-	
+	#spread_tirangles_out(tri_array)
 	if snake_target == target_player:
-		#snake_state = "chase"
-		snake_state = "null2"
-		
+		snake_state = "chase"
+		#snake_state = "null2"
+		force_tris_catch_up(tri_array)
+		print("should be caught up ")
 	else :
-		#snake_state = "patrol"
-		snake_state = "null2"
+		snake_state = "patrol"
+		#snake_state = "null2"
+		force_tris_catch_up(tri_array)
+		print("should be caught up ")
 		
-	#ensnare_state = "path"
-	ensnare_state = "null2"
+		
+	ensnare_state = "path"
+	#ensnare_state = "null2"
+	
 	
 	
 	
