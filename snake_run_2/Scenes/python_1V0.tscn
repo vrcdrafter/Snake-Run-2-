@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://b324c7udfages"]
+
+[ext_resource type="Script" path="res://Scenes/snake_controller_4v1.gd" id="1_147mu"]
+[ext_resource type="PackedScene" uid="uid://dy5cdwookevrn" path="res://level_data/python_v1_.glb" id="2_147mu"]
+[ext_resource type="PackedScene" uid="uid://bpclxwra286ec" path="res://level_data/tounge_1.glb" id="3_hy33a"]
+[ext_resource type="Script" path="res://Scripts/tounge.gd" id="4_djsy8"]
+[ext_resource type="Script" path="res://Scripts/snake_sight.gd" id="5_v6quk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ajh1n"]
+size = Vector3(6, 1, 19)
+
+[node name="Snake" type="Node3D" groups=["snake"]]
+script = ExtResource("1_147mu")
+hide_triangles = true
+
+[node name="snake_python" parent="." instance=ExtResource("2_147mu")]
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="."]
+transform = Transform3D(-1, 6.21725e-15, 6.27833e-07, 6.27516e-07, 0.0317962, 0.999495, -1.99627e-08, 0.999494, -0.0317962, 0, -0.0816841, -0.55639)
+bone_name = "jaw"
+bone_idx = 33
+use_external_skeleton = true
+external_skeleton = NodePath("../snake_python/snake_export/Skeleton3D")
+
+[node name="tounge_1" parent="BoneAttachment3D" instance=ExtResource("3_hy33a")]
+transform = Transform3D(1, 2.07467e-06, 2.108e-06, -2.20139e-06, 0.0460952, 0.998937, 1.9753e-06, -0.998937, 0.0460953, -2.37555e-08, 0.245639, 0.0187225)
+
+[node name="AnimationPlayer" parent="BoneAttachment3D/tounge_1" index="1"]
+script = ExtResource("4_djsy8")
+
+[node name="Detection" type="Area3D" parent="BoneAttachment3D"]
+transform = Transform3D(1, 2.12876e-06, 3.06718e-07, -6.94289e-08, -0.110585, 0.993867, 2.14962e-06, -0.993867, -0.110585, 2.07254e-07, 0.529565, -0.0841033)
+script = ExtResource("5_v6quk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BoneAttachment3D/Detection"]
+transform = Transform3D(1, -1.93264e-12, -4.79883e-12, 1.9329e-12, 1, 6.03412e-07, 4.68603e-12, -6.03502e-07, 1, 0.0693388, -3.13372e-06, 2.65597)
+shape = SubResource("BoxShape3D_ajh1n")
+
+[connection signal="area_entered" from="BoneAttachment3D/Detection" to="BoneAttachment3D/Detection" method="_on_area_entered"]
+
+[editable path="snake_python"]
+[editable path="BoneAttachment3D/tounge_1"]
