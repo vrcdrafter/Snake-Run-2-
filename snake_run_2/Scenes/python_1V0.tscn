@@ -15,8 +15,45 @@ hide_triangles = true
 
 [node name="snake_python" parent="." instance=ExtResource("2_147mu")]
 
+[node name="Skeleton3D" parent="snake_python/snake_export" index="0"]
+bones/0/position = Vector3(-0.152648, 2.32442, 0.646249)
+bones/0/rotation = Quaternion(-0.12998, 0.793623, 0.570611, 0.166345)
+bones/1/rotation = Quaternion(0.0339207, -0.0156535, 0.327714, 0.944038)
+bones/2/rotation = Quaternion(-0.331942, -0.0347272, -0.0061285, 0.94264)
+bones/3/rotation = Quaternion(-0.167407, -0.00397777, 0.220694, 0.960861)
+bones/4/rotation = Quaternion(-0.220976, 0.0252583, 0.442066, 0.86897)
+bones/5/rotation = Quaternion(-0.186043, 0.0185028, 0.235368, 0.953755)
+bones/6/rotation = Quaternion(-0.170799, -0.00713682, 0.0820964, 0.981854)
+bones/7/rotation = Quaternion(-0.0600712, -0.00514907, 0.0790358, 0.995047)
+bones/8/rotation = Quaternion(-0.0139895, 0.00201324, 0.0148966, 0.999789)
+bones/9/rotation = Quaternion(-0.126702, -0.0264787, -0.00897119, 0.991547)
+bones/10/rotation = Quaternion(-0.340883, 0.0275303, 0.0660342, 0.93738)
+bones/11/rotation = Quaternion(-0.322353, -0.033079, -0.0756018, 0.943016)
+bones/12/rotation = Quaternion(-0.377469, -0.000464034, -0.0901389, 0.921624)
+bones/13/rotation = Quaternion(-0.470765, 0.0328696, -0.152157, 0.868417)
+bones/14/rotation = Quaternion(-0.434659, 0.0316215, -0.24491, 0.866078)
+bones/15/rotation = Quaternion(-0.237739, 0.0355949, -0.227035, 0.943752)
+bones/16/rotation = Quaternion(-0.261064, -0.00532102, -0.482994, 0.835784)
+bones/17/rotation = Quaternion(-0.172805, 0.0178012, -0.424804, 0.888461)
+bones/18/rotation = Quaternion(-0.077048, -0.00567058, -0.324827, 0.942613)
+bones/19/rotation = Quaternion(-0.0489955, 0.0533209, -0.453407, 0.888357)
+bones/20/rotation = Quaternion(0.0681471, 0.06735, -0.450443, 0.887649)
+bones/21/rotation = Quaternion(0.184233, 0.057316, -0.389529, 0.900578)
+bones/22/rotation = Quaternion(0.264777, 0.0353978, -0.360764, 0.893583)
+bones/23/rotation = Quaternion(0.291408, 0.0477497, -0.342677, 0.891837)
+bones/24/rotation = Quaternion(0.487081, 0.0811385, -0.166524, 0.853486)
+bones/25/rotation = Quaternion(0.299895, -0.0569346, -0.065416, 0.950022)
+bones/26/rotation = Quaternion(0.462918, 0.103661, -0.175428, 0.862662)
+bones/27/rotation = Quaternion(0.585035, -0.118636, 0.0440849, 0.801072)
+bones/28/rotation = Quaternion(0.343014, -0.00198726, 0.00613413, 0.939308)
+bones/29/rotation = Quaternion(0.418743, 2.9904e-07, 0.0218676, 0.907842)
+bones/30/rotation = Quaternion(0.480785, 3.2502e-07, -0.00520031, 0.876823)
+bones/31/rotation = Quaternion(0.278163, 1.75092e-07, 0.0292739, 0.960088)
+bones/32/rotation = Quaternion(0.368746, 2.53253e-07, -0.0102151, 0.929474)
+bones/33/rotation = Quaternion(1.92807e-07, 0.0159001, 0.999874, 7.67193e-09)
+
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="."]
-transform = Transform3D(-1, 6.21725e-15, 6.27833e-07, 6.27516e-07, 0.0317962, 0.999495, -1.99627e-08, 0.999494, -0.0317962, 0, -0.0816841, -0.55639)
+transform = Transform3D(0.91087, 0.399624, 0.103039, 0.0164743, -0.284684, 0.95848, 0.412366, -0.871352, -0.265894, -0.38251, 2.42218, 1.15008)
 bone_name = "jaw"
 bone_idx = 33
 use_external_skeleton = true

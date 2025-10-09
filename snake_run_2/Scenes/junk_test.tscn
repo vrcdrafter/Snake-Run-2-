@@ -50,16 +50,16 @@ handle_input_locally = false
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_2"] instance=ExtResource("1_3du67")]
-transform = Transform3D(-0.711621, 0, -0.702563, 0, 1, 0, 0.702563, 0, -0.711621, 9.52601, 4.47644, -3.50517)
+[node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_3"] instance=ExtResource("1_3du67")]
+transform = Transform3D(-0.711621, 0, -0.702563, 0, 1, 0, 0.702563, 0, -0.711621, -0.854253, 4.47644, 9.68058)
 
-[node name="green7" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_2", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.69536, 2.019, 0)
+[node name="green7" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8.69536, 2.019, 0)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="green8" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_2", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8818, 2.00336, 0)
+[node name="green8" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+transform = Transform3D(-0.0680153, 0, 0.997684, 0, 1, 0, -0.997684, 0, -0.0680153, 13.8818, 2.00336, 0)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 

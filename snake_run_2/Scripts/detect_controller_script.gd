@@ -79,6 +79,6 @@ func add_new_snake():
 	
 	var spawn_points :Array[Node] = $snake_spawn_points.get_children()
 	var random_spawn_point = spawn_points[randi() % spawn_points.size()]
-	var new_snake = preload("res://Scenes/snake4.1.tscn").instantiate()
+	var new_snake = preload("res://Scenes/python_1V0.tscn").instantiate()
 	new_snake.global_position = random_spawn_point.global_position
 	add_child(new_snake)
