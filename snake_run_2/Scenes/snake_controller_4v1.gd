@@ -29,7 +29,7 @@ var willing_to_chase :bool = true
 var simlation_oneshot :bool = true
 
 var death_accumulator :float = 0 
-var death_timer :float = 3
+var death_timer :float = 9
 
 signal snake_removed
 
@@ -136,6 +136,7 @@ func _physics_process(delta: float) -> void:
 						if ennarement_done:
 							move_segments_back_normal()
 							ensnare_state = "run_animation"
+							
 					else:
 						# means the prey esaped 
 						
@@ -161,7 +162,7 @@ func _physics_process(delta: float) -> void:
 					if transform_onestart:
 						transform_save = self.global_transform # note this line needs to run once too 
 						snake_animations.play(target_animation)
-						self.global_transform = snake_target.global_transform
+						self.global_transform = snake_target.global_transform * LOWER_OFFSET_TRANSFORM
 						transform_onestart = false
 					# check to see if player gets close 
 

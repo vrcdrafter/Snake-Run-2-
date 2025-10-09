@@ -81,6 +81,8 @@ var nav_mesh_calc_time :float = .2
 var time_accumulator :float = 0 
 var next_path_position :Vector3
 
+const LOWER_OFFSET_TRANSFORM := Transform3D(Basis(), Vector3(0, -1, 0)) # 1 meter down
+
 func _init() -> void:
 
 
@@ -152,7 +154,7 @@ func make_ensnarement_curve(ensnarement_data :PackedVector3Array, body_segment_p
 		var points_anim :PackedVector3Array  = anim_curve.get_baked_points()
 		for i in points_anim.size():
 			# really wierd transform order ., I have no idea why 
-			curve.add_point(target.global_transform * points_anim[i] * self.global_transform) 
+			curve.add_point(target.global_transform * LOWER_OFFSET_TRANSFORM * points_anim[i] * self.global_transform) 
 			curve.set_point_tilt(i,deg_to_rad(45)) # why am I setting this manually 
 		# need to keep working here . 
 		
@@ -238,12 +240,22 @@ func _make_curve_from_animation(snake_skeleton :Skeleton3D, debug :bool) -> Arra
 			
 			whole_lib.advance(0)
 			#whole_lib.seek(0.0,true,false)
+			var list_points :Array[Vector3]
 			var curve_new :Curve3D = Curve3D.new()
 			for g in snake_skeleton.get_bone_count(): # needs to excllude eyes and jaw bone 
 				# try backwards
-				var bone_position :Vector3 = snake_skeleton.get_bone_global_pose((snake_skeleton.get_bone_count()-1)-g).origin
-				curve_new.add_point(bone_position)
+				var bone_name = snake_skeleton.get_bone_name(g) # why is jaw in there !
+				if "neck" in bone_name:
+					
+					var bone_position :Vector3 = snake_skeleton.get_bone_global_pose(g).origin
+					list_points.append(bone_position)
+			list_points.reverse()
+			for l in list_points:
+				
+				curve_new.add_point(l)		
+			
 			curve_new.resource_name = anim_list[i]
+			
 			transition_curves.append(curve_new)
 			
 	return transition_curves
@@ -397,6 +409,7 @@ func move_segments_along_path(delta,speed_new :float) -> bool:
 	
 	for i in snake_vertibrea.size():
 		follow_path_array[i].progress += speed_new *delta
+	var temp_progress = follow_path_array[0].progress_ratio
 
 	if follow_path_array[0].progress_ratio > .99:
 		
@@ -474,7 +487,7 @@ func spine_bones() -> PackedInt32Array:
 	var snake_node :Node3D = find_child("sn*")
 	skeleton = snake_node.find_child("Skeleton3D",true,true)
 	for i in skeleton.get_bone_count():
-		if skeleton.get_bone_name(i).contains("Neck"):
+		if skeleton.get_bone_name(i).contains("neck"): # so this is case sensative , 
 			all_spine_bones.append(i)
 		else:
 			pass
