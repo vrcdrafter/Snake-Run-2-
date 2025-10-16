@@ -257,13 +257,29 @@ func _physics_process(delta: float) -> void:
 				# speed up animations too 
 
 			if direction:
+				if play_walk_once:
+					$AudioStreamPlayer.play()
+					play_walk_once = false
 				velocity.x = direction.x * SPEED_CONTROLLER
 				velocity.z = direction.z * SPEED_CONTROLLER
-				animation_tree_new.set("parameters/Blend2/blend_amount", 0)
+				if has_weapon:
+					animation_tree_new.set("parameters/no_wep/blend_amount", 0)
+					animation_tree_new.set("parameters/Blend2/blend_amount", 0)
+				else: 
+					animation_tree_new.set("parameters/no_wep/blend_amount", 1)
+					animation_tree_new.set("parameters/Blend3/blend_amount", -1)
 			else:
+				play_walk_once = true
+				$AudioStreamPlayer.stop()
 				velocity.x = move_toward(velocity.x, 0, SPEED_CONTROLLER)
 				velocity.z = move_toward(velocity.z, 0, SPEED_CONTROLLER)
 				animation_tree_new.set("parameters/Blend2/blend_amount", 1)
+				if has_weapon:
+					animation_tree_new.set("parameters/no_wep/blend_amount", 0)
+					animation_tree_new.set("parameters/Blend2/blend_amount", 1)
+				else:
+					animation_tree_new.set("parameters/no_wep/blend_amount", 1)
+					animation_tree_new.set("parameters/Blend3/blend_amount", 0)
 
 			move_and_slide()
 		
