@@ -47,7 +47,7 @@ script = ExtResource("1_envuj")
 
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 handle_input_locally = false
-size = Vector2i(1152, 648)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_3"] instance=ExtResource("1_3du67")]
@@ -73,4 +73,4 @@ spot_angle = 50.7548
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.404, 6.60686)
 
 [node name="Snake2" parent="." instance=ExtResource("9_cdf3r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3561, 1.155, -11.808)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.6458, 1.155, -11.808)

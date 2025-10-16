@@ -54,6 +54,7 @@ var snake_that_died :Node3D
 signal player_added
 
 @onready var ray :RayCast3D = get_node("BoneAttachment3D/MeshInstance3D/RayCast3D")
+@onready var ray_head :RayCast3D = get_node("rotation_helper/Camera3D/grab")
 
 var can_pickup_item :bool = false
 var examined_item :Node = null
@@ -72,6 +73,8 @@ var play_walk_once :bool = true
 
 @onready var sound_shape :CollisionShape3D = get_node("Sound_area/CollisionShape3D")
 var box_shape :BoxShape3D
+
+var has_weapon :bool = false
 
 
 func _ready():
@@ -99,6 +102,12 @@ func _ready():
 		box_shape.size = Vector3(5, 5, 5)  # Set to desired size
 		print("set")
 		
+		
+	if has_weapon:
+		$BoneAttachment3D/MeshInstance3D.set_visible(true)
+	else:
+		$BoneAttachment3D/MeshInstance3D.set_visible(false)
+
 
 
 
@@ -112,6 +121,10 @@ func _input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	
+	
+	
+	
 	var dec_size = box_shape.size.x - 5 * delta
 	#print("size of box", dec_size)
 	if dec_size < 5:
@@ -124,7 +137,7 @@ func _physics_process(delta: float) -> void:
 		remake_connections_accuulator = 0 
 		remake_connections()
 	
-	check_ray(delta)
+	check_ray(delta,ray_head)
 	
 	
 	
@@ -143,7 +156,7 @@ func _physics_process(delta: float) -> void:
 			
 			# run a reload if you want 
 			if $AnimatedSprite2D2.frame !=0:
-				if Input.is_action_just_pressed("reload"):
+				if Input.is_action_just_pressed("reload") and  has_weapon:
 					animation_tree_new.set("parameters/reload/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 					if $AnimatedSprite2D2.frame != 0:
 						$AnimatedSprite2D2.frame -= 1 # decrement that frame
@@ -212,13 +225,24 @@ func _physics_process(delta: float) -> void:
 					play_walk_once = false
 				velocity.x = direction.x * SPEED
 				velocity.z = direction.z * SPEED
-				animation_tree_new.set("parameters/Blend2/blend_amount", 0)
+				if has_weapon:
+					animation_tree_new.set("parameters/no_wep/blend_amount", 0)
+					animation_tree_new.set("parameters/Blend2/blend_amount", 0)
+				else: 
+					animation_tree_new.set("parameters/no_wep/blend_amount", 1)
+					animation_tree_new.set("parameters/Blend3/blend_amount", -1)
 			else:
 				play_walk_once = true
 				$AudioStreamPlayer.stop()
 				velocity.x = move_toward(velocity.x, 0, SPEED)
 				velocity.z = move_toward(velocity.z, 0, SPEED)
-				animation_tree_new.set("parameters/Blend2/blend_amount", 1)
+				if has_weapon:
+					animation_tree_new.set("parameters/no_wep/blend_amount", 0)
+					animation_tree_new.set("parameters/Blend2/blend_amount", 1)
+				else:
+					animation_tree_new.set("parameters/no_wep/blend_amount", 1)
+					animation_tree_new.set("parameters/Blend3/blend_amount", 0)
+				
 
 			move_and_slide()
 		else:
@@ -386,26 +410,37 @@ func spawn_bullet(delta :float):
 	get_tree().root.add_child(bullet_instance)
 
 	
-func check_ray(delta):
+func check_ray(delta,ray :RayCast3D):
 	if ray.is_colliding():
 		var collider :Node = ray.get_collider()
 		if collider == null:
 			pass
 		else:
 			if collider.is_in_group("item"):
-				can_pickup_item = true
-				animation_tree_new.set("parameters/select/add_amount", 1)
-				animation_tree_new.set("parameters/Add2/add_amount", 0)
-				examined_item = collider
-				check_stuf_timer_accum = 0
-				if collider.is_in_group("ammo"):
-					$AnimatedSprite2D2.frame = 3
+				
+				
+				if has_weapon:
+				
+					can_pickup_item = true
+					animation_tree_new.set("parameters/select_no_wep/blend_amount",0)
+					animation_tree_new.set("parameters/select/add_amount", 1)
+					animation_tree_new.set("parameters/Add2/add_amount", 0)
+					examined_item = collider
+					check_stuf_timer_accum = 0
+					if collider.is_in_group("ammo"):
+						$AnimatedSprite2D2.frame = 3
+				else:
+					animation_tree_new.set("parameters/select_no_wep/blend_amount",1)
+					can_pickup_item = true
+					examined_item = collider
+					check_stuf_timer_accum = 0
 					
 	else:
 		check_stuf_timer_accum += delta
 	
 	if check_stuf_timer_accum > check_stuf_timer:
 		can_pickup_item = false
+		animation_tree_new.set("parameters/select_no_wep/blend_amount",0)
 		animation_tree_new.set("parameters/select/add_amount", 0)
 		animation_tree_new.set("parameters/Add2/add_amount", 1)
 		examined_item = null
@@ -421,9 +456,15 @@ func handle_shoot(delta :float):
 			pass
 		else:
 			$got_item.play()
+			
+			if examined_item.is_in_group("gun"):
+				has_weapon = true
+				$BoneAttachment3D/MeshInstance3D.set_visible(true)
+			
+			
 			examined_item.queue_free()
 			$ProgressBar.value += 1
-	else:
+	elif has_weapon:
 		$AnimatedSprite2D.frame += 1
 		
 		if $AnimatedSprite2D.frame == 19:
@@ -434,6 +475,8 @@ func handle_shoot(delta :float):
 			spawn_bullet(delta)
 			$AudioStreamPlayer2.play()
 			animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	else:
+		pass
 			
 func play_reload_sound():
 	$reload.play()
