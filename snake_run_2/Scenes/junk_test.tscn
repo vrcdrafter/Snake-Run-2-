@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://d4lmmdar48ovc"]
+[gd_scene load_steps=10 format=3 uid="uid://d4lmmdar48ovc"]
 
 [ext_resource type="PackedScene" uid="uid://dgpjxoygnvyy4" path="res://Scenes/Player.tscn" id="1_3du67"]
 [ext_resource type="Script" path="res://Scenes/sub_viewport_container_2.gd" id="1_envuj"]
 [ext_resource type="Script" path="res://Scripts/detect_controller_script.gd" id="1_nlxrt"]
+[ext_resource type="PackedScene" uid="uid://y0scseug4ia2" path="res://Scenes/items/gun.tscn" id="5_ws20n"]
 [ext_resource type="PackedScene" uid="uid://b324c7udfages" path="res://Scenes/python_1V0.tscn" id="9_cdf3r"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_nlxrt"]
@@ -47,7 +48,7 @@ script = ExtResource("1_envuj")
 
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_3"] instance=ExtResource("1_3du67")]
@@ -73,4 +74,7 @@ spot_angle = 50.7548
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.404, 6.60686)
 
 [node name="Snake2" parent="." instance=ExtResource("9_cdf3r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.6458, 1.155, -11.808)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.4884, 1.155, -11.808)
+
+[node name="Area3D" parent="." instance=ExtResource("5_ws20n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.41715, 1.155, 8.60146)

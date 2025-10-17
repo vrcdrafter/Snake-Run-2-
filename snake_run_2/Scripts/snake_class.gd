@@ -73,7 +73,7 @@ var target_player :Node3D
 
 var bone_simulation_phys : PhysicalBoneSimulator3D = PhysicalBoneSimulator3D.new()
 
-var health :int = 2
+var health :int = 8
 
 var physical_bone_ref :Array[PhysicalBone3D] 
 
@@ -82,6 +82,9 @@ var time_accumulator :float = 0
 var next_path_position :Vector3
 
 const LOWER_OFFSET_TRANSFORM := Transform3D(Basis(), Vector3(0, -1, 0)) # 1 meter down
+
+var health_decremented :bool = false
+
 
 func _init() -> void:
 
@@ -597,9 +600,9 @@ func make_physical_skeleton():
 
 
 func _on_snake_hitbox_body_entered(test):
-
 	health -= 1
-	
+	 # you would need to do a damage operation 
+	health_decremented = true
 	
 	
 func make_transition_key(anim_player :AnimationPlayer, Skel :Skeleton3D):

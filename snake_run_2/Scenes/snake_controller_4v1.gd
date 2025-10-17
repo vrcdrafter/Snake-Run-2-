@@ -31,6 +31,9 @@ var simlation_oneshot :bool = true
 var death_accumulator :float = 0 
 var death_timer :float = 9
 
+var stun_accumulator :float = 0
+var stun_timer :float = 1
+
 signal snake_removed
 
 func _ready() -> void:
@@ -75,6 +78,10 @@ func _physics_process(delta: float) -> void:
 	snake_wave_pysics_process(delta) # initialize the snake wavyness
 	if health < 0:
 		snake_state = "null"
+		
+	if health_decremented:
+		snake_state = "stunned"
+		health_decremented = false
 
 		#snake_state = "null"
 	# have snake start to chase target 
@@ -235,7 +242,41 @@ func _physics_process(delta: float) -> void:
 				emit_signal("snake_removed")
 				self.queue_free()
 			
-				
+		"limp_RESET":
+			
+			
+			
+			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
+			for each in test2:
+				if each.get_child_count() > 0:
+					bone_simulation_phys.active = false
+					each.physical_bones_stop_simulation()
+			abort_universal_reset()
+			snake_state = "patrol"
+			
+		"stunned":
+			
+			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
+			if simlation_oneshot:
+				#dead_snake.emit($BoneAttachment3D/tounge_1)
+				for each in test2:
+					if each.get_child_count() > 0:
+						bone_simulation_phys.active = true
+						each.physical_bones_start_simulation()
+						bone_overriding = false
+						simlation_oneshot = false
+						skel.clear_bones_global_pose_override()
+						# also make is to the snake collides with nothing ( might fall through floor ) 
+				for area_examined in physical_bone_ref:
+					area_examined.collision_mask = 9
+					area_examined.collision_layer = 9
+					area_examined.gravity_scale = 1
+					area_examined.mass = .1			
+			stun_accumulator += delta
+			if stun_accumulator > stun_timer:
+				snake_state = "limp_RESET"
+				simlation_oneshot= true
+				stun_accumulator = 0
 
 
 	if bone_overriding:
@@ -256,6 +297,5 @@ func abort_universal_reset():
 	else :
 		snake_state = "patrol"
 	ensnare_state = "path"
-	
 	
 	
