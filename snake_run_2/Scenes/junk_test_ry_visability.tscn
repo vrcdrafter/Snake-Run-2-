@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dvtfeas2278t3"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.57135)
+debug_shape_custom_color = Color(0.271089, 0.680423, 0.693934, 1)

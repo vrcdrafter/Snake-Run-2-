@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://y0scseug4ia2"]
+
+[ext_resource type="Material" uid="uid://bkt64se33y38w" path="res://Materials/shine.tres" id="1_w4jqb"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hortj"]
+radius = 0.614698
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_egm1s"]
+albedo_color = Color(0.366817, 0.330394, 0.333065, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_qfcd4"]
+size = Vector3(0.23, 0.17, 0.755)
+
+[node name="Area3D" type="Area3D" groups=["gun", "item"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_hortj")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106237, 0.125599, 0.132276)
+material_override = SubResource("StandardMaterial3D_egm1s")
+material_overlay = ExtResource("1_w4jqb")
+mesh = SubResource("PrismMesh_qfcd4")
+surface_material_override/0 = ExtResource("1_w4jqb")

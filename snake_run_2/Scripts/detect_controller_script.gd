@@ -46,7 +46,7 @@ func assess_controllers():
 func act_on_connection(_device, _connected):
 	print("hey you connected something, it was ",_device, " its plugged in ",_connected)
 	# if more controllerd added after scene started shift number +1 
-	if _device == 0:
+	if _device == 0 and _connected == true:
 		print("you have one controller")
 		print("This is the joy name ", Input.get_joy_info(0))
 		spawn_player($spawn_point_1.global_position,1)
@@ -54,6 +54,7 @@ func act_on_connection(_device, _connected):
 
 func spawn_player(spawn_position :Vector3,num :int):
 	var new_player :SubViewportContainer = load("res://Scenes/player_spawn.tscn").instantiate()
+	new_player.mouse_filter = Control.MOUSE_FILTER_STOP
 	new_player.name = "controller" + str(num)
 	$GridContainer.columns = 2
 	$GridContainer.add_child(new_player)

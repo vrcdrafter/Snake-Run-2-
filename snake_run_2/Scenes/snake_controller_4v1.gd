@@ -32,7 +32,7 @@ var death_accumulator :float = 0
 var death_timer :float = 9
 
 var stun_accumulator :float = 0
-var stun_timer :float = 1
+var stun_timer :float = .2
 
 signal snake_removed
 
@@ -277,7 +277,11 @@ func _physics_process(delta: float) -> void:
 				snake_state = "limp_RESET"
 				simlation_oneshot= true
 				stun_accumulator = 0
-
+				
+				move_triangles_to_bones(tri_array)
+				#snake_state = "null2"
+		"null2":
+			pass
 
 	if bone_overriding:
 		override_skeleton(skel)

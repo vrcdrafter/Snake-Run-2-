@@ -48,6 +48,7 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 stretch = true
 script = ExtResource("2_i4sut")
 
@@ -56,7 +57,7 @@ handle_input_locally = false
 size = Vector2i(2, 2)
 render_target_update_mode = 4
 
-[node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" groups=["A", "anim_ensnare_3"] instance=ExtResource("3_udigb")]
+[node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("3_udigb")]
 transform = Transform3D(-0.911876, 0, -0.410464, 0, 1, 0, 0.410464, 0, -0.911876, 19.9206, 6.28652, -125.079)
 
 [node name="green" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
@@ -200,6 +201,12 @@ transform = Transform3D(-0.799968, 0, 0.600043, 0, 1, 0, -0.600043, 0, -0.799968
 [node name="gun" parent="treasure" instance=ExtResource("13_35no0")]
 transform = Transform3D(0.419769, 0, 0.907631, 0, 1, 0, -0.907631, 0, 0.419769, 21.8337, 4.87624, -115.261)
 
+[node name="gun2" parent="treasure" instance=ExtResource("13_35no0")]
+transform = Transform3D(0.419769, 0, 0.907631, 0, 1, 0, -0.907631, 0, 0.419769, 21.8337, 4.87624, -109.369)
+
+[node name="gun3" parent="treasure" instance=ExtResource("13_35no0")]
+transform = Transform3D(0.419769, 0, 0.907631, 0, 1, 0, -0.907631, 0, 0.419769, 21.8337, 4.87624, -102.722)
+
 [node name="sounds" type="Node" parent="."]
 
 [node name="jungle_ambient" type="AudioStreamPlayer" parent="sounds"]
@@ -223,10 +230,10 @@ Click here"
 script = ExtResource("12_tm7on")
 
 [node name="Snake" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.2263, 7.82374, -92.5614)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.7218, 7.82374, -8.51921)
 
 [node name="Snake2" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.324, 7.82374, -79.6144)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.9306, 7.82374, -30.9235)
 
 [node name="Snake3" parent="." instance=ExtResource("12_35no0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8883, 7.82374, -58.9282)
@@ -235,7 +242,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8883, 7.82374, -58.9282)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2906, 7.82374, -58.9282)
 
 [node name="Snake5" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.20923, 7.82374, -35.8357)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.20923, 7.82374, 46.3776)
 
 [node name="Snake6" parent="." instance=ExtResource("12_35no0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.35013, 7.82374, -37.8755)
@@ -244,21 +251,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.35013, 7.82374, -37.8755)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.40117, 7.82374, -37.8755)
 
 [node name="Snake8" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.206, 7.82374, -37.8755)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.0363, 7.82374, -21.8706)
 
 [node name="Snake9" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0144, 7.82374, -37.8755)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.608, 7.82374, -30.0999)
 
 [node name="Snake10" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.93047, 7.82374, -42.5688)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.245, 7.82374, -4.85405)
 
 [node name="Snake11" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.93047, 7.82374, -31.2719)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.93047, 7.82374, 66.2118)
 
 [node name="Snake12" parent="." instance=ExtResource("12_35no0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.399, 7.82374, -31.2719)
 
 [node name="Snake13" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25638, 7.82374, -31.2719)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.34993, 7.82374, 66.1292)
 
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

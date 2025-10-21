@@ -84,6 +84,8 @@ var next_path_position :Vector3
 const LOWER_OFFSET_TRANSFORM := Transform3D(Basis(), Vector3(0, -1, 0)) # 1 meter down
 
 var health_decremented :bool = false
+ # really just using this for the triangles to snap to during damage hit 
+var colission_array :Array[CollisionShape3D]
 
 
 func _init() -> void:
@@ -215,11 +217,14 @@ func override_skeleton(skeleton_L :Skeleton3D): # need to changet this for two c
 		#so the self.transform.inverse()  is what makes the snake note mobile and cane be moved anywhere around the scene 
 
 	
-func move_triangles_to_bones(tris :Array[Node3D]):
-	for i in snake_vertibrea.size(): #EXCLUDE THE TWO EYES AND JAW
+
 		
-		tris[i].global_transform = skeleton.get_bone_global_pose((snake_vertibrea.size()-1)-i) # go reverse
-		tris[i].global_position = tris[i].global_position  # may need to comment this out 
+func move_triangles_to_bones(tris :Array[MeshInstance3D]):
+	for i in snake_vertibrea.size(): #EXCLUDE THE TWO EYES AND JAW
+
+		tris[i].global_transform = colission_array[i].global_transform
+		
+
 	
 func shift_rotate_points(points :PackedVector3Array, angle_deg :float, offset :Vector3):
 	var new_points :PackedVector3Array
@@ -329,7 +334,7 @@ func add_colission_shapes():
 		
 		var colis_area :Area3D = Area3D.new()
 		var colission_snake_shape :CollisionShape3D = CollisionShape3D.new()
-		
+		colission_array.append(colission_snake_shape)
 		bone_attachment_hit.add_child(colis_area)
 		colis_area.position = skeleton.get_bone_pose_position(i)
 		colis_area.name = "hitbox" + str(i)

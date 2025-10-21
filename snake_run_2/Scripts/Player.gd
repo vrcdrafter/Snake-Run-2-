@@ -5,7 +5,7 @@ const DEACCEL = 30
 
 const SPEED = 5.0
 const SPEED_CONTROLLER = 7.0
-const SPRINT_MULT = 2
+const SPRINT_MULT = 3
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.06
 @onready var animation_tree_new :AnimationTree = get_node("AnimationTree")
@@ -218,6 +218,9 @@ func _physics_process(delta: float) -> void:
 
 			if Input.is_key_pressed(KEY_SHIFT):
 				direction = direction * SPRINT_MULT
+				$AudioStreamPlayer.pitch_scale = 1.5
+			else:
+				$AudioStreamPlayer.pitch_scale = 1
 
 			if direction:
 				if play_walk_once:
