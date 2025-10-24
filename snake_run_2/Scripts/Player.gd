@@ -44,7 +44,7 @@ var joy_y_accum:float = 0
 var bullet_scene :PackedScene = preload("res://Scenes/bullet.tscn")
 
 # health stuff 
-var health :int = 100
+var health :int = 1000
 var death_oneshot :bool = false
 
 signal dead 

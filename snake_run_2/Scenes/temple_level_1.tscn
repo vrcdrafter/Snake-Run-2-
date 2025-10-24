@@ -58,7 +58,7 @@ size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("3_udigb")]
-transform = Transform3D(-0.911876, 0, -0.410464, 0, 1, 0, 0.410464, 0, -0.911876, 19.9206, 6.28652, -125.079)
+transform = Transform3D(-0.911876, 0, -0.410464, 0, 1, 0, 0.410464, 0, -0.911876, 25.1051, 6.28652, -116.591)
 
 [node name="green" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.18856, 15.0458, 88.55)

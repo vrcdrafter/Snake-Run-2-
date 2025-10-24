@@ -36,6 +36,8 @@ var stun_timer :float = .2
 
 signal snake_removed
 
+var ensnarement_transform_snapline :Transform3D
+
 func _ready() -> void:
 
 	#initialize spine 
@@ -125,6 +127,7 @@ func _physics_process(delta: float) -> void:
 			
 				"path":
 					bone_simulation_phys.active = false
+					ensnarement_transform_snapline = snake_target.global_transform
 					make_ensnarement_curve(ensnarement_points,tri_array,snake_target,animation_curve)
 
 					var total_curve_length = curve.get_baked_length()
@@ -169,7 +172,9 @@ func _physics_process(delta: float) -> void:
 					if transform_onestart:
 						transform_save = self.global_transform # note this line needs to run once too 
 						snake_animations.play(target_animation)
-						self.global_transform = snake_target.global_transform * LOWER_OFFSET_TRANSFORM
+						var transform_pre :Transform3D = self.global_transform
+						self.global_transform = ensnarement_transform_snapline # this doesnt quite work 
+						self.global_transform.origin = self.global_transform.origin - Vector3(0,1,0)
 						transform_onestart = false
 					# check to see if player gets close 
 
