@@ -590,15 +590,17 @@ func make_physical_skeleton():
 		one_physical_bone.transform = rest_bone
 		
 		var capsule_mesh :CapsuleShape3D = CapsuleShape3D.new()
-		if not name.contains("Neck"):
+		if not name.contains("neck"):
 			capsule_mesh.height = .05
 			capsule_mesh.radius = .05
 		else:
-			capsule_mesh.height = .2
+			capsule_mesh.height = .5
 			capsule_mesh.radius = .2
 		var colission_shape :CollisionShape3D = CollisionShape3D.new()
 		colission_shape.shape = capsule_mesh
 		one_physical_bone.add_child(colission_shape)
+		one_physical_bone.collision_layer = 3
+		one_physical_bone.collision_mask = 3
 		one_physical_bone.joint_type = PhysicalBone3D.JOINT_TYPE_6DOF
 		physical_bone_ref.append(one_physical_bone)
 

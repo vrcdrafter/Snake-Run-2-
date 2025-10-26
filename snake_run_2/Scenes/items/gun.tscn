@@ -1,15 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://y0scseug4ia2"]
+[gd_scene load_steps=6 format=3 uid="uid://y0scseug4ia2"]
 
+[ext_resource type="Texture2D" uid="uid://gawk5wlj1mcp" path="res://level_data/gun_source_fox_Fox.png" id="1_o8cmb"]
 [ext_resource type="Material" uid="uid://bkt64se33y38w" path="res://Materials/shine.tres" id="1_w4jqb"]
+[ext_resource type="ArrayMesh" uid="uid://cyuv6rk15qjjt" path="res://Resources/gun.tres" id="3_avp8d"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_hortj"]
 radius = 0.614698
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_egm1s"]
-albedo_color = Color(0.366817, 0.330394, 0.333065, 1)
-
-[sub_resource type="PrismMesh" id="PrismMesh_qfcd4"]
-size = Vector3(0.23, 0.17, 0.755)
+shading_mode = 0
+albedo_texture = ExtResource("1_o8cmb")
 
 [node name="Area3D" type="Area3D" groups=["gun", "item"]]
 
@@ -20,5 +20,5 @@ shape = SubResource("SphereShape3D_hortj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106237, 0.125599, 0.132276)
 material_override = SubResource("StandardMaterial3D_egm1s")
 material_overlay = ExtResource("1_w4jqb")
-mesh = SubResource("PrismMesh_qfcd4")
+mesh = ExtResource("3_avp8d")
 surface_material_override/0 = ExtResource("1_w4jqb")

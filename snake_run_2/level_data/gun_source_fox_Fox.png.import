@@ -2,19 +2,19 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgk2sxhbh32ve"
-path="res://.godot/imported/source_fox_Fox.png-b70de4caae6aa64deb1eebc4b2b6eaaf.ctex"
+uid="uid://gawk5wlj1mcp"
+path="res://.godot/imported/gun_source_fox_Fox.png-921440a473417ba51fa899a84184cd54.ctex"
 metadata={
 "vram_texture": false
 }
 generator_parameters={
-"md5": "450620d339e6c4e4b6118e48b17bb6bb"
+"md5": "3c2ec0bd3097f09abf4414c1c3aaeb42"
 }
 
 [deps]
 
-source_file="res://level_data/source_fox_Fox.png"
-dest_files=["res://.godot/imported/source_fox_Fox.png-b70de4caae6aa64deb1eebc4b2b6eaaf.ctex"]
+source_file="res://level_data/gun_source_fox_Fox.png"
+dest_files=["res://.godot/imported/gun_source_fox_Fox.png-921440a473417ba51fa899a84184cd54.ctex"]
 
 [params]
 
@@ -23,7 +23,7 @@ compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
-compress/channel_pack=1
+compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0

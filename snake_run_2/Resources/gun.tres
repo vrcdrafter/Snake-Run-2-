@@ -1,0 +1,40 @@
+[gd_resource type="ArrayMesh" load_steps=4 format=4 uid="uid://cyuv6rk15qjjt"]
+
+[ext_resource type="Texture2D" uid="uid://gawk5wlj1mcp" path="res://level_data/gun_source_fox_Fox.png" id="1_056y2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ekusg"]
+resource_name = "gun"
+albedo_texture = ExtResource("1_056y2")
+texture_filter = 2
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_lkqle"]
+_surfaces = [{
+"aabb": AABB(-0.115, -0.085, -0.3775, 0.23, 0.17, 0.755),
+"format": 34896613377,
+"index_count": 24,
+"index_data": PackedByteArray("AgAAAAQAAwABAAUABQAAAAIABQABAAAABAABAAMABAAAAAEABQAEAAMABQACAAQA"),
+"name": "gun",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("/3//////AAD/f///AAAAAAAAAAD//wAA//8AAAAAAAD//wAA//8AAAAAAAAAAAAA")
+}]
+blend_shape_mode = 0
+
+[resource]
+resource_name = "gun_Mesh_0"
+_surfaces = [{
+"aabb": AABB(-0.115, -0.085, -0.3775, 0.23, 0.17, 0.755),
+"attribute_data": PackedByteArray("W0jr1ltIfPLBWbDiwVlB/sFZJsvBWbfm8kZl6asA9OiuAP/o7kZx6Q1HS9bNANrVygDm1RBHV9byRm3p00bU/q4AB+mPAG/+"),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AgAAAAQAAwABAAUACwAJAA0ACwAHAAkACgAIAAwACgAGAAgAEAAPABEAEAAOAA8A"),
+"material": SubResource("StandardMaterial3D_ekusg"),
+"name": "gun",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 18,
+"vertex_data": PackedByteArray("/3///////7//f///AAD//wAAAAD///+///8AAAAA/////wAA////vwAAAAAAAP///3//////1O7/f///AABqPP9///8AANTu/3//////ajz//wAA///U7gAAAAAAAGo8//8AAAAA1O4AAAAA//9qPAAAAAD//3bV//8AAP//dtUAAAAAAAB21f//AAAAAHbV/3//f/8//7//f/9//z//v/9//3//P/+/nLfekAaYY8+ct96QBphjz5y33pAGmGPPnLfekAaYY8+/Kn3Vvyp91b8qfdW/Kn3V")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_lkqle")

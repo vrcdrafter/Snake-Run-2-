@@ -1,12 +1,13 @@
-[gd_scene load_steps=24 format=3 uid="uid://5s3bx0fea1h3"]
+[gd_scene load_steps=27 format=3 uid="uid://5s3bx0fea1h3"]
 
 [ext_resource type="Script" path="res://Scripts/title_script.gd" id="1_eysnh"]
 [ext_resource type="ArrayMesh" uid="uid://b0445x6gkuj3" path="res://level_data/Map.obj" id="2_fp2oq"]
 [ext_resource type="Texture2D" uid="uid://b2awemstcdgb1" path="res://textures/water (1).png" id="3_q2qps"]
 [ext_resource type="Script" path="res://Scenes/animated_sprite_3d.gd" id="4_q2qps"]
-[ext_resource type="Script" path="res://Scenes/path_follow_3d.gd" id="5_2qdx2"]
 [ext_resource type="Script" path="res://Scripts/menu_camera.gd" id="5_yosvi"]
 [ext_resource type="Texture2D" uid="uid://6uq37fr0cqkh" path="res://textures/arrow.png" id="7_3eqdi"]
+[ext_resource type="AudioStream" uid="uid://csn7ukujgbqp3" path="res://sounds/Menu.wav" id="7_yu0ss"]
+[ext_resource type="Texture2D" uid="uid://djfslir86gl65" path="res://textures/start_block.png" id="8_yu0ss"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ir1x8"]
 
@@ -640,6 +641,26 @@ func _ready() -> void:
 	
 "
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_yu0ss"]
+atlas = ExtResource("7_3eqdi")
+region = Rect2(0, 0, 62.5336, 63.7082)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6aagf"]
+atlas = ExtResource("7_3eqdi")
+region = Rect2(68.1981, 0, 59.8019, 61.6673)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kyk5u"]
+atlas = ExtResource("7_3eqdi")
+region = Rect2(0, 64.9329, 66.3321, 63.0671)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwqts"]
+atlas = ExtResource("8_yu0ss")
+region = Rect2(0.228973, 66.1728, 63.0889, 60.6354)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_th2ad"]
+atlas = ExtResource("8_yu0ss")
+region = Rect2(0, 0, 64, 62.9484)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_yosvi"]
 atlas = ExtResource("3_q2qps")
 region = Rect2(0, 0, 256, 256)
@@ -672,22 +693,10 @@ animations = [{
 [sub_resource type="Curve3D" id="Curve3D_2qdx2"]
 bake_interval = 23.17
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.766172, 0.711939, -0.327319, 0, 0, 0, 0, 0, 0, 2.5813, 1.06038, -2.17185, 0, 0, 0, 0, 0, 0, 3.49142, 2.1111, -5.40223, 0, 0, 0, 0, 0, 0, 0.916421, 3.95075, -8.59305, 0, 0, 0, 0, 0, 0, -4.32443, 3.13694, -6.73443, 0, 0, 0, 0, 0, 0, -2.66251, 1.50115, -0.748491, 0, 0, 0, 0, 0, 0, 0.765801, 0.702472, -0.330894),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 2.54453, 1.20157, -2.18964, 0, 0, 0, 0, 0, 0, 3.21543, 1.3431, -2.98621, 0, 0, 0, 0, 0, 0, 3.49142, 2.1111, -5.40223, 0, 0, 0, 0, 0, 0, 3.49142, 2.1111, -5.40223, 0, 0, 0, 0, 0, 0, 3.49142, 2.1111, -5.40223, 0, 0, 0, 0, 0, 0, 0.916421, 3.95075, -8.59305, 0, 0, 0, 0, 0, 0, -1.91704, 2.42431, -5.10726, 0, 0, 0, 0, 0, 0, -4.57075, 1.08833, -2.37771, 0, 0, 0, 0, 0, 0, -1.8082, 1.07916, -2.19358, 0, 0, 0, 0, 0, 0, 0.672497, 0.0301192, -1.41289, 0, 0, 0, 0, 0, 0, 1.23106, 1.37901, -1.51748, 0, 0, 0, 0, 0, 0, 2.60261, 1.06231, -2.04041),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
-point_count = 7
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yu0ss"]
-atlas = ExtResource("7_3eqdi")
-region = Rect2(0, 0, 62.5336, 63.7082)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6aagf"]
-atlas = ExtResource("7_3eqdi")
-region = Rect2(68.1981, 0, 59.8019, 61.6673)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kyk5u"]
-atlas = ExtResource("7_3eqdi")
-region = Rect2(0, 64.9329, 66.3321, 63.0671)
+point_count = 12
 
 [node name="Node3D" type="Node3D"]
 
@@ -700,38 +709,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_eysnh")
 
-[node name="LEVEL1" type="Button" parent="Control"]
-layout_mode = 0
-offset_left = 51.0
-offset_top = 91.0
-offset_right = 209.0
-offset_bottom = 170.0
-text = "    LEVEL_1
-"
-alignment = 0
-
-[node name="LEVEL2" type="Button" parent="Control"]
-auto_translate_mode = 1
-layout_mode = 0
-offset_left = 43.0
-offset_top = 261.0
-offset_right = 205.0
-offset_bottom = 341.0
-text = "   LEVEL_2
-"
-alignment = 0
-
-[node name="LEVEL3" type="Button" parent="Control"]
-auto_translate_mode = 1
-layout_mode = 0
-offset_left = 40.0
-offset_top = 445.0
-offset_right = 178.0
-offset_bottom = 521.0
-text = "   LEVEL_3
-"
-alignment = 0
-
 [node name="Label" type="Label" parent="Control"]
 layout_mode = 0
 offset_left = 54.0
@@ -743,10 +720,10 @@ text = "fdsafdsa"
 [node name="Label2" type="Label" parent="Control"]
 auto_translate_mode = 1
 layout_mode = 0
-offset_left = 37.0
-offset_top = 20.0
-offset_right = 177.0
-offset_bottom = 51.0
+offset_left = 493.0
+offset_top = 509.0
+offset_right = 633.0
+offset_bottom = 540.0
 text = "SELECT A LEVEL 	"
 
 [node name="Node2D" type="Node2D" parent="Control"]
@@ -774,6 +751,36 @@ scale = Vector2(0.25217, 0.232253)
 sprite_frames = SubResource("SpriteFrames_nyyro")
 script = SubResource("GDScript_nmk8q")
 
+[node name="TextureButton" type="TextureButton" parent="Control"]
+layout_mode = 0
+offset_left = 333.0
+offset_top = 608.0
+offset_right = 395.0
+offset_bottom = 671.0
+scale = Vector2(-1, -1)
+texture_normal = SubResource("AtlasTexture_yu0ss")
+texture_pressed = SubResource("AtlasTexture_6aagf")
+texture_hover = SubResource("AtlasTexture_kyk5u")
+
+[node name="TextureButton2" type="TextureButton" parent="Control"]
+layout_mode = 0
+offset_left = 842.0
+offset_top = 549.0
+offset_right = 904.0
+offset_bottom = 612.0
+texture_normal = SubResource("AtlasTexture_yu0ss")
+texture_pressed = SubResource("AtlasTexture_6aagf")
+texture_hover = SubResource("AtlasTexture_kyk5u")
+
+[node name="TextureButton3" type="TextureButton" parent="Control"]
+offset_left = 414.0
+offset_top = 478.0
+offset_right = 477.0
+offset_bottom = 538.0
+scale = Vector2(4.5301, 4.12675)
+texture_normal = SubResource("AtlasTexture_cwqts")
+texture_hover = SubResource("AtlasTexture_th2ad")
+
 [node name="Map" type="MeshInstance3D" parent="."]
 mesh = ExtResource("2_fp2oq")
 skeleton = NodePath("../Control")
@@ -789,40 +796,23 @@ script = ExtResource("4_q2qps")
 transform = Transform3D(1, 0, 0, 0, -0.0264736, 0.99965, 0, -0.99965, -0.0264736, 0, 7.03009, 0)
 
 [node name="Path3D" type="Path3D" parent="."]
-transform = Transform3D(0.592554, 0.264182, -0.760978, 0.0366156, 0.934881, 0.353067, 0.804698, -0.237075, 0.544295, -3.87786, 1.76815, 2.65905)
+transform = Transform3D(0.592554, 0.264182, -0.760978, 0.0366156, 0.934881, 0.353067, 0.804698, -0.237075, 0.544295, -3.87786, 1.25198, 2.34227)
 curve = SubResource("Curve3D_2qdx2")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(-0.528799, 0.187262, 0.827827, 0.584765, 0.787305, 0.19544, -0.615156, 0.587435, -0.525831, -4.46676, 2.92008, -5.97736)
-progress = 17.2389
-script = ExtResource("5_2qdx2")
+transform = Transform3D(-0.232346, 0.20713, -0.950283, -0.109239, 0.965269, 0.237112, 0.966449, 0.158902, -0.201659, -0.123491, 0.303494, -1.6739)
+progress = 21.3744
 
 [node name="Camera3D" type="Camera3D" parent="Path3D/PathFollow3D"]
-transform = Transform3D(-0.409776, -0.0228606, 0.9119, 0.1596, 0.982468, 0.0963483, -0.898116, 0.18502, -0.398944, 0, 0, 0)
+transform = Transform3D(-0.362423, 0.112798, 0.925175, 0.195615, 0.979775, -0.0428223, -0.911273, 0.165459, -0.377144, 0.374949, -0.267445, -0.696169)
 script = ExtResource("5_yosvi")
 
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.64423, 0.307357, 0)
 
-[node name="TextureButton" type="TextureButton" parent="."]
-offset_left = 333.0
-offset_top = 608.0
-offset_right = 395.0
-offset_bottom = 671.0
-scale = Vector2(-1, -1)
-texture_normal = SubResource("AtlasTexture_yu0ss")
-texture_pressed = SubResource("AtlasTexture_6aagf")
-texture_hover = SubResource("AtlasTexture_kyk5u")
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_yu0ss")
 
-[node name="TextureButton2" type="TextureButton" parent="."]
-offset_left = 842.0
-offset_top = 549.0
-offset_right = 904.0
-offset_bottom = 612.0
-texture_normal = SubResource("AtlasTexture_yu0ss")
-texture_pressed = SubResource("AtlasTexture_6aagf")
-texture_hover = SubResource("AtlasTexture_kyk5u")
-
-[connection signal="button_down" from="Control/LEVEL1" to="Control" method="_on_level_1_button_down"]
-[connection signal="button_down" from="Control/LEVEL2" to="Control" method="_on_level_2_button_down"]
-[connection signal="button_down" from="Control/LEVEL3" to="Control" method="_on_level_3_button_down"]
+[connection signal="pressed" from="Control/TextureButton" to="Control" method="_on_texture_button_pressed"]
+[connection signal="pressed" from="Control/TextureButton2" to="Control" method="_on_texture_button_2_pressed"]
+[connection signal="pressed" from="Control/TextureButton3" to="Control" method="_on_texture_button_3_pressed"]
