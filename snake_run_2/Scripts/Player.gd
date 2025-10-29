@@ -76,6 +76,9 @@ var box_shape :BoxShape3D
 
 var has_weapon :bool = false
 
+## This is the strength at which snakes have on the player when ensnared 
+@export var snake_strength :float = 15
+
 
 func _ready():
 	camera = $rotation_helper/Camera3D
@@ -296,7 +299,7 @@ func _physics_process(delta: float) -> void:
 			time+= delta
 			
 
-			slow_move_back(ensnared_position,delta,wave(1,3,time,delta)+8.0)
+			slow_move_back(ensnared_position,delta,wave(1,3,time,delta)+snake_strength)
 			
 			if ((ensnared_position-self.get_global_position()).length() > .58):
 				snakes_around_you = 0 

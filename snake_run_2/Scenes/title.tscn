@@ -773,6 +773,7 @@ texture_pressed = SubResource("AtlasTexture_6aagf")
 texture_hover = SubResource("AtlasTexture_kyk5u")
 
 [node name="TextureButton3" type="TextureButton" parent="Control"]
+layout_mode = 0
 offset_left = 414.0
 offset_top = 478.0
 offset_right = 477.0
