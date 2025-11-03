@@ -27,6 +27,7 @@ var skip_frame :int = 1
 var willing_to_chase :bool = true
 
 var simlation_oneshot :bool = true
+var simlation_oneshot_stunn :bool = true
 
 var death_accumulator :float = 0 
 var death_timer :float = 9
@@ -262,14 +263,14 @@ func _physics_process(delta: float) -> void:
 		"stunned":
 			
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
-			if simlation_oneshot:
+			if simlation_oneshot_stunn:
 				#dead_snake.emit($BoneAttachment3D/tounge_1)
 				for each in test2:
 					if each.get_child_count() > 0:
 						bone_simulation_phys.active = true
 						each.physical_bones_start_simulation()
 						bone_overriding = false
-						simlation_oneshot = false
+						simlation_oneshot_stunn = false
 						skel.clear_bones_global_pose_override()
 						# also make is to the snake collides with nothing ( might fall through floor ) 
 				for area_examined in physical_bone_ref:
@@ -280,10 +281,13 @@ func _physics_process(delta: float) -> void:
 			stun_accumulator += delta
 			if stun_accumulator > stun_timer:
 				snake_state = "limp_RESET"
-				simlation_oneshot= true
+				simlation_oneshot_stunn= true
 				stun_accumulator = 0
 				
+				sway_head.position = Vector3(0,0,0) 
 				move_triangles_to_bones(tri_array)
+				# move head back to 0 just in case. 
+				
 				#snake_state = "null2"
 		"null2":
 			pass

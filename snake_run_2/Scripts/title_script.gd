@@ -87,20 +87,20 @@ func load_game():
 
 func level_access():
 	if load_game().contains("1"):
-		$TextureButton3.disabled = false
+		$TextureButton4.disabled = false
 	else:
 		$LEVEL1.disabled = true
 		
 	if load_game().contains("11"):
-		$TextureButton3.disabled = false
-		$Node2D/level_1_vid2.modulate = Color(1,1,1,1)
+		$TextureButton4.disabled = false
+		
 	else:
 		$TextureButton3.disabled = true
 	if load_game().contains("111"):
-		$TextureButton3.disabled = false
-		$Node2D/level_1_vid3.modulate = Color(1,1,1,1)
+		$TextureButton4.disabled = false
+
 	else:
-		$TextureButton3.disabled = true
+		$TextureButton4.disabled = true
 
 
 func setup_level():
@@ -131,7 +131,10 @@ func _on_texture_button_pressed() -> void:
 	sound_menu.play()
 
 
-func _on_texture_button_3_pressed() -> void:
+
+
+
+func _on_texture_button_4_pressed() -> void:
 	GlobalVars.next_level = "res://Scenes/"+current_selected_level+".tscn"
 	get_tree().change_scene_to_file("res://Scenes/loading.tscn")
 	setup_level()

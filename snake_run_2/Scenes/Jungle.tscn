@@ -199,10 +199,10 @@ transform = Transform3D(-0.799968, 0, 0.600043, 0, 1, 0, -0.600043, 0, -0.799968
 transform = Transform3D(-0.799968, 0, 0.600043, 0, 1, 0, -0.600043, 0, -0.799968, 3.01039, 6.10347, 16.2897)
 
 [node name="gun" parent="treasure" instance=ExtResource("13_35no0")]
-transform = Transform3D(0.419769, 0, 0.907631, 0, 1, 0, -0.907631, 0, 0.419769, 21.8337, 4.87624, -115.261)
+transform = Transform3D(-0.782521, 0, 0.622624, 0, 1, 0, -0.622624, 0, -0.782521, 27.8852, 5.06357, -115.797)
 
 [node name="gun2" parent="treasure" instance=ExtResource("13_35no0")]
-transform = Transform3D(0.419769, 0, 0.907631, 0, 1, 0, -0.907631, 0, 0.419769, 21.8337, 4.87624, -109.369)
+transform = Transform3D(0.942874, 0, 0.333149, 0, 1, 0, -0.333149, 0, 0.942874, 6.4001, 17.3724, -6.98553)
 
 [node name="gun3" parent="treasure" instance=ExtResource("13_35no0")]
 transform = Transform3D(0.419769, 0, 0.907631, 0, 1, 0, -0.907631, 0, 0.419769, 21.8337, 4.87624, -102.722)
@@ -218,6 +218,24 @@ transform = Transform3D(0.721954, 0, 0.691942, 0, 1, 0, -0.691942, 0, 0.721954, 
 
 [node name="Area3D2" parent="." instance=ExtResource("11_mpbyw")]
 transform = Transform3D(0.967625, 0, -0.25239, 0, 1, 0, 0.25239, 0, 0.967625, 27.5312, 6.32661, -116.467)
+
+[node name="Area3D3" parent="." instance=ExtResource("11_mpbyw")]
+transform = Transform3D(0.721954, 0, 0.691942, 0, 1, 0, -0.691942, 0, 0.721954, 59.2005, 7.06769, -16.8991)
+
+[node name="Area3D4" parent="." instance=ExtResource("11_mpbyw")]
+transform = Transform3D(0.967625, 0, -0.25239, 0, 1, 0, 0.25239, 0, 0.967625, 59.2005, 7.06769, -16.2141)
+
+[node name="Area3D5" parent="." instance=ExtResource("11_mpbyw")]
+transform = Transform3D(0.721954, 0, 0.691942, 0, 1, 0, -0.691942, 0, 0.721954, 40.4452, 6.3025, 16.5636)
+
+[node name="Area3D6" parent="." instance=ExtResource("11_mpbyw")]
+transform = Transform3D(0.967625, 0, -0.25239, 0, 1, 0, 0.25239, 0, 0.967625, 40.4452, 6.3025, 17.2486)
+
+[node name="Area3D7" parent="." instance=ExtResource("11_mpbyw")]
+transform = Transform3D(0.721954, 0, 0.691942, 0, 1, 0, -0.691942, 0, 0.721954, -25.2993, 8.38981, 13.7227)
+
+[node name="Area3D8" parent="." instance=ExtResource("11_mpbyw")]
+transform = Transform3D(0.967625, 0, -0.25239, 0, 1, 0, 0.25239, 0, 0.967625, -25.2993, 8.38981, 14.4077)
 
 [node name="Button" type="Button" parent="."]
 offset_left = 1036.0
@@ -260,12 +278,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.608, 7.82374, -30.0999)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.245, 7.82374, -4.85405)
 
 [node name="Snake11" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.93047, 7.82374, 66.2118)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.92533, 7.82374, 67.0415)
 
 [node name="Snake12" parent="." instance=ExtResource("12_35no0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.399, 7.82374, -31.2719)
 
 [node name="Snake13" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.34993, 7.82374, 66.1292)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.07497, 7.82374, 71.0783)
 
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
