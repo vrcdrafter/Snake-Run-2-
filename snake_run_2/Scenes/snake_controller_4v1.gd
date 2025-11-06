@@ -1,5 +1,5 @@
 extends Snake
-var ensnare_state :String = "path"
+var ensnare_state :String = "setup"
 var snake_state :String = "patrol"
 
 @onready var test_mesh :MeshInstance3D = get_node("../MeshInstance3D")
@@ -30,7 +30,7 @@ var simlation_oneshot :bool = true
 var simlation_oneshot_stunn :bool = true
 
 var death_accumulator :float = 0 
-var death_timer :float = 9
+var death_timer :float = 30
 
 var stun_accumulator :float = 0
 var stun_timer :float = .2
@@ -39,6 +39,11 @@ signal snake_removed
 
 var ensnarement_transform_snapline :Transform3D
 
+var animation_curve :Curve3D
+
+var ennarement_done :bool = false
+
+var target_animation :String
 func _ready() -> void:
 
 	#initialize spine 
@@ -112,41 +117,46 @@ func _physics_process(delta: float) -> void:
 				# its a animated spot run an animated ensnar 
 				snake_state = "ensnare_anim"			
 		"ensnare_anim": # meaning animated ensnarement
-
-
-			
-			# need to find right curve to use 
-			var target_animation :String = find_target_animation(snake_target)
-			var animation_curve :Curve3D # for now just play the first curve found
-			for i in all_animation_curves.size():
-				if all_animation_curves[i].resource_name == target_animation:
-					animation_curve = all_animation_curves[i]
-			# if at some point the player gets too close resume chase 
-			var ennarement_done :bool = false
-			
 			match ensnare_state:
+
+				"setup":
+					# need to find right curve to use 
+					target_animation = find_target_animation(snake_target)
+					 # for now just play the first curve found
+					for i in all_animation_curves.size():
+						if all_animation_curves[i].resource_name == target_animation:
+							animation_curve = all_animation_curves[i]
+							
+					ensnare_state = "path"
+					# if at some point the player gets too close resume chase 
+					
+			
+		
 			
 				"path":
 					bone_simulation_phys.active = false
 					ensnarement_transform_snapline = snake_target.global_transform
 					make_ensnarement_curve(ensnarement_points,tri_array,snake_target,animation_curve)
 
+					
 					var total_curve_length = curve.get_baked_length()
 					move_segments_to_path(total_curve_length - animation_curve.get_baked_length()) # so this 14.6 is the added curve length 
 				
 					if snake_target.name.contains("Player"):
-						ensnared.emit(snake_target)
+						#ensnared.emit(snake_target)
+						pass
 					ensnare_state = "run"
 				"run":
 					
 					var local_target_distance :float = (snake_target.global_position - tri_array[0].global_position).length()
 					twist_triangles(0)
-					if local_target_distance < 4: # keep trying to ensnare 
-						ennarement_done = move_segments_along_path(delta,3)
+					if local_target_distance < 15: # keep trying to ensnare 
+						ennarement_done = move_segments_along_path(delta,9)
 						
 						if ennarement_done:
 							move_segments_back_normal()
 							ensnare_state = "run_animation"
+							ensnared.emit(snake_target)
 							
 					else:
 						# means the prey esaped 
@@ -174,9 +184,11 @@ func _physics_process(delta: float) -> void:
 						transform_save = self.global_transform # note this line needs to run once too 
 						snake_animations.play(target_animation)
 						var transform_pre :Transform3D = self.global_transform
-						self.global_transform = ensnarement_transform_snapline # this doesnt quite work 
+						var rot_y = Transform3D(Basis(Vector3.UP, deg_to_rad(180)), Vector3.ZERO)
+						self.global_transform = ensnarement_transform_snapline * rot_y # this doesnt quite work 
 						self.global_transform.origin = self.global_transform.origin - Vector3(0,1,0)
 						transform_onestart = false
+						
 					# check to see if player gets close 
 
 					if onestart and not snake_target.name.contains("Player"):  #do not run this if you have a player 
@@ -232,10 +244,11 @@ func _physics_process(delta: float) -> void:
 						skel.clear_bones_global_pose_override()
 						# also make is to the snake collides with nothing ( might fall through floor ) 
 				for area_examined in physical_bone_ref:
-					area_examined.collision_mask = 9
-					area_examined.collision_layer = 9
+					area_examined.collision_mask = 7
+					area_examined.collision_layer = 7
 					area_examined.gravity_scale = 1
 					area_examined.mass = .1
+					area_examined.friction = .1
 					
 			death_accumulator += delta
 			if death_accumulator > death_timer:
@@ -309,6 +322,6 @@ func abort_universal_reset():
 		snake_state = "chase"
 	else :
 		snake_state = "patrol"
-	ensnare_state = "path"
+	ensnare_state = "setup"
 	
 	

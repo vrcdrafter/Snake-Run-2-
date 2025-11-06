@@ -131,46 +131,37 @@ func calc_length(skeleton :Skeleton3D):
 	return bone_length
 	
 func make_ensnarement_curve(ensnarement_data :PackedVector3Array, body_segment_pimitived :Array[MeshInstance3D],target :Node3D ,anim_curve :Curve3D = null):
-	# first check if the last argument is empty 
-
-	# first make curve for all points where snake is at that moment 
-	
-	var node :Node3D = self
-	var transform_global :Transform3D = self.global_transform
-	var rotation_global_y :float = self.rotation_degrees.y
-	var position_global :Vector3 = self.global_position
-	var rotation_global :Vector3 = self.rotation
-	var points :Array[Vector3] 
-	# fetches the triangle positions of wherever the snake is at the time 
-	for i in range(body_segment_pimitived.size()):
-		points.append((body_segment_pimitived[i].global_position - position_global).rotated(Vector3(0,1,0),deg_to_rad(rotation_global_y * -1)))
 	curve.clear_points()
-	points.pop_front() # have no idea why I have to do this 
-	# 
-
-	for i in points.size():
-		curve.add_point(points[(points.size()-1)-i]) # add the points in revers
-	# add points to current curve , no rotation yet
-	# check if there is unique animation argument added , if so add those points to the curve 
-	if not anim_curve == null:
+	var anim_ensnare_points :PackedVector3Array 
+	var anim_ensnare_points2 :PackedVector3Array 
+	var anim_ensnare_point_2_translated :PackedVector3Array
+	# make the curve where the snake is currently at . 
+	for each in body_segment_pimitived:
+		var local_transform :Vector3 = ensarement_path.to_local(each.global_position)
+		anim_ensnare_points.append(local_transform)
+	anim_ensnare_points.reverse()
+	# make the curve to slither into 
+	
+# Create a rotation transform (180° around Y) 	
+	for each in anim_curve.get_baked_points():
+		anim_ensnare_points2.append(each)
 		
-		# clear curve as is
+	var rot_y = Transform3D(Basis(Vector3.UP, deg_to_rad(180)), Vector3.ZERO)
+	var offset :Vector3 = Vector3(0,-1,0)
+	for each in anim_ensnare_points2:
+		var transform_test :Vector3 = (target.global_transform * rot_y) * each
+		var local_transform :Vector3 = ensarement_path.to_local(transform_test)
+		anim_ensnare_point_2_translated.append(local_transform + offset)
 		
-		var points_anim :PackedVector3Array  = anim_curve.get_baked_points()
-		for i in points_anim.size():
-			# really wierd transform order ., I have no idea why 
-			curve.add_point(target.global_transform * LOWER_OFFSET_TRANSFORM * points_anim[i] * self.global_transform) 
-			curve.set_point_tilt(i,deg_to_rad(45)) # why am I setting this manually 
-		# need to keep working here . 
 		
-	# of no unique animation add points to regular ensarment
-	else:
-		for i in ensnarement_data.size():
-
-			var magic_numver :Vector3 = target.global_position - position_global
-			curve.add_point((ensnarement_data[i]) + (magic_numver).rotated(Vector3(0,1,0),deg_to_rad(rotation_global_y * -1)) + Vector3(0,-.7,0)) 
+	anim_ensnare_points.append_array(anim_ensnare_point_2_translated)
+	
+	for each in anim_ensnare_points:
+		curve.add_point(each)
+	
 	ensarement_path.curve = curve
-
+	
+	
 func move_segments_to_path(offset_head):
 	# measure head and how far up it is on the path 
 	
@@ -454,14 +445,14 @@ func initialize_patrol_objects():
 			
 func find_target_animation(target_local :Node3D ) ->String:
 	var anim_name_local_array :Array[StringName] = target_local.get_groups()
-
-	var animation_to_return :String
+	var all_ensnare_animations :Array[StringName]
+	
 	for i in anim_name_local_array.size():
 		var test :StringName = anim_name_local_array[i]
 		if test.contains("anim"):
+			all_ensnare_animations.append(anim_name_local_array[i])
 			
-			animation_to_return = anim_name_local_array[i]
-	return animation_to_return
+	return all_ensnare_animations.pick_random()
 	
 
 func make_anim_timer() -> Timer: # at startup makes a timer in the tree
@@ -599,8 +590,8 @@ func make_physical_skeleton():
 		var colission_shape :CollisionShape3D = CollisionShape3D.new()
 		colission_shape.shape = capsule_mesh
 		one_physical_bone.add_child(colission_shape)
-		one_physical_bone.collision_layer = 3
-		one_physical_bone.collision_mask = 3
+		one_physical_bone.collision_layer = 0
+		one_physical_bone.collision_mask = 0
 		one_physical_bone.joint_type = PhysicalBone3D.JOINT_TYPE_6DOF
 		physical_bone_ref.append(one_physical_bone)
 
