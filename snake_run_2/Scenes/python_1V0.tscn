@@ -899,7 +899,7 @@ bones/33/rotation = Quaternion(1.95957e-07, 0.0159001, 0.999874, 1.45914e-08)
 bones/33/scale = Vector3(1, 1, 1)
 
 [node name="export_snake_mesh" type="MeshInstance3D" parent="snake_python/snake_export/Skeleton3D"]
-extra_cull_margin = 100.0
+extra_cull_margin = 1000.0
 mesh = SubResource("ArrayMesh_7lc6i")
 skin = SubResource("Skin_cyy1n")
 
@@ -909,7 +909,7 @@ libraries = {
 }
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="."]
-transform = Transform3D(0.910869, 0.399625, 0.10304, 0.016474, -0.284685, 0.95848, 0.412367, -0.871352, -0.265894, -0.382511, 2.42218, 1.15008)
+transform = Transform3D(0.910869, 0.399625, 0.10304, 0.016474, -0.284684, 0.95848, 0.412366, -0.871352, -0.265894, -0.382511, 2.42218, 1.15008)
 bone_name = "jaw"
 bone_idx = 33
 use_external_skeleton = true

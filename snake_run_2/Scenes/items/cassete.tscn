@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://dede7t10j8m8e"]
+
+[ext_resource type="Material" uid="uid://bkt64se33y38w" path="res://Materials/shine.tres" id="1_725f3"]
+[ext_resource type="Material" uid="uid://dl2rihtx14bjh" path="res://Materials/common_item_material.tres" id="2_725f3"]
+[ext_resource type="ArrayMesh" uid="uid://bl1h4ntl8rhkg" path="res://level_data/casset.obj" id="3_d7tsw"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hortj"]
+radius = 0.614698
+
+[node name="Area3D" type="Area3D" groups=["ammo", "item"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_hortj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." groups=["item"]]
+material_override = ExtResource("1_725f3")
+material_overlay = ExtResource("2_725f3")
+mesh = ExtResource("3_d7tsw")

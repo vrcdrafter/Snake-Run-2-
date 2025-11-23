@@ -87,6 +87,12 @@ var health_decremented :bool = false
  # really just using this for the triangles to snap to during damage hit 
 var colission_array :Array[CollisionShape3D]
 
+@onready var attacker :Node3D = get_node("BoneAttachment3D/tounge_1")
+
+var angle_local
+
+
+var bone_collission_reference :Array[PhysicalBone3D]
 
 func _init() -> void:
 
@@ -146,7 +152,15 @@ func make_ensnarement_curve(ensnarement_data :PackedVector3Array, body_segment_p
 	for each in anim_curve.get_baked_points():
 		anim_ensnare_points2.append(each)
 		
-	var rot_y = Transform3D(Basis(Vector3.UP, deg_to_rad(180)), Vector3.ZERO)
+		
+	var snake_head_global_position :Vector3 = attacker.global_position
+	var global_vector :Vector3 = target.global_position - snake_head_global_position
+	var local_vector_appoach :Vector3 = target.to_local(global_vector)
+	# how do I get the local angle between the target and the approach 
+	angle_local = atan2(local_vector_appoach.x, local_vector_appoach.z)
+	
+	
+	var rot_y = Transform3D(Basis(Vector3.UP, angle_local), Vector3.ZERO)
 	var offset :Vector3 = Vector3(0,-1,0)
 	for each in anim_ensnare_points2:
 		var transform_test :Vector3 = (target.global_transform * rot_y) * each
@@ -402,20 +416,16 @@ func initialize_ensnarment_curve():
 	
 	add_child(ensarement_path)
 	
-func move_segments_along_path(delta,speed_new :float) -> bool:
-	
-	
-	
-	for i in snake_vertibrea.size():
-		follow_path_array[i].progress += speed_new *delta
-	var temp_progress = follow_path_array[0].progress_ratio
-
+func move_segments_along_path(delta,speed_new :float) -> bool:	
 	if follow_path_array[0].progress_ratio > .99:
-		
 		return true
+	else:	
+		for i in snake_vertibrea.size():
+			follow_path_array[i].progress += speed_new *delta
+		var temp_progress = follow_path_array[0].progress_ratio
 		
-	else:
 		return false
+
 
 
 func initialize_timing_sway(): # function to randomize the snakes wavyness 
@@ -571,7 +581,7 @@ func make_physical_skeleton():
 	
 	for i in skeleton.get_bone_count():
 		var one_physical_bone :PhysicalBone3D = PhysicalBone3D.new()
-		
+	
 		bone_simulation_phys.add_child(one_physical_bone)
 		
 
@@ -590,8 +600,8 @@ func make_physical_skeleton():
 		var colission_shape :CollisionShape3D = CollisionShape3D.new()
 		colission_shape.shape = capsule_mesh
 		one_physical_bone.add_child(colission_shape)
-		one_physical_bone.collision_layer = 0
-		one_physical_bone.collision_mask = 0
+		one_physical_bone.collision_layer = 7
+		one_physical_bone.collision_mask = 7
 		one_physical_bone.joint_type = PhysicalBone3D.JOINT_TYPE_6DOF
 		physical_bone_ref.append(one_physical_bone)
 
@@ -654,3 +664,11 @@ func check_players():
 	var player_death_callable :Callable = Callable(self,"prey_dead")
 	for each in player_in_scene:
 		each.connect("dead",player_death_callable)
+		
+		
+func change_masking_bones(mask_int):
+	for each in physical_bone_ref:
+		each.collision_mask = mask_int
+		each.collision_layer = mask_int
+	
+	

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bfm582olwre7x"
+path="res://.godot/imported/temple_tree.obj-da71fc596d7d2b4037defaa22bb7d0ca.mesh"
+
+[deps]
+
+files=["res://.godot/imported/temple_tree.obj-da71fc596d7d2b4037defaa22bb7d0ca.mesh"]
+
+source_file="res://level_data/temple_tree.obj"
+dest_files=["res://.godot/imported/temple_tree.obj-da71fc596d7d2b4037defaa22bb7d0ca.mesh", "res://.godot/imported/temple_tree.obj-da71fc596d7d2b4037defaa22bb7d0ca.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

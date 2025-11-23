@@ -44,6 +44,9 @@ var animation_curve :Curve3D
 var ennarement_done :bool = false
 
 var target_animation :String
+
+var ensnared_position :Vector3 
+
 func _ready() -> void:
 
 	#initialize spine 
@@ -116,6 +119,8 @@ func _physics_process(delta: float) -> void:
 			if target_distance < 1 and snake_target.is_in_group("A"):
 				# its a animated spot run an animated ensnar 
 				snake_state = "ensnare_anim"			
+				var snake_target_name4 = snake_target.name
+				ensnared_position = snake_target.global_position
 		"ensnare_anim": # meaning animated ensnarement
 			match ensnare_state:
 
@@ -128,11 +133,7 @@ func _physics_process(delta: float) -> void:
 							animation_curve = all_animation_curves[i]
 							
 					ensnare_state = "path"
-					# if at some point the player gets too close resume chase 
-					
-			
-		
-			
+					# if at some point the player gets too close resume chase 			
 				"path":
 					bone_simulation_phys.active = false
 					ensnarement_transform_snapline = snake_target.global_transform
@@ -142,26 +143,45 @@ func _physics_process(delta: float) -> void:
 					var total_curve_length = curve.get_baked_length()
 					move_segments_to_path(total_curve_length - animation_curve.get_baked_length()) # so this 14.6 is the added curve length 
 				
-					if snake_target.name.contains("Player"):
-						#ensnared.emit(snake_target)
-						pass
+					if snake_target.name.contains("Player") and target_animation == "anim_ensnare_3":
+						ensnared.emit(snake_target,ensnared_position)
+						
 					ensnare_state = "run"
 				"run":
-					
+					ensnared_position = snake_target.global_position
 					var local_target_distance :float = (snake_target.global_position - tri_array[0].global_position).length()
 					twist_triangles(0)
-					if local_target_distance < 15: # keep trying to ensnare 
-						ennarement_done = move_segments_along_path(delta,9)
-						
-						if ennarement_done:
-							move_segments_back_normal()
-							ensnare_state = "run_animation"
-							ensnared.emit(snake_target)
+					# turn off the colission on the stupid snake 
+					change_masking_bones(0)
+					if target_animation == "anim_ensnare_3":
+						if local_target_distance < 4: # keep trying to ensnare 
+							ennarement_done = move_segments_along_path(delta,3)
 							
-					else:
-						# means the prey esaped 
+							if ennarement_done:
+								move_segments_back_normal()
+								ensnare_state = "run_animation"
+								
+						else:
+							# means the prey esaped 
+							
+							ensnare_state = "abort_dynamic"
+					
+					else: # for any other animation 
 						
-						ensnare_state = "abort_dynamic"
+						if local_target_distance < 10: # keep trying to ensnare 
+							ennarement_done = move_segments_along_path(delta,10)
+							
+							if ennarement_done and local_target_distance < 4:
+								move_segments_back_normal()
+								ensnare_state = "run_animation"
+								ensnared.emit(snake_target,ensnared_position) # run this if its the right animation or the player is in the rigth position
+							if ennarement_done and local_target_distance > 4:
+								ensnare_state = "abort_dynamic"
+						else:
+							# means the prey esaped 						
+							ensnare_state = "abort_dynamic"
+							
+							
 				"run_animation":
 					bone_simulation_phys.active = true
 					var local_target_distance_self :float = (snake_target.global_position - self.global_position).length() # this is the true snake to player at this point
@@ -184,7 +204,12 @@ func _physics_process(delta: float) -> void:
 						transform_save = self.global_transform # note this line needs to run once too 
 						snake_animations.play(target_animation)
 						var transform_pre :Transform3D = self.global_transform
-						var rot_y = Transform3D(Basis(Vector3.UP, deg_to_rad(180)), Vector3.ZERO)
+						
+
+						
+						
+						
+						var rot_y = Transform3D(Basis(Vector3.UP, angle_local), Vector3.ZERO)
 						self.global_transform = ensnarement_transform_snapline * rot_y # this doesnt quite work 
 						self.global_transform.origin = self.global_transform.origin - Vector3(0,1,0)
 						transform_onestart = false
@@ -214,8 +239,8 @@ func _physics_process(delta: float) -> void:
 			snake_target = target_player
 		
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
-			aggressivness = 5
-			movement_speed = 5
+			aggressivness = randf_range(5.0, 7.0)
+			movement_speed = randf_range(5.0, 10.0)
 			#find something to patrol to 
 			set_movement_target(snake_target.global_position) # assigns target
 			nav_startup_physics_process(delta,tri_array[0]) #starts up the navigation server 
@@ -323,5 +348,6 @@ func abort_universal_reset():
 	else :
 		snake_state = "patrol"
 	ensnare_state = "setup"
+	change_masking_bones(7)
 	
 	

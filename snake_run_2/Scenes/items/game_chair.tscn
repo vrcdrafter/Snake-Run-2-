@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://choncxrtj6bhm"]
+
+[ext_resource type="Material" uid="uid://bkt64se33y38w" path="res://Materials/shine.tres" id="1_tjb13"]
+[ext_resource type="Texture2D" uid="uid://feadnteaqgcw" path="res://textures/game_chair.png" id="2_tjb13"]
+[ext_resource type="ArrayMesh" uid="uid://oar708pvrsks" path="res://level_data/game_chair.obj" id="3_ym54y"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bnd7d"]
+size = Vector3(4.77307, 8.19385, 2.42651)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6x718"]
+shading_mode = 0
+albedo_texture = ExtResource("2_tjb13")
+
+[node name="game_chair" type="Area3D" groups=["item"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.941711, 3.59692, -0.714418)
+shape = SubResource("BoxShape3D_bnd7d")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.07889, -0.816634)
+material_override = ExtResource("1_tjb13")
+material_overlay = SubResource("StandardMaterial3D_6x718")
+mesh = ExtResource("3_ym54y")

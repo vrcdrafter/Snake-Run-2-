@@ -44,11 +44,12 @@ var joy_y_accum:float = 0
 var bullet_scene :PackedScene = preload("res://Scenes/bullet.tscn")
 
 # health stuff 
-var health :int = 10000
+var health :int = 100
 var death_oneshot :bool = false
 
 signal dead 
 var player_ensnared :Node3D
+var position_ensnared :Vector3
 var snake_that_died :Node3D
 
 signal player_added
@@ -300,7 +301,7 @@ func _physics_process(delta: float) -> void:
 			
 
 			slow_move_back(ensnared_position,delta,wave(1,3,time,delta)+snake_strength)
-			
+			var distance_to_free = (ensnared_position-self.get_global_position()).length()
 			if ((ensnared_position-self.get_global_position()).length() > .58):
 				snakes_around_you = 0 
 				ensnared = false
@@ -322,7 +323,7 @@ func _on_button_button_down():
 	emit_signal("remove_mouse")
 	GlobalVars.game_started = true
 
-func _on_snake_ensnared(player_ensnared,test):
+func _on_snake_ensnared(player_ensnared,position_ensnared,test):
 	print("should be ensnared ",player_ensnared.name)
 	if self == player_ensnared:
 		ensnared = true
@@ -376,8 +377,8 @@ func remake_connections():
 	var test2
 	for n in all_snakes:
 		print(n.name, "ic connected", n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,test])), all_snakes.size())
-		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,test])):
-			n.connect("ensnared",callable_ensnare.bind([player_ensnared,test]))
+		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test])):
+			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
 #	timer_handle.connect("timeout",timer_callable)
 #	game_over_button_handle.connect("pressed",reset_level)

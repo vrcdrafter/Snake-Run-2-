@@ -1,16 +1,6 @@
 # Blender 4.2.0 MTL File: 'temple.blend'
 # www.blender.org
 
-newmtl land
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.022858 0.800339 0.100048
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-
 newmtl rocks_large
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -18,5 +8,5 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 illum 2
-map_Kd C:/Users/mhawley/Desktop/github_stuff/Snake-Run-2-/snake_run_2/textures/rock_texture_jungle.png
-map_d C:/Users/mhawley/Desktop/github_stuff/Snake-Run-2-/snake_run_2/textures/rock_texture_jungle.png
+map_Kd C:/Users/mhawley/Desktop/snake_run_2/Snake-Run-2-/snake_run_2/textures/rock_texture_jungle.png
+map_d C:/Users/mhawley/Desktop/snake_run_2/Snake-Run-2-/snake_run_2/textures/rock_texture_jungle.png
