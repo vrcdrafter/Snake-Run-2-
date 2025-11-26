@@ -47,6 +47,10 @@ var target_animation :String
 
 var ensnared_position :Vector3 
 
+var player_references :Array
+
+var frame_counter :int = 0
+
 func _ready() -> void:
 
 	#initialize spine 
@@ -84,7 +88,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	
 
-	
+	player_references = check_player_references()
 	
 	snake_wave_pysics_process(delta) # initialize the snake wavyness
 	if health < 0:
@@ -331,7 +335,26 @@ func _physics_process(delta: float) -> void:
 			pass
 
 	if bone_overriding:
-		override_skeleton(skel)
+		frame_counter += 1
+		var distance_list :Array[float]
+		# check distance 
+		for each in player_references:
+			var distance :float = each.global_position.distance_to(tri_array[0].global_position)
+			distance_list.append(distance)
+			
+		var min_distance = distance_list.min()
+		
+		if min_distance < 30:
+			
+			frame_counter = 0
+			override_skeleton(skel)  #Run all the time 
+			
+		else:
+			if frame_counter > 50:
+				override_skeleton(skel) 
+				frame_counter = 0
+			else:
+				pass
 		
 		
 func abort_universal_reset():

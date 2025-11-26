@@ -80,6 +80,9 @@ var has_weapon :bool = false
 ## This is the strength at which snakes have on the player when ensnared 
 @export var snake_strength :float = 15
 
+@onready var vhs_icon :AnimatedSprite2D = get_node("/root/Node/vhs_icon")
+@onready var gold_icon :AnimatedSprite2D = get_node("/root/Node/gold_icon")
+@onready var chair_icon :AnimatedSprite2D = get_node("/root/Node/chair_icon")
 
 func _ready():
 	camera = $rotation_helper/Camera3D
@@ -91,7 +94,7 @@ func _ready():
 	#DOES NOT WORK AND NEEDS TO BE MOVED#
 	if GlobalVars.game_started == true:
 		emit_signal("remove_mouse")
-		print("should be removing the enable mouse button AAAAAAAAsDDD")
+	
 		emit_signal("snakes_go")
 		
 	$AudioStreamPlayer3D.play()
@@ -179,6 +182,11 @@ func _physics_process(delta: float) -> void:
 			rotation_helper.rotation = camera_rot
 			
 			event = Vector2(0,0)
+			
+		# Handle Jump.
+			if Input.is_action_just_pressed("jump") and is_on_floor():
+				velocity.y = JUMP_VELOCITY
+			
 		else:			
 			if Input.is_action_just_pressed("shoot_p" + player_id):
 				handle_shoot(delta)
@@ -194,23 +202,21 @@ func _physics_process(delta: float) -> void:
 			self.rotate_y(look_stick_angle.x * Joy_sensativity * -1 * delta)
 		
 		
-		var moving = false
+		
 		# Add the gravity. Pulls value from project settings.
 		if not is_on_floor():
 			velocity.y -= gravity * delta
 
-		# Handle Jump.
-		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
+
 
 		# This just controls acceleration. Don't touch it.
 		var accel
 		if dir.dot(velocity) > 0:
 			accel = ACCEL
-			moving = true
+		
 		else:
 			accel = DEACCEL
-			moving = false
+		
 			
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with a custom keymap depending on your control scheme. These strings default to the arrow keys layout.
@@ -486,7 +492,16 @@ func handle_shoot(delta :float):
 			
 			
 			examined_item.queue_free()
-			$ProgressBar.value += 1
+			var item_name = examined_item.name
+			match item_name:
+				"vhs_icon2":
+					vhs_icon.frame = 2
+				"gold_icon":
+					gold_icon.frame = 1
+				"game_chair":
+					chair_icon.frame = 1
+			
+			
 	elif has_weapon:
 		$AnimatedSprite2D.frame += 1
 		
