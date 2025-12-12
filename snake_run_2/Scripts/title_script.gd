@@ -26,6 +26,8 @@ var lerp_speed: float = 2.0  # Adjust for smoothness
 @onready var terminal :Label = $Label
 func _ready() -> void:
 	
+	$TextureButton4.disabled = false
+	
 	#build a file so its ready 
 	print("Starting at:", level_array[current_index])
 	if FileAccess.file_exists(path):
@@ -41,7 +43,7 @@ func _ready() -> void:
 		$Label2.text = "Jungle"
 		
 		# close the file 
-		
+		print(file.get_path_absolute())
 		
 	else:
 		# make a new one and make a default value 
@@ -53,7 +55,7 @@ func _ready() -> void:
 		file.close()
 	print(load_game())
 	
-	level_access() # asses what levels the player gets 
+	# asses what levels the player gets 
 	
 	target_progress = 21.37
 	
@@ -81,26 +83,15 @@ func load_game():
 	
 	
 
+func level_access(current_level: int) -> void:
+	var save_raw: String = load_game().strip_edges()
+	var highest_unlocked: int = 0
 
-
-
-
-func level_access():
-	if load_game().contains("1"):
-		$TextureButton4.disabled = false
-	else:
-		$LEVEL1.disabled = true
+	highest_unlocked = int(save_raw)
 		
-	if load_game().contains("11"):
-		$TextureButton4.disabled = false
-		
-	else:
-		$TextureButton3.disabled = true
-	if load_game().contains("111"):
-		$TextureButton4.disabled = false
+	$TextureButton4.disabled = current_level >= highest_unlocked
+			
 
-	else:
-		$TextureButton4.disabled = true
 
 
 func setup_level():
@@ -119,6 +110,7 @@ func _on_texture_button_2_pressed() -> void:
 		current_index = level_array.size() - 1  # Loop to the last item
 	print("Selected level:", level_array[current_index])
 	current_selected_level = level_array[current_index]
+	level_access(current_index)
 	sound_menu.play()
 
 
@@ -128,6 +120,7 @@ func _on_texture_button_pressed() -> void:
 		current_index = 0  # Loop back to start
 	print("Selected level:", level_array[current_index])
 	current_selected_level = level_array[current_index]
+	level_access(current_index)
 	sound_menu.play()
 
 
@@ -137,4 +130,5 @@ func _on_texture_button_pressed() -> void:
 func _on_texture_button_4_pressed() -> void:
 	GlobalVars.next_level = "res://Scenes/"+current_selected_level+".tscn"
 	get_tree().change_scene_to_file("res://Scenes/loading.tscn")
+	
 	setup_level()

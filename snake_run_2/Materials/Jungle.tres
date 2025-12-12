@@ -8,4 +8,5 @@ alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 cull_mode = 2
 shading_mode = 0
+albedo_color = Color(0.845129, 0.768461, 0.756065, 1)
 albedo_texture = ExtResource("1_n21b2")

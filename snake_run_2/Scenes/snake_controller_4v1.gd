@@ -51,6 +51,8 @@ var player_references :Array
 
 var frame_counter :int = 0
 
+var old_target_position :Vector3 = Vector3(0,0,0)
+
 func _ready() -> void:
 
 	#initialize spine 
@@ -111,7 +113,10 @@ func _physics_process(delta: float) -> void:
 			aggressivness = 12
 			movement_speed = 3
 			#find something to patrol to 
-			set_movement_target(snake_target.global_position) # assigns target
+			
+			if old_target_position.distance_to(snake_target.global_position) > .1  or  snake_target.is_in_group("Player"):
+			
+				set_movement_target(snake_target.global_position) # assigns target
 			nav_startup_physics_process(delta,tri_array[0]) #starts up the navigation server 
 			#start tris following eachother
 			follower(delta,tri_array,bone_length)
@@ -125,6 +130,8 @@ func _physics_process(delta: float) -> void:
 				snake_state = "ensnare_anim"			
 				var snake_target_name4 = snake_target.name
 				ensnared_position = snake_target.global_position
+				
+			old_target_position = snake_target.global_position
 		"ensnare_anim": # meaning animated ensnarement
 			match ensnare_state:
 
@@ -355,6 +362,8 @@ func _physics_process(delta: float) -> void:
 				frame_counter = 0
 			else:
 				pass
+				
+	
 		
 		
 func abort_universal_reset():

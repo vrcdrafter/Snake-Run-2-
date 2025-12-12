@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dws6u84xqhu83"]
+
+[ext_resource type="Script" path="res://Scripts/NPC_combat.gd" id="1_ykuam"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ykuam"]
+
+[node name="NPC" type="Node3D"]
+script = ExtResource("1_ykuam")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_ykuam")
+skeleton = NodePath("../..")

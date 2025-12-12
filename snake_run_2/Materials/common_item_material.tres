@@ -3,4 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://dg44sc556mgsu" path="res://textures/Common_item_texture.png" id="1_2rc54"]
 
 [resource]
+transparency = 1
+shading_mode = 0
 albedo_texture = ExtResource("1_2rc54")

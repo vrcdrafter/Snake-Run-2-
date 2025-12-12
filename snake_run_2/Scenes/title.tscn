@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://5s3bx0fea1h3"]
+[gd_scene load_steps=20 format=3 uid="uid://5s3bx0fea1h3"]
 
 [ext_resource type="Script" path="res://Scripts/title_script.gd" id="1_eysnh"]
 [ext_resource type="ArrayMesh" uid="uid://b0445x6gkuj3" path="res://level_data/Map.obj" id="2_fp2oq"]
@@ -23,11 +23,15 @@ region = Rect2(0, 64.9329, 66.3321, 63.0671)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cwqts"]
 atlas = ExtResource("3_yu0ss")
-region = Rect2(0, 62, 64, 65)
+region = Rect2(0, 62, 96, 65)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_th2ad"]
 atlas = ExtResource("3_yu0ss")
-region = Rect2(0, 0, 64, 64)
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qh4d7"]
+atlas = ExtResource("3_yu0ss")
+region = Rect2(0, 128, 96, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yosvi"]
 atlas = ExtResource("3_q2qps")
@@ -109,12 +113,13 @@ texture_hover = SubResource("AtlasTexture_kyk5u")
 layout_mode = 0
 offset_left = 467.0
 offset_top = 512.0
-offset_right = 531.0
-offset_bottom = 575.0
+offset_right = 532.0
+offset_bottom = 577.0
 rotation = 3.13791
 scale = Vector2(-2.41183, -2.43675)
 texture_normal = SubResource("AtlasTexture_cwqts")
 texture_hover = SubResource("AtlasTexture_th2ad")
+texture_disabled = SubResource("AtlasTexture_qh4d7")
 
 [node name="TextureButton2" type="TextureButton" parent="Control"]
 layout_mode = 0
@@ -149,7 +154,7 @@ transform = Transform3D(-0.232346, 0.20713, -0.950283, -0.109239, 0.965269, 0.23
 progress = 21.3744
 
 [node name="Camera3D" type="Camera3D" parent="Path3D/PathFollow3D"]
-transform = Transform3D(-0.362423, 0.112798, 0.925175, 0.195615, 0.979775, -0.0428222, -0.911273, 0.165459, -0.377144, 0.374952, -0.267445, -0.696171)
+transform = Transform3D(-0.362423, 0.112798, 0.925175, 0.195615, 0.979775, -0.0428223, -0.911273, 0.165459, -0.377145, 0.37495, -0.267445, -0.696172)
 script = ExtResource("5_yosvi")
 
 [node name="Marker3D" type="Marker3D" parent="."]

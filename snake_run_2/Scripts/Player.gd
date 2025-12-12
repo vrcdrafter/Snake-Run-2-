@@ -3,11 +3,11 @@ extends CharacterBody3D
 const ACCEL = 10
 const DEACCEL = 30
 
-const SPEED = 5.0
-const SPEED_CONTROLLER = 7.0
+const SPEED = 5
+const SPEED_CONTROLLER = 7
 const SPRINT_MULT = 3
 const JUMP_VELOCITY = 4.5
-const MOUSE_SENSITIVITY = 0.06
+const MOUSE_SENSITIVITY = 0.12
 @onready var animation_tree_new :AnimationTree = get_node("AnimationTree")
 
 # Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
@@ -114,6 +114,7 @@ func _ready():
 		$BoneAttachment3D/MeshInstance3D.set_visible(true)
 	else:
 		$BoneAttachment3D/MeshInstance3D.set_visible(false)
+		
 
 
 
@@ -149,7 +150,9 @@ func _physics_process(delta: float) -> void:
 	
 	
 	if death_oneshot:
+
 		$"source_fox/Armature (Mecha g)/Skeleton3D/PhysicalBoneSimulator3D".physical_bones_start_simulation()
+		
 		print("you died")
 	
 	
@@ -227,6 +230,8 @@ func _physics_process(delta: float) -> void:
 
 
 			if Input.is_key_pressed(KEY_SHIFT):
+			
+				
 				direction = direction * SPRINT_MULT
 				$AudioStreamPlayer.pitch_scale = 1.5
 			else:
@@ -487,19 +492,23 @@ func handle_shoot(delta :float):
 			$got_item.play()
 			
 			if examined_item.is_in_group("gun"):
+				$AnimatedSprite2D.visible = true
+				$AnimatedSprite2D2.visible = true
 				has_weapon = true
 				$BoneAttachment3D/MeshInstance3D.set_visible(true)
 			
 			
 			examined_item.queue_free()
 			var item_name = examined_item.name
-			match item_name:
-				"vhs_icon2":
-					vhs_icon.frame = 2
-				"gold_icon":
-					gold_icon.frame = 1
-				"game_chair":
-					chair_icon.frame = 1
+			if item_name == "vhs_icon2":
+				
+				vhs_icon.frame = 2
+			elif item_name.contains("treasure_"):
+				gold_icon.frame = 2
+			elif item_name == "game_chair":
+				chair_icon.frame = 2
+			else:
+				pass
 			
 			
 	elif has_weapon:

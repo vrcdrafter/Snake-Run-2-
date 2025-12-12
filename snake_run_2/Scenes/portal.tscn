@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://k1xk3gxjiuco"]
+
+[ext_resource type="ArrayMesh" uid="uid://dkafbhwox8x5l" path="res://level_data/base.obj" id="1_oi2tk"]
+[ext_resource type="Material" uid="uid://dl2rihtx14bjh" path="res://Materials/common_item_material.tres" id="2_dashy"]
+[ext_resource type="Script" path="res://Scripts/oscilate_base_text.gd" id="3_dashy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dashy"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Base" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_oi2tk")
+surface_material_override/0 = ExtResource("2_dashy")
+script = ExtResource("3_dashy")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_dashy")

@@ -94,6 +94,12 @@ var angle_local
 
 var bone_collission_reference :Array[PhysicalBone3D]
 
+var number_changed :bool = true
+
+var num_players :int
+
+var player_in_scene :Array = []
+
 func _init() -> void:
 
 
@@ -376,6 +382,8 @@ func nav_startup_ready():
 	
 	navigation_agent = NavigationAgent3D.new()
 	tri_array[0].add_child(navigation_agent)
+	navigation_agent.simplify_path
+	navigation_agent.simplify_epsilon = 3
 	#navigation_agent.path_postprocessing = NavigationPathQueryParameters3D.PATH_POSTPROCESSING_EDGECENTERED
 	
 	var _on_velocity_computed :Callable = Callable(self,"velocity_computed")
@@ -598,7 +606,7 @@ func make_physical_skeleton():
 			capsule_mesh.height = .5
 			capsule_mesh.radius = .2
 		var colission_shape :CollisionShape3D = CollisionShape3D.new()
-		colission_shape.disabled = true
+		colission_shape.disabled = false
 		colission_shape.shape = capsule_mesh
 		one_physical_bone.add_child(colission_shape)
 		one_physical_bone.collision_layer = 7
@@ -676,16 +684,28 @@ func change_masking_bones(mask_int):
 func check_player_references() -> Array:
 	var where_players_spawn :GridContainer = get_node("/root/Node/GridContainer")
 	
-	var num_players :int = where_players_spawn.get_child_count()
-
-	var player_in_scene :Array = []
-	if num_players != 1: 
-		# this means we got another player 
-		# go find it 
-		player_in_scene = get_tree().root.find_children("Player","CharacterBody3D",true,false)### attach all player connections so the snake is listening for player is dead
-		return player_in_scene
+	var player_save_state :int = num_players
+	num_players = where_players_spawn.get_child_count()
+	
+	if num_players != player_save_state:
+		number_changed = true
+		player_in_scene.clear()
+		
 	else:
-		player_in_scene.append(get_node("/root/Node/GridContainer/SubViewportContainer2/SubViewport/Player"))
+		number_changed = false
+	
+	if number_changed:
+	
+		if num_players == 2 : 
+			# this means we got another player 
+			# go find it 
+			player_in_scene = get_tree().root.find_children("Player","CharacterBody3D",true,false)### attach all player connections so the snake is listening for player is dead
+			return player_in_scene
+		else:
+			player_in_scene.append(get_node("/root/Node/GridContainer/SubViewportContainer2/SubViewport/Player"))
+			return player_in_scene
+			
+	else:
 		return player_in_scene
 		
 	
