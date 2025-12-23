@@ -30,6 +30,9 @@ var direction :Vector3
 var can_play_walk :bool = false
 var audio_toggle :bool = false
 
+@onready var grid_container :GridContainer = get_node("../../..")
+var get_number_players :int = 0
+
 # fetching mouse events from top sub viewport container 
 @onready var top_container_handle :SubViewportContainer = get_node("../..")
 var event : Vector2 
@@ -87,7 +90,7 @@ var has_weapon :bool = false
 func _ready():
 	camera = $rotation_helper/Camera3D
 	rotation_helper = $rotation_helper
-	
+	$pickup.hide()
 	setup_level()
 	
 	remake_connections()   
@@ -130,7 +133,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	
+	get_number_players = grid_container.get_children().size()
 	
 	
 	var dec_size = box_shape.size.x - 5 * delta
@@ -162,6 +165,7 @@ func _physics_process(delta: float) -> void:
 			
 			if Input.is_action_just_pressed("shoot"):
 				handle_shoot(delta)
+
 			event = top_container_handle.mouse_event
 			
 			# run a reload if you want 
@@ -193,6 +197,7 @@ func _physics_process(delta: float) -> void:
 		else:			
 			if Input.is_action_just_pressed("shoot_p" + player_id):
 				handle_shoot(delta)
+
 				
 			if Input.is_action_just_pressed("reload_p" + player_id):
 				animation_tree_new.set("parameters/reload/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
@@ -452,6 +457,16 @@ func check_ray(delta,ray :RayCast3D):
 		else:
 			if collider.is_in_group("item"):
 				
+				$pickup.show()
+				if get_number_players == 1:
+					
+					$pickup.global_position = Vector2i(270,311)
+					print("halved")
+				else :
+					
+					$pickup.global_position = Vector2i(270,311)
+					print("halved")
+				$pickup.play()
 				
 				if has_weapon:
 				
@@ -471,6 +486,7 @@ func check_ray(delta,ray :RayCast3D):
 					
 	else:
 		check_stuf_timer_accum += delta
+		$pickup.hide()
 	
 	if check_stuf_timer_accum > check_stuf_timer:
 		can_pickup_item = false
@@ -490,7 +506,7 @@ func handle_shoot(delta :float):
 			pass
 		else:
 			$got_item.play()
-			
+
 			if examined_item.is_in_group("gun"):
 				$AnimatedSprite2D.visible = true
 				$AnimatedSprite2D2.visible = true
@@ -500,10 +516,10 @@ func handle_shoot(delta :float):
 			
 			examined_item.queue_free()
 			var item_name = examined_item.name
-			if item_name == "vhs_icon2":
+			if item_name == "vhs_icon":
 				
 				vhs_icon.frame = 2
-			elif item_name.contains("treasure_"):
+			elif item_name.contains("gold_icon"):
 				gold_icon.frame = 2
 			elif item_name == "game_chair":
 				chair_icon.frame = 2

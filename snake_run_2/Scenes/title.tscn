@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://5s3bx0fea1h3"]
+[gd_scene load_steps=22 format=3 uid="uid://5s3bx0fea1h3"]
 
 [ext_resource type="Script" path="res://Scripts/title_script.gd" id="1_eysnh"]
 [ext_resource type="ArrayMesh" uid="uid://b0445x6gkuj3" path="res://level_data/Map.obj" id="2_fp2oq"]
 [ext_resource type="Texture2D" uid="uid://b2awemstcdgb1" path="res://textures/water (1).png" id="3_q2qps"]
 [ext_resource type="Texture2D" uid="uid://djfslir86gl65" path="res://textures/start_block.png" id="3_yu0ss"]
 [ext_resource type="Script" path="res://Scenes/animated_sprite_3d.gd" id="4_q2qps"]
+[ext_resource type="Texture2D" uid="uid://c0aqwlkqii503" path="res://textures/land_map.png" id="5_6aagf"]
 [ext_resource type="Script" path="res://Scripts/menu_camera.gd" id="5_yosvi"]
 [ext_resource type="Texture2D" uid="uid://6uq37fr0cqkh" path="res://textures/arrow.png" id="7_3eqdi"]
 [ext_resource type="AudioStream" uid="uid://csn7ukujgbqp3" path="res://sounds/Menu.wav" id="7_yu0ss"]
@@ -32,6 +33,9 @@ region = Rect2(0, 0, 96, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_qh4d7"]
 atlas = ExtResource("3_yu0ss")
 region = Rect2(0, 128, 96, 64)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kyk5u"]
+albedo_texture = ExtResource("5_6aagf")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yosvi"]
 atlas = ExtResource("3_q2qps")
@@ -134,6 +138,7 @@ texture_hover = SubResource("AtlasTexture_kyk5u")
 [node name="Map" type="MeshInstance3D" parent="."]
 mesh = ExtResource("2_fp2oq")
 skeleton = NodePath("../Control")
+surface_material_override/0 = SubResource("StandardMaterial3D_kyk5u")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Map"]
 transform = Transform3D(13.715, 0, 0, 0, 1.6355e-07, 13.715, 0, -13.715, 1.6355e-07, 0, 0, 0)
@@ -154,7 +159,7 @@ transform = Transform3D(-0.232346, 0.20713, -0.950283, -0.109239, 0.965269, 0.23
 progress = 21.3744
 
 [node name="Camera3D" type="Camera3D" parent="Path3D/PathFollow3D"]
-transform = Transform3D(-0.362423, 0.112798, 0.925175, 0.195615, 0.979775, -0.0428223, -0.911273, 0.165459, -0.377145, 0.37495, -0.267445, -0.696172)
+transform = Transform3D(-0.362424, 0.112798, 0.925175, 0.195615, 0.979775, -0.0428222, -0.911273, 0.165459, -0.377145, 0.374951, -0.267445, -0.696173)
 script = ExtResource("5_yosvi")
 
 [node name="Marker3D" type="Marker3D" parent="."]

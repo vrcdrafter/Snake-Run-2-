@@ -53,16 +53,26 @@ func _process(delta: float) -> void:
 	Bubble.smooth_follow
 
 
-func _on_area_3d_area_entered(area: Area3D) -> void:
-	if area.is_in_group("Player_ai_area"):
-		Bubble.start("1")
-		start_timer = false
-		dialoge_accum = 0 
+
 	
 func _on_char_displayed(_idx):
 	audio_player.play()
 
 
-func _on_area_3d_area_exited(area: Area3D) -> void:
-	if area.is_in_group("Player_ai_area"):
+
+
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	var name_local = body.name
+	if name_local == "Physical Bone elbow_r":
+		Bubble.start("1")
+		start_timer = false
+		dialoge_accum = 0 
+		
+
+
+func _on_area_3d_body_exited(body: Node3D) -> void:
+	var name_local = body.name
+	if name_local == "Physical Bone elbow_r":
 		start_timer = true
+		

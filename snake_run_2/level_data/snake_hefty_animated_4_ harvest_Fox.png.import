@@ -2,20 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0aqwlkqii503"
-path="res://.godot/imported/land_map.png-d179b6a0ec92adc18a95415dd7212b7e.ctex"
+uid="uid://6eksahnq8klk"
+path.s3tc="res://.godot/imported/snake_hefty_animated_4_ harvest_Fox.png-e1bf7dd2397153743ae9747abbdd6115.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "450620d339e6c4e4b6118e48b17bb6bb"
 }
 
 [deps]
 
-source_file="res://textures/land_map.png"
-dest_files=["res://.godot/imported/land_map.png-d179b6a0ec92adc18a95415dd7212b7e.ctex"]
+source_file="res://level_data/snake_hefty_animated_4_ harvest_Fox.png"
+dest_files=["res://.godot/imported/snake_hefty_animated_4_ harvest_Fox.png-e1bf7dd2397153743ae9747abbdd6115.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

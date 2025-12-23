@@ -31,15 +31,17 @@ func _ready() -> void:
 	#build a file so its ready 
 	print("Starting at:", level_array[current_index])
 	if FileAccess.file_exists(path):
+		
 		#do a read 
 		file = FileAccess.open(path,FileAccess.READ)
 		print("data esists")
-		terminal.text = "file already exists \n"
-		terminal.text = "is is here \n " + file.get_path_absolute() + "\n"
+		
+		terminal.text += "is is here " + file.get_path_absolute() + "\n"
+		#terminal.text += OS.get_data_dir()
 		# load it 
 		
 		
-		terminal.text = load_game() +"\n"
+		terminal.text += load_game() +"\n"
 		$Label2.text = "Jungle"
 		
 		# close the file 
