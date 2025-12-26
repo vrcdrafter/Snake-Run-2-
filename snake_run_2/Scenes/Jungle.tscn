@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cty2blbsnp16o"]
+[gd_scene load_steps=33 format=3 uid="uid://cty2blbsnp16o"]
 
 [ext_resource type="Script" path="res://Scripts/detect_controller_script.gd" id="1_1rm5b"]
 [ext_resource type="Script" path="res://Scenes/sub_viewport_container_2.gd" id="2_i4sut"]
@@ -7,7 +7,6 @@
 [ext_resource type="Material" uid="uid://bacbevq55vllh" path="res://Materials/Jungle.tres" id="6_5punl"]
 [ext_resource type="ArrayMesh" uid="uid://tir1sb21mnvv" path="res://level_data/temple_text.obj" id="6_udigb"]
 [ext_resource type="PackedScene" uid="uid://ck2n0oi2noe2x" path="res://Scenes/items/gold1.tscn" id="8_xqhwl"]
-[ext_resource type="PackedScene" uid="uid://di8nqxe5hv7cx" path="res://Scenes/items/gold2.tscn" id="9_xqhwl"]
 [ext_resource type="AudioStream" uid="uid://bg5dvq7dji8ix" path="res://sounds/audio_hero_NightJungleAmbienc+PE011101.mp3" id="10_vm8cy"]
 [ext_resource type="PackedScene" uid="uid://duj445gwmyx3u" path="res://Scenes/items/ammo.tscn" id="11_mpbyw"]
 [ext_resource type="PackedScene" uid="uid://b324c7udfages" path="res://Scenes/python_1V0.tscn" id="12_35no0"]
@@ -240,35 +239,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.0263, 8.37254, -48.7774)
 
 [node name="treasure" type="Node3D" parent="."]
 
-[node name="Area3D" parent="treasure" instance=ExtResource("8_xqhwl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.59489, 3.15874, -0.375839)
+[node name="teasure_1" parent="treasure" instance=ExtResource("8_xqhwl")]
+transform = Transform3D(0.707859, 0, -0.706354, 0, 1, 0, 0.706354, 0, 0.707859, -11.879, 3.15874, -0.281266)
 
-[node name="Area3D2" parent="treasure" instance=ExtResource("9_xqhwl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.46291, 2.81092, 0)
+[node name="teasure_2" parent="treasure" instance=ExtResource("8_xqhwl")]
+transform = Transform3D(0.674277, 0, 0.738479, 0, 1, 0, -0.738479, 0, 0.674277, -13.4545, 3.15874, 3.08468)
 
-[node name="Area3D3" parent="treasure" instance=ExtResource("8_xqhwl")]
-transform = Transform3D(0.783889, 0, 0.620902, 0, 1, 0, -0.620902, 0, 0.783889, -9.30374, 3.15874, -0.664004)
+[node name="teasure_3" parent="treasure" instance=ExtResource("8_xqhwl")]
+transform = Transform3D(0.767221, 0, -0.641383, 0, 1, 0, 0.641383, 0, 0.767221, -13.6986, 3.15874, 6.79918)
 
-[node name="Area3D4" parent="treasure" instance=ExtResource("9_xqhwl")]
-transform = Transform3D(0.783889, 0, 0.620902, 0, 1, 0, -0.620902, 0, 0.783889, -11.3186, 2.81092, 1.41137)
-
-[node name="Area3D5" parent="treasure" instance=ExtResource("8_xqhwl")]
-transform = Transform3D(0.963593, 0, 0.267373, 0, 1, 0, -0.267373, 0, 0.963593, -8.9796, 3.15874, 5.14804)
-
-[node name="Area3D6" parent="treasure" instance=ExtResource("9_xqhwl")]
-transform = Transform3D(0.963593, 0, 0.267373, 0, 1, 0, -0.267373, 0, 0.963593, -11.6427, 2.81092, 6.27703)
-
-[node name="Area3D7" parent="treasure" instance=ExtResource("8_xqhwl")]
-transform = Transform3D(0.221583, 0, 0.975142, 0, 1, 0, -0.975142, 0, 0.221583, -13.6975, 3.15874, 8.94362)
-
-[node name="Area3D8" parent="treasure" instance=ExtResource("9_xqhwl")]
-transform = Transform3D(0.221583, 0, 0.975142, 0, 1, 0, -0.975142, 0, 0.221583, -13.9665, 2.81092, 11.8236)
-
-[node name="Area3D9" parent="treasure" instance=ExtResource("8_xqhwl")]
-transform = Transform3D(-0.799968, 0, 0.600043, 0, 1, 0, -0.600043, 0, -0.799968, -11.9241, 3.15874, 14.8694)
-
-[node name="Area3D10" parent="treasure" instance=ExtResource("9_xqhwl")]
-transform = Transform3D(-0.799968, 0, 0.600043, 0, 1, 0, -0.600043, 0, -0.799968, -9.4043, 2.81092, 16.2897)
+[node name="teasure_4" parent="treasure" instance=ExtResource("8_xqhwl")]
+transform = Transform3D(-0.998141, 0, -0.060944, 0, 1, 0, 0.060944, 0, -0.998141, -13.6499, 3.15874, 9.36713)
 
 [node name="gun" parent="treasure" instance=ExtResource("13_35no0")]
 transform = Transform3D(-0.782521, 0, 0.622624, 0, 1, 0, -0.622624, 0, -0.782521, 15.4705, 1.77102, -115.797)

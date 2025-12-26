@@ -37,7 +37,7 @@ func _ready() -> void:
 		print("data esists")
 		
 		terminal.text += "is is here " + file.get_path_absolute() + "\n"
-		#terminal.text += OS.get_data_dir()
+		terminal.text += OS.get_data_dir()
 		# load it 
 		
 		

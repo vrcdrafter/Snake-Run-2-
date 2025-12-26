@@ -516,10 +516,10 @@ func handle_shoot(delta :float):
 			
 			examined_item.queue_free()
 			var item_name = examined_item.name
-			if item_name == "vhs_icon":
+			if item_name == "VHS_new":
 				
 				vhs_icon.frame = 2
-			elif item_name.contains("gold_icon"):
+			elif item_name.contains("teasure"):
 				gold_icon.frame = 2
 			elif item_name == "game_chair":
 				chair_icon.frame = 2

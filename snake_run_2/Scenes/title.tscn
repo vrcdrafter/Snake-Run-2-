@@ -159,7 +159,7 @@ transform = Transform3D(-0.232346, 0.20713, -0.950283, -0.109239, 0.965269, 0.23
 progress = 21.3744
 
 [node name="Camera3D" type="Camera3D" parent="Path3D/PathFollow3D"]
-transform = Transform3D(-0.362424, 0.112798, 0.925175, 0.195615, 0.979775, -0.0428222, -0.911273, 0.165459, -0.377145, 0.374951, -0.267445, -0.696173)
+transform = Transform3D(-0.362424, 0.112798, 0.925175, 0.195615, 0.979775, -0.0428222, -0.911273, 0.165459, -0.377145, 0.374953, -0.267445, -0.696174)
 script = ExtResource("5_yosvi")
 
 [node name="Marker3D" type="Marker3D" parent="."]
