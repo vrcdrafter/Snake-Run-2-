@@ -21,6 +21,8 @@ var spine_integer :int = 0
 
 @onready var parent :Node3D = get_node("../mouse_soldier2")
 
+@onready var tree :AnimationTree = get_node("../AnimationTree")
+
 
 	
 func _ready() -> void:
@@ -52,15 +54,19 @@ func _process(delta: float) -> void:
 
 	if current_angle > 45 and current_angle <= 135 :
 		parent.set_rotation_degrees(Vector3(0,90,0)) 
+		tree.set("parameters/BlendSpace2D/blend_position", Vector2(-1, 0))
 	elif current_angle > 135 and current_angle <= 225 :
 		
 		parent.set_rotation_degrees(Vector3(0,180,0)) 
+		tree.set("parameters/BlendSpace2D/blend_position", Vector2(0, -1))
 		
 	elif current_angle > 225 and current_angle <= 315 :
 		parent.set_rotation_degrees(Vector3(0,270,0)) 
+		tree.set("parameters/BlendSpace2D/blend_position", Vector2(1, 0))
 		
 	elif current_angle > 315 or current_angle <= 45 :
 		parent.set_rotation_degrees(Vector3(0,0,0)) 
+		tree.set("parameters/BlendSpace2D/blend_position", Vector2(0, 1))
 	else:
 		pass
 		
