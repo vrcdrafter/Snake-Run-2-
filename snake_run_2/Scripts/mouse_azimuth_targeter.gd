@@ -23,6 +23,8 @@ var spine_integer :int = 0
 
 @onready var tree :AnimationTree = get_node("../AnimationTree")
 
+@onready var detection_area :Area3D = get_node("../Detection")
+
 
 	
 func _ready() -> void:
@@ -70,3 +72,11 @@ func _process(delta: float) -> void:
 	else:
 		pass
 		
+
+
+func _on_detection_body_entered(body: Node3D) -> void:
+	var body_detected :String = body.name
+	var body_parent :String = body.get_parent().get_parent().name
+	var body_parent2 :String = body.get_parent().get_parent().get_parent().name
+	var body_parent3 :String = body.get_parent().get_parent().get_parent().get_parent().get_parent().name
+	print(body_detected)
