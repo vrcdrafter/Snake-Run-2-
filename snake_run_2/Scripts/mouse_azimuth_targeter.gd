@@ -7,7 +7,7 @@ var angle :float = 0
 @onready var snake_target :Node3D = get_node("/root/Node/Snake/BoneAttachment3D/tounge_1")
 
 @onready var skeleton_for_measure :Skeleton3D = get_node("../mouse_soldier2/Armature (Mecha g)_002/Skeleton3D")
-
+@onready var skeleton_il :SkeletonIK3D = get_node("../mouse_soldier2/Armature (Mecha g)_002/Skeleton3D/SkeletonIK3D")
 
 var hips_integer :int = 0 
 var spine_integer :int = 0 
@@ -38,7 +38,7 @@ func _ready() -> void:
 		if immediate_name == "Chest":
 			spine_integer = i
 	# 
-	
+	skeleton_il.start()
 	
 
 
@@ -76,7 +76,10 @@ func _process(delta: float) -> void:
 
 func _on_detection_body_entered(body: Node3D) -> void:
 	var body_detected :String = body.name
-	var body_parent :String = body.get_parent().get_parent().name
-	var body_parent2 :String = body.get_parent().get_parent().get_parent().name
-	var body_parent3 :String = body.get_parent().get_parent().get_parent().get_parent().get_parent().name
-	print(body_detected)
+	if body is PhysicalBone3D:
+
+		var immediate_bone :PhysicalBone3D = body
+		
+		var bone_name :String = immediate_bone.bone_name # uhhg I want the name of the bone now , like the bone Name 
+		if bone_name.contains("head"):
+			snake_target = immediate_bone
