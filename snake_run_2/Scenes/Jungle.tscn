@@ -15,10 +15,10 @@
 [ext_resource type="PackedScene" uid="uid://choncxrtj6bhm" path="res://Scenes/items/game_chair.tscn" id="14_v88kg"]
 [ext_resource type="PackedScene" uid="uid://dede7t10j8m8e" path="res://Scenes/items/cassete.tscn" id="15_0vauo"]
 [ext_resource type="PackedScene" uid="uid://brymwetlsv2rp" path="res://Scenes/crocko.tscn" id="16_qiwoi"]
-[ext_resource type="PackedScene" uid="uid://dws6u84xqhu83" path="res://Scenes/NPC_combat.tscn" id="17_agkn7"]
 [ext_resource type="PackedScene" uid="uid://k1xk3gxjiuco" path="res://Scenes/portal.tscn" id="18_j6r50"]
 [ext_resource type="Texture2D" uid="uid://cuoy5fl6jasg4" path="res://textures/vhs.png" id="19_ni4ou"]
 [ext_resource type="Texture2D" uid="uid://d3rj6moiljaqc" path="res://textures/treasure.png" id="20_6e3xr"]
+[ext_resource type="PackedScene" uid="uid://dtjmtnv35shjq" path="res://Scenes/mouse.tscn" id="20_sbbgh"]
 [ext_resource type="Texture2D" uid="uid://cgauuwt4wj0og" path="res://textures/gaming_chair.png" id="21_dmxrc"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_nlxrt"]
@@ -303,6 +303,9 @@ script = ExtResource("12_tm7on")
 [node name="Snake" parent="." instance=ExtResource("12_35no0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5927, 7.82374, -24.8998)
 
+[node name="BoneAttachment3D" parent="Snake" index="1"]
+transform = Transform3D(0.910869, 0.399625, 0.10304, 0.016474, -0.284684, 0.95848, 0.412366, -0.871352, -0.265894, -0.382511, 2.42218, 1.15008)
+
 [node name="Snake2" parent="." instance=ExtResource("12_35no0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.8015, 7.82374, -47.3041)
 
@@ -348,9 +351,6 @@ transform = Transform3D(0.454789, -0.207767, 0, 0.207574, 0.454366, 0.0215481, -
 [node name="Crocko" parent="." instance=ExtResource("16_qiwoi")]
 transform = Transform3D(0.134254, 0, 0.0669014, 0, 0.15, 0, -0.0669014, 0, 0.134254, 7.37068, 4.8828, -113.504)
 
-[node name="NPC" parent="." instance=ExtResource("17_agkn7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3565, 2.36282, -112.496)
-
 [node name="Node3D2" parent="." instance=ExtResource("18_j6r50")]
 transform = Transform3D(3.42, 0, 0, 0, 3.42, 0, 0, 0, 3.42, 10.2606, 3.34941, -119.183)
 
@@ -369,4 +369,10 @@ visible = false
 position = Vector2(52, 393)
 sprite_frames = SubResource("SpriteFrames_ie2k7")
 
+[node name="Main_node" parent="." instance=ExtResource("20_sbbgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7758, 2.2414, -111.675)
+
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
+
+[editable path="Snake"]
+[editable path="Snake/BoneAttachment3D/tounge_1"]

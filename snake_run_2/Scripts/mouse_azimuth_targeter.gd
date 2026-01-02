@@ -1,10 +1,10 @@
-@tool
+
 
 extends Node3D
 
 var angle :float = 0 
 
-@onready var snake_target :Marker3D = get_node("../../snake_head")
+@onready var snake_target :Node3D = get_node("/root/Node/Snake/BoneAttachment3D/tounge_1")
 
 @onready var skeleton_for_measure :Skeleton3D = get_node("../mouse_soldier2/Armature (Mecha g)_002/Skeleton3D")
 
@@ -17,7 +17,7 @@ var spine_integer :int = 0
 
 @onready var orientation :Node3D = get_node("../mouse_soldier2")
 
-@onready var text_1 :Label3D = get_node("../../Label3D")
+
 
 @onready var parent :Node3D = get_node("../mouse_soldier2")
 
@@ -50,7 +50,7 @@ func _process(delta: float) -> void:
 	
 	var current_angle :float = self.rotation_degrees.y + 180
 	
-	text_1.text = str(fmod(orientation.rotation_degrees.y + 360,  360)) + "\n" + str(self.rotation_degrees.y + 180)  
+  
 
 	if current_angle > 45 and current_angle <= 135 :
 		parent.set_rotation_degrees(Vector3(0,90,0)) 
