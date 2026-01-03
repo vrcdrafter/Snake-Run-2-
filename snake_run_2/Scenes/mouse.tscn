@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://dtjmtnv35shjq"]
+[gd_scene load_steps=31 format=4 uid="uid://dtjmtnv35shjq"]
 
 [ext_resource type="Texture2D" uid="uid://xangndpnoa2f" path="res://level_data/mouse_soldier2_crocko2_Common_item_texture.png" id="1_dev0r"]
 [ext_resource type="Script" path="res://Scripts/NPC_combat.gd" id="1_erwuk"]
@@ -7,7 +7,6 @@
 [ext_resource type="Animation" uid="uid://1lj5n7vvba25" path="res://Resources/mouse_shoot.res" id="4_5rgqy"]
 [ext_resource type="Animation" uid="uid://ctxjmbndwvdhx" path="res://Resources/mouse_side_step.res" id="5_uwmpi"]
 [ext_resource type="Animation" uid="uid://ju8errorok6i" path="res://Resources/mouse_idle.res" id="6_ffywo"]
-[ext_resource type="Script" path="res://Scripts/mouse_azimuth_targeter.gd" id="6_uwmpi"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c6w4r"]
 resource_name = "mouse"
@@ -858,7 +857,7 @@ bones/0/name = "Hips"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, -2.17551e-09, 1.13505e-09, -1.13505e-09, 0, 1, -2.17551e-09, -1, 0, 6.38829e-09, 0.914339, -0.0124)
 bones/0/enabled = true
-bones/0/position = Vector3(6.3365e-09, 0.904898, -0.0312812)
+bones/0/position = Vector3(6.3421e-09, 0.905919, -0.0292401)
 bones/0/rotation = Quaternion(-0.707107, 1.17046e-09, 3.67859e-10, 0.707107)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Spine"
@@ -950,21 +949,21 @@ bones/13/parent = 0
 bones/13/rest = Transform3D(0.960671, 0.267377, 0.0749735, 0.0496896, -0.431151, 0.90091, 0.273207, -0.861753, -0.42748, 0.098, 1.4688e-08, -5.94934e-08)
 bones/13/enabled = true
 bones/13/position = Vector3(0.098, 1.4688e-08, -5.94934e-08)
-bones/13/rotation = Quaternion(-0.822047, 0.123943, -0.233238, 0.504457)
+bones/13/rotation = Quaternion(-0.821512, 0.124114, -0.232925, 0.50543)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/name = "Left knee"
 bones/14/parent = 13
 bones/14/rest = Transform3D(0.973255, -0.121848, 0.194749, 0.211904, 0.148781, -0.965899, 0.0887183, 0.981334, 0.170622, -1.62981e-08, 0.322806, 3.07336e-08)
 bones/14/enabled = true
 bones/14/position = Vector3(-1.62981e-08, 0.322806, 3.07336e-08)
-bones/14/rotation = Quaternion(0.6286, 0.0362538, 0.108017, 0.769338)
+bones/14/rotation = Quaternion(0.628051, 0.0363, 0.107933, 0.769796)
 bones/14/scale = Vector3(1, 1, 1)
 bones/15/name = "Left ankle"
 bones/15/parent = 14
 bones/15/rest = Transform3D(0.966166, 0.257588, -0.0131013, 0.0186789, -0.019218, 0.999641, 0.257244, -0.966064, -0.0233792, 1.39698e-09, 0.390764, 2.79397e-08)
 bones/15/enabled = true
 bones/15/position = Vector3(1.39698e-09, 0.390764, 2.79397e-08)
-bones/15/rotation = Quaternion(-0.685211, -0.100225, -0.0827949, 0.716649)
+bones/15/rotation = Quaternion(-0.684312, -0.100327, -0.0826676, 0.717508)
 bones/15/scale = Vector3(1, 1, 1)
 bones/16/name = "Left toe"
 bones/16/parent = 15
@@ -978,21 +977,21 @@ bones/17/parent = 0
 bones/17/rest = Transform3D(0.96241, -0.262013, -0.0715259, -0.0477583, -0.422503, 0.905102, -0.267369, -0.867664, -0.419134, -0.098, 1.51144e-08, -5.97159e-08)
 bones/17/enabled = true
 bones/17/position = Vector3(-0.098, 1.51144e-08, -5.97159e-08)
-bones/17/rotation = Quaternion(-0.718255, -0.102962, 0.121548, 0.6773)
+bones/17/rotation = Quaternion(-0.717533, -0.10303, 0.121367, 0.678086)
 bones/17/scale = Vector3(1, 1, 1)
 bones/18/name = "Right knee"
 bones/18/parent = 17
 bones/18/rest = Transform3D(0.975004, 0.119232, -0.187487, -0.205553, 0.163678, -0.964862, -0.0843549, 0.979282, 0.184095, 2.32831e-09, 0.329414, -3.44589e-08)
 bones/18/enabled = true
 bones/18/position = Vector3(2.32831e-09, 0.329414, -3.44589e-08)
-bones/18/rotation = Quaternion(0.6087, -0.0354354, -0.10195, 0.786025)
+bones/18/rotation = Quaternion(0.607148, -0.0355172, -0.101704, 0.787253)
 bones/18/scale = Vector3(1, 1, 1)
 bones/19/name = "Right ankle"
 bones/19/parent = 18
 bones/19/rest = Transform3D(0.973436, -0.228848, -0.00708753, 0.0131627, 0.0250311, 0.9996, -0.228579, -0.97314, 0.0273785, 1.07102e-08, 0.398097, 1.21072e-08)
 bones/19/enabled = true
 bones/19/position = Vector3(1.07102e-08, 0.398097, 1.21072e-08)
-bones/19/rotation = Quaternion(-0.650283, 0.081716, 0.0793609, 0.751103)
+bones/19/rotation = Quaternion(-0.647988, 0.0819132, 0.0790583, 0.753095)
 bones/19/scale = Vector3(1, 1, 1)
 bones/20/name = "Right toe"
 bones/20/parent = 19
@@ -1035,7 +1034,7 @@ mesh = SubResource("ArrayMesh_u5tu0")
 skin = SubResource("Skin_orvcp")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="mouse_soldier2/Armature (Mecha g)_002/Skeleton3D"]
-transform = Transform3D(0.435142, -0.723889, 0.535383, 0.899727, 0.371927, -0.228389, -0.033795, 0.581081, 0.813144, 0.111616, 1.34691, 0.571045)
+transform = Transform3D(0.435142, -0.723889, 0.535383, 0.899727, 0.371927, -0.228389, -0.033795, 0.581081, 0.813144, 0.111616, 1.34794, 0.573086)
 bone_name = "hang_l"
 bone_idx = 8
 
@@ -1044,7 +1043,7 @@ transform = Transform3D(0.361464, 0.928249, -0.0877337, -0.710003, 0.33502, 0.61
 mesh = ExtResource("2_kxv04")
 
 [node name="BoneAttachment3D2" type="BoneAttachment3D" parent="mouse_soldier2/Armature (Mecha g)_002/Skeleton3D"]
-transform = Transform3D(1, -2.17551e-09, 1.13505e-09, -1.13505e-09, 0, 1, -2.17551e-09, -1, 0, 6.3365e-09, 0.904898, -0.0312812)
+transform = Transform3D(1, -2.17551e-09, 1.13505e-09, -1.13505e-09, 0, 1, -2.17551e-09, -1, 0, 6.3421e-09, 0.905919, -0.0292401)
 bone_name = "Hips"
 bone_idx = 0
 
@@ -1149,9 +1148,6 @@ libraries = {
 
 [node name="Node3D" type="Node3D" parent="."]
 transform = Transform3D(1, 0.000202129, -8.72727e-05, 0, 0.396396, 0.918076, 0.000220166, -0.918077, 0.396396, -0.000152573, 1.60501, 0.0817018)
-script = ExtResource("6_uwmpi")
-transform_1 = Transform3D(1, 3.24623e-09, 7.2389e-08, -1.04591e-09, 0.999539, -0.0303751, -7.24542e-08, 0.0303751, 0.999539, 1.23823e-08, 1.04674, -0.0172)
-transform_2 = Transform3D(1, 0.000202129, -8.72727e-05, 0, 0.396396, 0.918076, 0.000220166, -0.918077, 0.396396, -0.000152573, 1.60501, 0.692992)
 
 [node name="Marker3D" type="Marker3D" parent="Node3D"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.00640047, 0.296312, 0.179272)
@@ -1176,4 +1172,4 @@ mesh = SubResource("PrismMesh_erwuk")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)
 shape = SubResource("BoxShape3D_erwuk")
 
-[connection signal="body_entered" from="Detection" to="Node3D" method="_on_detection_body_entered"]
+[connection signal="body_entered" from="Detection" to="." method="_on_detection_body_entered"]

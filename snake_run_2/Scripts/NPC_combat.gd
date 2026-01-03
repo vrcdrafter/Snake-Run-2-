@@ -5,13 +5,14 @@ var AI_STATE :String = "patrol"
 func _ready() -> void:
 	
 	startup_navigation_ready()
+	initialize_targeting()
 
 
 
 
 func _process(delta: float) -> void:
 	
-	
+	run_targeting()
 	_process_navigation(delta)
 	
 	

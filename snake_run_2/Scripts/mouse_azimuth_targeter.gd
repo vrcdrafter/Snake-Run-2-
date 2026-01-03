@@ -3,26 +3,16 @@
 extends Node3D
 
 var angle :float = 0 
-
 @onready var snake_target :Node3D = get_node("/root/Node/Snake/BoneAttachment3D/tounge_1")
-
 @onready var skeleton_for_measure :Skeleton3D = get_node("../mouse_soldier2/Armature (Mecha g)_002/Skeleton3D")
 @onready var skeleton_il :SkeletonIK3D = get_node("../mouse_soldier2/Armature (Mecha g)_002/Skeleton3D/SkeletonIK3D")
-
 var hips_integer :int = 0 
 var spine_integer :int = 0 
-
 @export var transform_1 :Transform3D 
 @export var transform_2 :Transform3D 
-
 @onready var orientation :Node3D = get_node("../mouse_soldier2")
-
-
-
 @onready var parent :Node3D = get_node("../mouse_soldier2")
-
 @onready var tree :AnimationTree = get_node("../AnimationTree")
-
 @onready var detection_area :Area3D = get_node("../Detection")
 
 
