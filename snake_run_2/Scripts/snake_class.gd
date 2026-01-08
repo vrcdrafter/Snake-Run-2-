@@ -168,6 +168,9 @@ func make_ensnarement_curve(ensnarement_data :PackedVector3Array, body_segment_p
 	
 	var rot_y = Transform3D(Basis(Vector3.UP, angle_local), Vector3.ZERO)
 	var offset :Vector3 = Vector3(0,-1,0)
+	var snake_target_name = snake_target.name
+	if snake_target_name == "Mouse":
+		offset = Vector3(0,0,0)
 	for each in anim_ensnare_points2:
 		var transform_test :Vector3 = (target.global_transform * rot_y) * each
 		var local_transform :Vector3 = ensarement_path.to_local(transform_test)
@@ -565,6 +568,7 @@ func connect_player_signals(): #what this does is connect the players signals if
 	
 func found_prey(player_to_chase,test):
 	found_player = true
+	var prey_name =player_to_chase.name
 
 	target_player = player_to_chase
 	

@@ -153,8 +153,8 @@ func _physics_process(delta: float) -> void:
 					
 					var total_curve_length = curve.get_baked_length()
 					move_segments_to_path(total_curve_length - animation_curve.get_baked_length()) # so this 14.6 is the added curve length 
-				
-					if snake_target.name.contains("Player") and target_animation == "anim_ensnare_3":
+					var target_name = snake_target.name
+					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse"))  and target_animation == "anim_ensnare_3":
 						ensnared.emit(snake_target,ensnared_position)
 						
 					ensnare_state = "run"
@@ -166,7 +166,7 @@ func _physics_process(delta: float) -> void:
 					change_masking_bones(0)
 					if target_animation == "anim_ensnare_3":
 						if local_target_distance < 4: # keep trying to ensnare 
-							ennarement_done = move_segments_along_path(delta,3)
+							ennarement_done = move_segments_along_path(delta,5)
 							
 							if ennarement_done:
 								move_segments_back_normal()
@@ -180,7 +180,7 @@ func _physics_process(delta: float) -> void:
 					else: # for any other animation 
 						
 						if local_target_distance < 10: # keep trying to ensnare 
-							ennarement_done = move_segments_along_path(delta,10)
+							ennarement_done = move_segments_along_path(delta,13)
 							
 							if ennarement_done and local_target_distance < 4:
 								move_segments_back_normal()
@@ -214,15 +214,13 @@ func _physics_process(delta: float) -> void:
 					if transform_onestart:
 						transform_save = self.global_transform # note this line needs to run once too 
 						snake_animations.play(target_animation)
-						var transform_pre :Transform3D = self.global_transform
-						
-
-						
-						
 						
 						var rot_y = Transform3D(Basis(Vector3.UP, angle_local), Vector3.ZERO)
-						self.global_transform = ensnarement_transform_snapline * rot_y # this doesnt quite work 
-						self.global_transform.origin = self.global_transform.origin - Vector3(0,1,0)
+						self.global_transform = ensnarement_transform_snapline * rot_y # this doesnt quite work
+						var offset :Vector3 = Vector3(0,1,0)
+						if snake_target.name == "Mouse":
+							offset = Vector3(0,0,0)
+						self.global_transform.origin = self.global_transform.origin - offset
 						transform_onestart = false
 						
 					# check to see if player gets close 
@@ -247,6 +245,7 @@ func _physics_process(delta: float) -> void:
 		"chase":
 			found_player = false
 			# make it so the target is the player 			snake_target = target_player
+			var named_think = target_player.name
 			snake_target = target_player
 		
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
@@ -259,7 +258,7 @@ func _physics_process(delta: float) -> void:
 			follower(delta,tri_array,bone_length)
 			
 			# chase is intereting because it stays here unless the target is far away , 
-			if target_distance > 8:
+			if target_distance > 17:
 				snake_state = "patrol"
 			if target_distance < 1: 
 				snake_state = "ensnare_anim"

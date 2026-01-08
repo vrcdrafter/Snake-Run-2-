@@ -126,7 +126,7 @@ script = ExtResource("2_i4sut")
 
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 handle_input_locally = false
-size = Vector2i(1152, 648)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("3_udigb")]
@@ -302,9 +302,6 @@ script = ExtResource("12_tm7on")
 
 [node name="Snake" parent="." instance=ExtResource("12_35no0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5927, 7.82374, -24.8998)
-
-[node name="BoneAttachment3D" parent="Snake" index="1"]
-transform = Transform3D(0.910869, 0.399625, 0.10304, 0.016474, -0.284684, 0.95848, 0.412366, -0.871352, -0.265894, -0.382511, 2.42218, 1.15008)
 
 [node name="Snake2" parent="." instance=ExtResource("12_35no0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.8015, 7.82374, -47.3041)

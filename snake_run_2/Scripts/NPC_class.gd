@@ -7,7 +7,7 @@ class_name NPC
 
 
 
-@export var movement_speed: float = 4.0
+@export var movement_speed: float = 9
 @onready var navigation_agent: NavigationAgent3D = get_node("NavigationAgent3D")
 var movement_delta: float
 
@@ -25,9 +25,26 @@ var spine_integer :int = 0
 @onready var parent :Node3D = get_node("mouse_soldier2")
 @onready var tree :AnimationTree = get_node("AnimationTree")
 @onready var thing_to_aim :Node3D = get_node("Node3D")
+var bullet_scene :PackedScene = preload("res://Scenes/bullet.tscn")
+var turn_speed := 6.0  # higher = snappier turnin
+@onready var test_target = get_node("MeshInstance3D")
+var enemy_array :Array[Node3D] = []
+@onready var text_diag :Label3D = get_node("Label3D")
 
+var shooting_timer :float = .2
+var shooting_accumulator :float = 0 
 
+@onready var player = get_node("/root/Node/GridContainer/SubViewportContainer2/SubViewport/Player")
 
+# Velocity stuff
+var velocity = Vector3.ZERO
+var last_position = Vector3.ZERO
+
+# signal variables 
+
+var player_ensnared :Node3D
+var position_ensnared :Vector3
+var snake_that_died :Node3D
 
 	
 
@@ -49,16 +66,28 @@ func _process_navigation(delta):
 
 	movement_delta = movement_speed * delta
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
+	
+	# Compute desired travel direction (ignore vertical)
+	var to_target: Vector3 = next_path_position - global_position
+	to_target.y = 0.0
+	# If we have a direction, rotate yaw toward it
+	if to_target.length() > 0.001:
+		# Godot's "forward" is -Z, so yaw is atan2(x, z)
+		var target_yaw := atan2(to_target.x, to_target.z)
+		rotation.y = lerp_angle(rotation.y, target_yaw, turn_speed * delta)
+	
+	
 	var new_velocity: Vector3 = global_position.direction_to(next_path_position) * movement_delta
 	if navigation_agent.avoidance_enabled:
 		navigation_agent.set_velocity(new_velocity)
 	else:
 		_on_velocity_computed(new_velocity)
 		
+		
 func startup_navigation_ready():
 	navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
 	
-	set_movement_target(Vector3(0,0,0))
+	set_movement_target(player.global_position)
 	
 	
 func initialize_targeting():
@@ -72,47 +101,133 @@ func initialize_targeting():
 	skeleton_il.start()
 	
 	
-func run_targeting():
+func run_targeting(delta :float) -> bool:
 	
-	if snake_target == null:
-		pass
+	# check_velocity . 
+	
+	velocity = (global_position - last_position) / delta
+	last_position = global_position
+	print(velocity.length())
+	
+	
+	
+	if enemy_array.size() == 0: 
+		skeleton_il.stop()
+		parent.set_rotation_degrees(Vector3(0,0,0)) 
+
+		
+		if velocity.length() == 0:
+			tree.set("parameters/Add2/add_amount", 0.0)
+			return false
+		else:
+			tree.set("parameters/Add2/add_amount", 1.0)
+			tree.set("parameters/BlendSpace2D/blend_position", Vector2(-1, 0))
+			return false
+		
+		
+		
+		
 	else:
-	
+		
+		
+		shooting_accumulator += delta
+		if shooting_accumulator > shooting_timer:
+			#spawn_bullet(delta)
+			shooting_accumulator = 0
+		
+		
+		
+		skeleton_il.start()
 		transform_1 = skeleton_for_measure.get_bone_global_pose_no_override(hips_integer)
 		#transform_2 = skeleton_for_measure.get_bone_global_pose_no_override(spine_integer)
 		transform_2 = thing_to_aim.global_transform
-		thing_to_aim.look_at(snake_target.global_position, Vector3(0, 1, 0))
+		thing_to_aim.look_at(enemy_array[0].global_position, Vector3(0, 1, 0))
 		
 		var current_angle :float = thing_to_aim.rotation_degrees.y + 180
-		
-	  
-
-		if current_angle > 45 and current_angle <= 135 :
-			parent.set_rotation_degrees(Vector3(0,90,0)) 
-			tree.set("parameters/BlendSpace2D/blend_position", Vector2(-1, 0))
-		elif current_angle > 135 and current_angle <= 225 :
-			
-			parent.set_rotation_degrees(Vector3(0,180,0)) 
-			tree.set("parameters/BlendSpace2D/blend_position", Vector2(0, -1))
-			
-		elif current_angle > 225 and current_angle <= 315 :
-			parent.set_rotation_degrees(Vector3(0,270,0)) 
-			tree.set("parameters/BlendSpace2D/blend_position", Vector2(1, 0))
-			
-		elif current_angle > 315 or current_angle <= 45 :
-			parent.set_rotation_degrees(Vector3(0,0,0)) 
-			tree.set("parameters/BlendSpace2D/blend_position", Vector2(0, 1))
+		if velocity.length() == 0:
+			tree.set("parameters/Add2/add_amount", 0.0)
+			return true
 		else:
-			pass
+			tree.set("parameters/Add2/add_amount", 1.0)
+			if current_angle > 45 and current_angle <= 135 :
+				parent.set_rotation_degrees(Vector3(0,90,0)) 
+				tree.set("parameters/BlendSpace2D/blend_position", Vector2(-1, 0))
+				return true
+			elif current_angle > 135 and current_angle <= 225 :
+				
+				parent.set_rotation_degrees(Vector3(0,180,0)) 
+				tree.set("parameters/BlendSpace2D/blend_position", Vector2(0, -1))
+				return true
+				
+			elif current_angle > 225 and current_angle <= 315 :
+				parent.set_rotation_degrees(Vector3(0,270,0)) 
+				tree.set("parameters/BlendSpace2D/blend_position", Vector2(1, 0))
+				return true
+				
+			elif current_angle > 315 or current_angle <= 45 :
+				parent.set_rotation_degrees(Vector3(0,0,0)) 
+				tree.set("parameters/BlendSpace2D/blend_position", Vector2(0, 1))
+				return true
+			else:
+				tree.set("parameters/BlendSpace2D/blend_position", Vector2(1, 0))
+				return false
 	
 	
-	
-func _on_detection_body_entered(body: Node3D) -> void:
-	var body_detected :String = body.name
-	if body is PhysicalBone3D:
 
-		var immediate_bone :PhysicalBone3D = body
+			
+			
+func spawn_bullet(delta :float):
+	
+	
+	var bullet_instance :Node3D = bullet_scene.instantiate()
+
+
+	var pt1 :Marker3D = get_node("mouse_soldier2/Armature (Mecha g)_002/Skeleton3D/BoneAttachment3D/MeshInstance3D/Marker3D")
+
+	var transform_end_of_gun :Transform3D = pt1.global_transform
+
+	bullet_instance.global_transform = transform_end_of_gun
+	
+	get_tree().root.add_child(bullet_instance)
+	
+
+			
+
+
+			
+			
+func _on_detection_area_entered(area: Area3D) -> void:
+	var area_name :String = area.name
+	if area_name.contains("hitbox1"):
+	
+		enemy_array.append(area)
 		
-		var bone_name :String = immediate_bone.bone_name # uhhg I want the name of the bone now , like the bone Name 
-		if bone_name.contains("head"):
-			snake_target = immediate_bone
+func _on_detection_area_exited(area: Area3D) -> void:
+	var area_name :String = area.name
+	if area_name.contains("hitbox1"):
+		enemy_array.erase(area)
+		
+		
+func remake_connections():
+	
+	var all_snakes :Array = get_tree().get_nodes_in_group("snake")
+	
+
+
+	var callable_ensnare = Callable(self, "_on_snake_ensnared")
+
+
+	var callable_dead_snake = Callable(self,"turn_off_ensnared")
+	var test
+	var test2
+	for n in all_snakes:
+		print(n.name, "ic connected", n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,test])), all_snakes.size())
+		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test])):
+			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test]))
+			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
+	
+func _on_snake_ensnared(player_ensnared,position_ensnared,test):
+	print("should be ensnared ",player_ensnared.name)
+	pass
+	
+	
