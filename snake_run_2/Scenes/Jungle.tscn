@@ -301,43 +301,40 @@ Click here"
 script = ExtResource("12_tm7on")
 
 [node name="Snake" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5927, 7.82374, -24.8998)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.6719, 4.38788, -4.21543)
 
 [node name="Snake2" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.8015, 7.82374, -47.3041)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.6719, 4.38788, -4.21543)
 
 [node name="Snake3" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2408, 7.82374, -75.3088)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.6719, 4.38788, -4.21543)
 
 [node name="Snake4" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1615, 7.82374, -75.3088)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.6719, 4.38788, -4.21543)
 
 [node name="Snake5" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.91987, 7.82374, 29.997)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.5873, 4.38788, -15.7627)
 
 [node name="Snake6" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.18838, 7.82374, -54.2561)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.5873, 4.38788, -15.7627)
 
 [node name="Snake7" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.7279, 7.82374, -54.2561)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.5873, 4.38788, -15.7627)
 
 [node name="Snake8" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.9072, 7.82374, -38.2512)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.5873, 4.38788, -15.7627)
 
 [node name="Snake9" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.7371, 7.82374, -46.4805)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.59871, 4.38788, -37.3351)
 
 [node name="Snake10" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.1159, 7.82374, -21.2347)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.59871, 4.38788, -37.3351)
 
 [node name="Snake11" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.0544, 7.82374, 50.6609)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.59871, 4.38788, -37.3351)
 
 [node name="Snake12" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7301, 7.82374, -47.6525)
-
-[node name="Snake13" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.8349, 5.75068, 54.6977)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.59871, 4.38788, -37.3351)
 
 [node name="game_chair" parent="." instance=ExtResource("14_v88kg")]
 transform = Transform3D(-0.460572, 0, 0.19461, 0, 0.5, 0, -0.19461, 0, -0.460572, -61.8604, 13.0679, 70.8924)
@@ -346,7 +343,7 @@ transform = Transform3D(-0.460572, 0, 0.19461, 0, 0.5, 0, -0.19461, 0, -0.460572
 transform = Transform3D(0.454789, -0.207767, 0, 0.207574, 0.454366, 0.0215481, -0.008954, -0.0195997, 0.499535, 44.9115, 5.97364, 42.6514)
 
 [node name="Crocko" parent="." instance=ExtResource("16_qiwoi")]
-transform = Transform3D(0.134254, 0, 0.0669014, 0, 0.15, 0, -0.0669014, 0, 0.134254, 7.37068, 4.8828, -113.504)
+transform = Transform3D(0.134254, 0, 0.0669014, 0, 0.15, 0, -0.0669014, 0, 0.134254, 7.37068, 4.8828, -113.222)
 
 [node name="Node3D2" parent="." instance=ExtResource("18_j6r50")]
 transform = Transform3D(3.42, 0, 0, 0, 3.42, 0, 0, 0, 3.42, 10.2606, 3.34941, -119.183)
@@ -366,10 +363,32 @@ visible = false
 position = Vector2(52, 393)
 sprite_frames = SubResource("SpriteFrames_ie2k7")
 
-[node name="Main_node" parent="." instance=ExtResource("20_sbbgh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7758, 2.2414, -111.675)
+[node name="Mouse" parent="." instance=ExtResource("20_sbbgh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2447, 2.37739, -109.336)
 
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
 
 [editable path="Snake"]
 [editable path="Snake/BoneAttachment3D/tounge_1"]
+[editable path="Snake2"]
+[editable path="Snake2/BoneAttachment3D/tounge_1"]
+[editable path="Snake3"]
+[editable path="Snake3/BoneAttachment3D/tounge_1"]
+[editable path="Snake4"]
+[editable path="Snake4/BoneAttachment3D/tounge_1"]
+[editable path="Snake5"]
+[editable path="Snake5/BoneAttachment3D/tounge_1"]
+[editable path="Snake6"]
+[editable path="Snake6/BoneAttachment3D/tounge_1"]
+[editable path="Snake7"]
+[editable path="Snake7/BoneAttachment3D/tounge_1"]
+[editable path="Snake8"]
+[editable path="Snake8/BoneAttachment3D/tounge_1"]
+[editable path="Snake9"]
+[editable path="Snake9/BoneAttachment3D/tounge_1"]
+[editable path="Snake10"]
+[editable path="Snake10/BoneAttachment3D/tounge_1"]
+[editable path="Snake11"]
+[editable path="Snake11/BoneAttachment3D/tounge_1"]
+[editable path="Snake12"]
+[editable path="Snake12/BoneAttachment3D/tounge_1"]

@@ -569,7 +569,6 @@ func connect_player_signals(): #what this does is connect the players signals if
 func found_prey(player_to_chase,test):
 	found_player = true
 	var prey_name =player_to_chase.name
-
 	target_player = player_to_chase
 	
 func prey_dead():

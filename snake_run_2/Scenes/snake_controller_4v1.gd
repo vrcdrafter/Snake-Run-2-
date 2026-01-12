@@ -53,6 +53,8 @@ var frame_counter :int = 0
 
 var old_target_position :Vector3 = Vector3(0,0,0)
 
+signal let_go_prey
+
 func _ready() -> void:
 
 	#initialize spine 
@@ -96,9 +98,11 @@ func _physics_process(delta: float) -> void:
 	if health < 0:
 		snake_state = "null"
 		
+		
 	if health_decremented:
 		snake_state = "stunned"
 		health_decremented = false
+		
 
 		#snake_state = "null"
 	# have snake start to chase target 
@@ -121,15 +125,21 @@ func _physics_process(delta: float) -> void:
 			#start tris following eachother
 			follower(delta,tri_array,bone_length)
 			# if condition if its just a relay point
-			if target_distance < 1 and not snake_target.is_in_group("A"): # meaning its just a way point 
-				# pick new object
-				snake_target = pick_new_target(snake_target)
-			# if condition if its a animated object 
-			if target_distance < 1 and snake_target.is_in_group("A"):
-				# its a animated spot run an animated ensnar 
-				snake_state = "ensnare_anim"			
-				var snake_target_name4 = snake_target.name
-				ensnared_position = snake_target.global_position
+			
+			# so here is a odd edge, sometimes your still chasing the player 
+			if target_distance < 1 and snake_target.name.contains("Player") or snake_target.name.contains("Mouse"):
+				snake_state = "chase" # go back to chasing 
+				
+			else: # go ahead and pick a new waypoint 
+				if target_distance < 1 and not snake_target.is_in_group("A"): # meaning its just a way point 
+					# pick new object
+					snake_target = pick_new_target(snake_target)
+				# if condition if its a animated object 
+				if target_distance < 1 and snake_target.is_in_group("A"):
+					# its a animated spot run an animated ensnar 
+					snake_state = "ensnare_anim"			
+					var snake_target_name4 = snake_target.name
+					ensnared_position = snake_target.global_position
 				
 			old_target_position = snake_target.global_position
 		"ensnare_anim": # meaning animated ensnarement
@@ -203,10 +213,10 @@ func _physics_process(delta: float) -> void:
 					else:
 						discernment_distance = local_target_distance_self
 					
-					if snake_target.name.contains("Player") and discernment_distance > 3:
+					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse")) and discernment_distance > 3:
 						
 						timer_up = true
-					if found_player and not snake_target.name.contains("Player"): 
+					if found_player and not (snake_target.name.contains("Player") or snake_target.name.contains("Mouse")): 
 						timer_up = true
 						
 					bone_overriding = false
@@ -219,13 +229,14 @@ func _physics_process(delta: float) -> void:
 						self.global_transform = ensnarement_transform_snapline * rot_y # this doesnt quite work
 						var offset :Vector3 = Vector3(0,1,0)
 						if snake_target.name == "Mouse":
+						# need another offset here . 
 							offset = Vector3(0,0,0)
-						self.global_transform.origin = self.global_transform.origin - offset
+						self.global_transform.origin = snake_target.global_position
 						transform_onestart = false
 						
 					# check to see if player gets close 
 
-					if onestart and not snake_target.name.contains("Player"):  #do not run this if you have a player 
+					if onestart and not (snake_target.name.contains("Player") or snake_target.name.contains("Mouse")):  #do not run this if you have a player 
 						timer_move_on.start() # start the timer for how long to be there .
 						onestart = false
 					
@@ -236,7 +247,7 @@ func _physics_process(delta: float) -> void:
 				"abort_static":
 					abort_universal_reset()
 					self.global_transform = transform_save# # this is a PROBLEM PROBLEM , be careful where abort comes form 
-					if snake_target.name.contains("Player"):
+					if snake_target.name.contains("Player") or snake_target.name.contains("Mouse"):
 						pass # make this so theres a otpion to target the player!!!!!!!!!!!!!!!
 					else:
 						snake_target = pick_new_target(snake_target)
@@ -309,7 +320,7 @@ func _physics_process(delta: float) -> void:
 			snake_state = "patrol"
 			
 		"stunned":
-			
+			let_go_prey.emit(snake_target, ensnare_state)
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
 			if simlation_oneshot_stunn:
 				#dead_snake.emit($BoneAttachment3D/tounge_1)

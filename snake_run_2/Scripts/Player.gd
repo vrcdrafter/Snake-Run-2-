@@ -392,7 +392,7 @@ func remake_connections():
 	var test
 	var test2
 	for n in all_snakes:
-		print(n.name, "ic connected", n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,test])), all_snakes.size())
+		
 		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test])):
 			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))

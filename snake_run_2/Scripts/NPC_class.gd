@@ -2,7 +2,7 @@
 extends Node3D
 class_name NPC
 
-
+var AI_STATE :String = "patrol"
 
 
 
@@ -31,7 +31,7 @@ var turn_speed := 6.0  # higher = snappier turnin
 var enemy_array :Array[Node3D] = []
 @onready var text_diag :Label3D = get_node("Label3D")
 
-var shooting_timer :float = .2
+var shooting_timer :float = 1.5
 var shooting_accumulator :float = 0 
 
 @onready var player = get_node("/root/Node/GridContainer/SubViewportContainer2/SubViewport/Player")
@@ -45,6 +45,12 @@ var last_position = Vector3.ZERO
 var player_ensnared :Node3D
 var position_ensnared :Vector3
 var snake_that_died :Node3D
+var target_snake_was_after :Node3D
+var the_ensnare_state :String
+var der_tounge :Node3D
+
+
+var is_ensnared :bool = false
 
 	
 
@@ -132,7 +138,7 @@ func run_targeting(delta :float) -> bool:
 		
 		shooting_accumulator += delta
 		if shooting_accumulator > shooting_timer:
-			#spawn_bullet(delta)
+			spawn_bullet(delta)
 			shooting_accumulator = 0
 		
 		
@@ -215,19 +221,36 @@ func remake_connections():
 
 
 	var callable_ensnare = Callable(self, "_on_snake_ensnared")
-
+	var callable_stunned_snake :Callable = Callable(self, "_snake_stunned")
 
 	var callable_dead_snake = Callable(self,"turn_off_ensnared")
 	var test
 	var test2
+	
 	for n in all_snakes:
-		print(n.name, "ic connected", n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,test])), all_snakes.size())
+	
 		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test])):
 			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
+			n.connect("let_go_prey",callable_stunned_snake.bind([target_snake_was_after,the_ensnare_state,test]))
 	
 func _on_snake_ensnared(player_ensnared,position_ensnared,test):
 	print("should be ensnared ",player_ensnared.name)
-	pass
+	is_ensnared = true
 	
 	
+func _snake_stunned(player_ensnared,the_state,test):
+	print(player_ensnared)
+	if the_state == "run" and player_ensnared == self:
+		
+		AI_STATE = "follow_player"
+		is_ensnared = false
+		
+func turn_off_ensnared(der_tounge :Node3D, test):
+
+	
+	var distance_l :float = self.global_position.distance_to(der_tounge.global_position) 
+	if distance_l < 5:
+		AI_STATE = "follow_player"
+		is_ensnared = false
+# need a function incase the snake is dead 
