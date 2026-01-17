@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://ck2n0oi2noe2x" path="res://Scenes/items/gold1.tscn" id="8_xqhwl"]
 [ext_resource type="AudioStream" uid="uid://bg5dvq7dji8ix" path="res://sounds/audio_hero_NightJungleAmbienc+PE011101.mp3" id="10_vm8cy"]
 [ext_resource type="PackedScene" uid="uid://duj445gwmyx3u" path="res://Scenes/items/ammo.tscn" id="11_mpbyw"]
-[ext_resource type="PackedScene" uid="uid://b324c7udfages" path="res://Scenes/python_1V0.tscn" id="12_35no0"]
 [ext_resource type="Script" path="res://Scripts/re_enable_mouse.gd" id="12_tm7on"]
 [ext_resource type="PackedScene" uid="uid://y0scseug4ia2" path="res://Scenes/items/gun.tscn" id="13_35no0"]
 [ext_resource type="PackedScene" uid="uid://choncxrtj6bhm" path="res://Scenes/items/game_chair.tscn" id="14_v88kg"]
@@ -18,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://k1xk3gxjiuco" path="res://Scenes/portal.tscn" id="18_j6r50"]
 [ext_resource type="Texture2D" uid="uid://cuoy5fl6jasg4" path="res://textures/vhs.png" id="19_ni4ou"]
 [ext_resource type="Texture2D" uid="uid://d3rj6moiljaqc" path="res://textures/treasure.png" id="20_6e3xr"]
+[ext_resource type="PackedScene" uid="uid://brs008iwtjduj" path="res://Scenes/python_2V0.tscn" id="20_p2dbi"]
 [ext_resource type="PackedScene" uid="uid://dtjmtnv35shjq" path="res://Scenes/mouse.tscn" id="20_sbbgh"]
 [ext_resource type="Texture2D" uid="uid://cgauuwt4wj0og" path="res://textures/gaming_chair.png" id="21_dmxrc"]
 
@@ -300,42 +300,6 @@ Mouse if lost
 Click here"
 script = ExtResource("12_tm7on")
 
-[node name="Snake" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.6719, 4.38788, -4.21543)
-
-[node name="Snake2" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.6719, 4.38788, -4.21543)
-
-[node name="Snake3" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.6719, 4.38788, -4.21543)
-
-[node name="Snake4" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.6719, 4.38788, -4.21543)
-
-[node name="Snake5" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.5873, 4.38788, -15.7627)
-
-[node name="Snake6" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.5873, 4.38788, -15.7627)
-
-[node name="Snake7" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.5873, 4.38788, -15.7627)
-
-[node name="Snake8" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.5873, 4.38788, -15.7627)
-
-[node name="Snake9" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.59871, 4.38788, -37.3351)
-
-[node name="Snake10" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.59871, 4.38788, -37.3351)
-
-[node name="Snake11" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.59871, 4.38788, -37.3351)
-
-[node name="Snake12" parent="." instance=ExtResource("12_35no0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.59871, 4.38788, -37.3351)
-
 [node name="game_chair" parent="." instance=ExtResource("14_v88kg")]
 transform = Transform3D(-0.460572, 0, 0.19461, 0, 0.5, 0, -0.19461, 0, -0.460572, -61.8604, 13.0679, 70.8924)
 
@@ -366,29 +330,40 @@ sprite_frames = SubResource("SpriteFrames_ie2k7")
 [node name="Mouse" parent="." instance=ExtResource("20_sbbgh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2447, 2.37739, -109.336)
 
-[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
+[node name="Snake" parent="." instance=ExtResource("20_p2dbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.62487, 2.78192, -37.4323)
 
-[editable path="Snake"]
-[editable path="Snake/BoneAttachment3D/tounge_1"]
-[editable path="Snake2"]
-[editable path="Snake2/BoneAttachment3D/tounge_1"]
-[editable path="Snake3"]
-[editable path="Snake3/BoneAttachment3D/tounge_1"]
-[editable path="Snake4"]
-[editable path="Snake4/BoneAttachment3D/tounge_1"]
-[editable path="Snake5"]
-[editable path="Snake5/BoneAttachment3D/tounge_1"]
-[editable path="Snake6"]
-[editable path="Snake6/BoneAttachment3D/tounge_1"]
-[editable path="Snake7"]
-[editable path="Snake7/BoneAttachment3D/tounge_1"]
-[editable path="Snake8"]
-[editable path="Snake8/BoneAttachment3D/tounge_1"]
-[editable path="Snake9"]
-[editable path="Snake9/BoneAttachment3D/tounge_1"]
-[editable path="Snake10"]
-[editable path="Snake10/BoneAttachment3D/tounge_1"]
-[editable path="Snake11"]
-[editable path="Snake11/BoneAttachment3D/tounge_1"]
-[editable path="Snake12"]
-[editable path="Snake12/BoneAttachment3D/tounge_1"]
+[node name="Snake2" parent="." instance=ExtResource("20_p2dbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.62487, 2.78192, -37.4323)
+
+[node name="Snake3" parent="." instance=ExtResource("20_p2dbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.62487, 2.78192, -37.4323)
+
+[node name="Snake4" parent="." instance=ExtResource("20_p2dbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.62487, 2.78192, -37.4323)
+
+[node name="Snake5" parent="." instance=ExtResource("20_p2dbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.7395, 4.4524, 22.0807)
+
+[node name="Snake6" parent="." instance=ExtResource("20_p2dbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.7395, 4.4524, 22.0807)
+
+[node name="Snake7" parent="." instance=ExtResource("20_p2dbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.7395, 4.4524, 22.0807)
+
+[node name="Snake8" parent="." instance=ExtResource("20_p2dbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.7395, 4.4524, 22.0807)
+
+[node name="Snake9" parent="." instance=ExtResource("20_p2dbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.2418, 4.4524, 5.82907)
+
+[node name="Snake10" parent="." instance=ExtResource("20_p2dbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.2418, 4.4524, 5.82907)
+
+[node name="Snake11" parent="." instance=ExtResource("20_p2dbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.2418, 4.4524, 5.82907)
+
+[node name="Snake12" parent="." instance=ExtResource("20_p2dbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.2418, 4.4524, 5.82907)
+
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

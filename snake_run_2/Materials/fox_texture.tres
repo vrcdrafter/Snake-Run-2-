@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cqnoavug4s6jp"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dikle"]
+load_path = "res://.godot/imported/source_fox_Fox.png-b70de4caae6aa64deb1eebc4b2b6eaaf.ctex"
+
+[resource]
+resource_name = "fox_material"
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.711809, 0.689859, 0.6429, 1)
+albedo_texture = SubResource("CompressedTexture2D_dikle")
+texture_filter = 2

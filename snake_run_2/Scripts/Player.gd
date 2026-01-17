@@ -51,10 +51,12 @@ var health :int = 100
 var death_oneshot :bool = false
 
 signal dead 
+var previous_thing_ensnared :Node3D
+var current_thing_ensnared :Node3D
 var player_ensnared :Node3D
 var position_ensnared :Vector3
 var snake_that_died :Node3D
-
+var snake_previous_state :String
 signal player_added
 
 @onready var ray :RayCast3D = get_node("BoneAttachment3D/MeshInstance3D/RayCast3D")
@@ -346,12 +348,10 @@ func _on_snake_ensnared(player_ensnared,position_ensnared,test):
 		ensnared_position = self.get_global_position() # may want a different position , 
 		snakes_around_you += 1
 		
-func turn_off_ensnared(snake_that_died,test2):
+func turn_off_ensnared(previous_thing_ensnared,current_thing_ensnared,test,test2):
 
-	var distance_l :float = self.global_position.distance_to(snake_that_died.global_position) 
-	if distance_l < 4:
+	if previous_thing_ensnared == self and current_thing_ensnared != self:
 		ensnared = false
-
 func slow_move_back(pos:Vector3, delta:float, move_strength:float):
 	var current_position = self.get_global_position() # get the position 
 	self.position = self.position.lerp(pos, delta * move_strength)
@@ -389,6 +389,7 @@ func remake_connections():
 	var timer_callable = Callable(self, "_on_game_over_timer_timeout")
 	var reset_level = Callable(self,"_on_button_pressed")
 	var callable_dead_snake = Callable(self,"turn_off_ensnared")
+	var callable_changed_target = Callable(self,"turn_off_ensnared")
 	var test
 	var test2
 	for n in all_snakes:
@@ -396,7 +397,8 @@ func remake_connections():
 		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test])):
 			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
-#	timer_handle.connect("timeout",timer_callable)
+			n.connect("let_go_prey",callable_changed_target.bind([previous_thing_ensnared,current_thing_ensnared,test,test2]))
+			#	timer_handle.connect("timeout",timer_callable)
 #	game_over_button_handle.connect("pressed",reset_level)
 	
 	

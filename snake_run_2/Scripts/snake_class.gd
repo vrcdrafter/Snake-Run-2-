@@ -120,7 +120,7 @@ func _init() -> void:
 		pass
 	
 
-func follower(delta :float, body_segment_pimitived :Array[MeshInstance3D], bone_length :float):
+func follower3(delta :float, body_segment_pimitived :Array[MeshInstance3D], bone_length :float):
 	for i in range(body_segment_pimitived.size()):
 		
 		if i == 0: # meaning its the first piece, THE HEAD , note the head is already the green triangle and needs to follow nothing 
@@ -136,6 +136,17 @@ func follower(delta :float, body_segment_pimitived :Array[MeshInstance3D], bone_
 				body_segment_pimitived[i].look_at(body_segment_pimitived[i-1].global_position)
 				if (body_segment_pimitived[i-1].global_position.distance_to(body_segment_pimitived[i].global_position) > bone_length):
 					body_segment_pimitived[i].global_position = body_segment_pimitived[i].global_position.lerp(body_segment_pimitived[i-1].global_position,delta * movement_speed)
+
+func follower(delta: float, body: Array[MeshInstance3D], bone_length: float):
+	for i in range(1, body.size()):
+		var target := sway_head if i == 1 else body[i - 1]
+		body[i].look_at(target.global_position)
+		var to_target = target.global_position - body[i].global_position
+		var dist = to_target.length()
+		if dist > bone_length:
+			body[i].global_position = target.global_position - to_target.normalized() * bone_length
+
+
 
 func calc_length(skeleton :Skeleton3D):
 	var bone_length

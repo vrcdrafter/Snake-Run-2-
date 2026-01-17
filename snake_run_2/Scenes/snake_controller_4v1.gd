@@ -55,6 +55,8 @@ var old_target_position :Vector3 = Vector3(0,0,0)
 
 signal let_go_prey
 
+var snake_target_at_beginning :Node3D 
+
 func _ready() -> void:
 
 	#initialize spine 
@@ -106,9 +108,18 @@ func _physics_process(delta: float) -> void:
 
 		#snake_state = "null"
 	# have snake start to chase target 
+	
+	snake_target_at_beginning = snake_target
+	
+	
 	match snake_state:
+		
+		
 		"patrol":
 			if found_player:
+				
+				
+				
 				snake_state = "chase"
 			
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
@@ -280,7 +291,7 @@ func _physics_process(delta: float) -> void:
 			
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
 			if simlation_oneshot:
-				dead_snake.emit($BoneAttachment3D/tounge_1)
+				let_go_prey.emit(snake_target_at_beginning, null, ensnare_state)
 				for each in test2:
 					if each.get_child_count() > 0:
 						bone_simulation_phys.active = true
@@ -320,7 +331,7 @@ func _physics_process(delta: float) -> void:
 			snake_state = "patrol"
 			
 		"stunned":
-			let_go_prey.emit(snake_target, ensnare_state)
+			let_go_prey.emit(snake_target_at_beginning, snake_target, ensnare_state)
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
 			if simlation_oneshot_stunn:
 				#dead_snake.emit($BoneAttachment3D/tounge_1)
@@ -375,7 +386,12 @@ func _physics_process(delta: float) -> void:
 				
 	
 		
+	if snake_target_at_beginning == snake_target:
+		# nothing changed , resume . 
+		pass
 		
+	else:
+		let_go_prey.emit(snake_target_at_beginning, snake_target, ensnare_state)
 func abort_universal_reset():
 	
 	transform_onestart = true # reset this so it can grab the next transform when the time comes . 

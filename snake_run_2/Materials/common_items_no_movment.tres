@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://co7bscmidxsxl"]
+
+[ext_resource type="Texture2D" uid="uid://du6witjf5oavo" path="res://textures/crocko2_Common_item_texture.png" id="1_j1cdl"]
+
+[resource]
+shading_mode = 0
+albedo_texture = ExtResource("1_j1cdl")
+texture_filter = 0

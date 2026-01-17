@@ -52,7 +52,8 @@ var der_tounge :Node3D
 
 var is_ensnared :bool = false
 
-	
+var previous_thing_ensnared :Node3D
+var current_thing_ensnared :Node3D
 
 func set_movement_target(movement_target: Vector3):
 	navigation_agent.set_target_position(movement_target)
@@ -138,7 +139,7 @@ func run_targeting(delta :float) -> bool:
 		
 		shooting_accumulator += delta
 		if shooting_accumulator > shooting_timer:
-			spawn_bullet(delta)
+			#spawn_bullet(delta)
 			shooting_accumulator = 0
 		
 		
@@ -222,7 +223,7 @@ func remake_connections():
 
 	var callable_ensnare = Callable(self, "_on_snake_ensnared")
 	var callable_stunned_snake :Callable = Callable(self, "_snake_stunned")
-
+	var callable_changed_target = Callable(self,"turn_off_ensnared")
 	var callable_dead_snake = Callable(self,"turn_off_ensnared")
 	var test
 	var test2
@@ -232,7 +233,8 @@ func remake_connections():
 		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test])):
 			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
-			n.connect("let_go_prey",callable_stunned_snake.bind([target_snake_was_after,the_ensnare_state,test]))
+			n.connect("let_go_prey",callable_changed_target.bind([previous_thing_ensnared,current_thing_ensnared,test,test2]))
+			print("connected")
 	
 func _on_snake_ensnared(player_ensnared,position_ensnared,test):
 	print("should be ensnared ",player_ensnared.name)
@@ -246,11 +248,11 @@ func _snake_stunned(player_ensnared,the_state,test):
 		AI_STATE = "follow_player"
 		is_ensnared = false
 		
-func turn_off_ensnared(der_tounge :Node3D, test):
+
+func turn_off_ensnared(previous_thing_ensnared,current_thing_ensnared,test,test2):
+	if previous_thing_ensnared == self and current_thing_ensnared != self:
 
 	
-	var distance_l :float = self.global_position.distance_to(der_tounge.global_position) 
-	if distance_l < 5:
 		AI_STATE = "follow_player"
 		is_ensnared = false
 # need a function incase the snake is dead 
