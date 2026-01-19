@@ -7,6 +7,8 @@ signal player_added
 var accumulator :float = 0 
 var time_to_check :float = 2
 
+var one_player_has_all_items  = false
+
 
 func _ready() -> void:
 	
@@ -17,6 +19,8 @@ func _ready() -> void:
 	
 	# make the grid columns 1 at statup 
 	$GridContainer.columns = 1
+	
+	setup_level()
 
 func _process(delta: float) -> void:
 	
@@ -33,6 +37,7 @@ func _process(delta: float) -> void:
 	accumulator += delta
 	if accumulator > time_to_check:
 		poll_all_snakes_connections()
+		poll_all_player_connection()
 		accumulator = 0
 
 
@@ -74,6 +79,16 @@ func poll_all_snakes_connections():
 	for each in all_snakes:
 		if not each.is_connected("snake_removed",Callable(self,"add_new_snake")):
 			each.connect("snake_removed",Callable(self,"add_new_snake"))
+			
+			
+func poll_all_player_connection():
+	
+	var all_player :Array = get_node("GridContainer").get_children()
+	
+	for each :SubViewportContainer in all_player:
+		if not each.get_child(0).get_child(0).is_connected("can_leave",Callable(self,"_player_has_items")):
+			each.get_child(0).get_child(0).connect("can_leave",Callable(self,"_player_has_items"))
+			pass
 	
 	
 func add_new_snake():
@@ -83,3 +98,26 @@ func add_new_snake():
 	var new_snake = preload("res://Scenes/python_1V0.tscn").instantiate()
 	new_snake.global_position = random_spawn_point.global_position
 	add_child(new_snake)
+	
+	
+func back_to_title() -> void:
+	GlobalVars.next_level = "res://Scenes/"+"title"+".tscn"
+	get_tree().change_scene_to_file("res://Scenes/loading.tscn")
+
+
+
+
+
+func _on_area_3d_area_entered(area: Area3D) -> void:
+	var name_object = area.get_parent().name
+	if name_object == "Player" and one_player_has_all_items:
+		back_to_title()
+		
+func _player_has_items():
+	one_player_has_all_items = true
+	print("I Have all the items ")
+	
+func setup_level():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	GlobalVars.game_started = true
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

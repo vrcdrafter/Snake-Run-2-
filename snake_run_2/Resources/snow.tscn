@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfbhppp2yli2c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ajrbm"]
+cull_mode = 2
+shading_mode = 0
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_y1ubb"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_ajrbm")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+transform = Transform3D(-0.835597, 0, 0.549344, 0, 1, 0, -0.549344, 0, -0.835597, 0, 0, 0)
+amount = 1000
+lifetime = 12.96
+mesh = SubResource("QuadMesh_y1ubb")
+emission_shape = 3
+emission_box_extents = Vector3(200, 200, 200)
+direction = Vector3(0, -1, 0)
+spread = 48.7
+gravity = Vector3(0, 0, 0)
+initial_velocity_max = 4.0
+linear_accel_max = 26.03

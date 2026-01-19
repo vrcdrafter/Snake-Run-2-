@@ -31,7 +31,7 @@ var turn_speed := 6.0  # higher = snappier turnin
 var enemy_array :Array[Node3D] = []
 @onready var text_diag :Label3D = get_node("Label3D")
 
-var shooting_timer :float = 1.5
+var shooting_timer :float = 1.3
 var shooting_accumulator :float = 0 
 
 @onready var player = get_node("/root/Node/GridContainer/SubViewportContainer2/SubViewport/Player")
@@ -139,7 +139,7 @@ func run_targeting(delta :float) -> bool:
 		
 		shooting_accumulator += delta
 		if shooting_accumulator > shooting_timer:
-			#spawn_bullet(delta)
+			spawn_bullet(delta)
 			shooting_accumulator = 0
 		
 		
