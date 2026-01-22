@@ -20,7 +20,7 @@ func _ready() -> void:
 	# make the grid columns 1 at statup 
 	$GridContainer.columns = 1
 	
-	setup_level()
+	
 
 func _process(delta: float) -> void:
 	
@@ -117,7 +117,19 @@ func _player_has_items():
 	one_player_has_all_items = true
 	print("I Have all the items ")
 	
+	save_level_access()
+	
 func setup_level():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	GlobalVars.game_started = true
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	
+	
+func save_level_access():
+	const path :String = "user://.save"
+	var file = FileAccess.open(path,FileAccess.WRITE)
+	if get_tree().current_scene.name == "level_2":
+		file.store_string("2")
+	else:
+		file.store_string("2")
+	file.close()

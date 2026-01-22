@@ -140,6 +140,7 @@ func run_targeting(delta :float) -> bool:
 		shooting_accumulator += delta
 		if shooting_accumulator > shooting_timer:
 			spawn_bullet(delta)
+			tree.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 			shooting_accumulator = 0
 		
 		
@@ -237,8 +238,10 @@ func remake_connections():
 			print("connected")
 	
 func _on_snake_ensnared(player_ensnared,position_ensnared,test):
+	var sname_local = player_ensnared.name
 	print("should be ensnared ",player_ensnared.name)
-	is_ensnared = true
+	if sname_local == "Mouse":
+		is_ensnared = true
 	
 	
 func _snake_stunned(player_ensnared,the_state,test):

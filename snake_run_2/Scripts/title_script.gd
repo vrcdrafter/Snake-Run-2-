@@ -47,6 +47,8 @@ func _ready() -> void:
 		# close the file 
 		print(file.get_path_absolute())
 		
+		setup_level_menu()
+		
 	else:
 		# make a new one and make a default value 
 		
@@ -88,7 +90,6 @@ func load_game():
 func level_access(current_level: int) -> void:
 	var save_raw: String = load_game().strip_edges()
 	var highest_unlocked: int = 0
-
 	highest_unlocked = int(save_raw)
 		
 	$TextureButton4.disabled = current_level >= highest_unlocked
@@ -96,10 +97,7 @@ func level_access(current_level: int) -> void:
 
 
 
-func setup_level():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	GlobalVars.game_started = true
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
 
 
 
@@ -133,4 +131,8 @@ func _on_texture_button_4_pressed() -> void:
 	GlobalVars.next_level = "res://Scenes/"+current_selected_level+".tscn"
 	get_tree().change_scene_to_file("res://Scenes/loading.tscn")
 	
-	setup_level()
+func setup_level_menu():
+
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
+	

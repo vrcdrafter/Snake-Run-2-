@@ -90,7 +90,7 @@ var has_weapon :bool = false
 @onready var chair_icon :AnimatedSprite2D = get_node("/root/Node/chair_icon")
 
 
-var item_accumulator :int = 0
+var item_accumulator :int = 3
 
 
 signal can_leave
@@ -141,7 +141,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	if item_accumulator >2:
+	if GlobalVars.items_collected > 3:
 		can_leave.emit()
 	
 	get_number_players = grid_container.get_children().size()
@@ -530,13 +530,13 @@ func handle_shoot(delta :float):
 			if item_name == "VHS_new":
 				
 				vhs_icon.frame = 2
-				item_accumulator += 1 
+				GlobalVars.items_collected += 1
 			elif item_name.contains("teasure"):
 				gold_icon.frame = 2
-				item_accumulator += 1
+				GlobalVars.items_collected += 1
 			elif item_name == "game_chair":
 				chair_icon.frame = 2
-				item_accumulator += 1 
+				GlobalVars.items_collected += 1
 			else:
 				pass
 			

@@ -7,3 +7,5 @@ var next_level :String
 var current_level :String
 
 var shaders_loaded :bool = false
+
+var items_collected :int = 0
