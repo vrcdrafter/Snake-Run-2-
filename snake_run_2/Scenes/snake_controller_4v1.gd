@@ -111,6 +111,7 @@ func _physics_process(delta: float) -> void:
 	
 	snake_target_at_beginning = snake_target
 	
+	give_hiss(delta)
 	
 	match snake_state:
 		

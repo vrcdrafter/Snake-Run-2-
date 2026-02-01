@@ -108,9 +108,7 @@ func _ready():
 	
 		emit_signal("snakes_go")
 		
-	$AudioStreamPlayer3D.play()
-	$AudioStreamPlayer3D.stream_paused = true
-	$AudioStreamPlayer3D.pitch_scale = .8
+
 	
 	player_id = find_id()
 	print("the player identified is ", player_id)

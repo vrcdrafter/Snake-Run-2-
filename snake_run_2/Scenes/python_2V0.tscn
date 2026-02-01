@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://brs008iwtjduj"]
+[gd_scene load_steps=14 format=3 uid="uid://brs008iwtjduj"]
 
 [ext_resource type="Script" path="res://Scenes/snake_controller_4v1.gd" id="1_sd7b2"]
 [ext_resource type="ArrayMesh" uid="uid://d2iain5ujwgug" path="res://Resources/python_skin_cartoon.tres" id="2_yka2a"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bpclxwra286ec" path="res://level_data/tounge_1.glb" id="5_xdkiv"]
 [ext_resource type="Script" path="res://Scripts/tounge.gd" id="6_wymce"]
 [ext_resource type="Script" path="res://Scripts/snake_sight.gd" id="7_qvhrc"]
+[ext_resource type="AudioStream" uid="uid://dwnao55tl0wa8" path="res://sounds/hiss.wav" id="8_ju5hp"]
 
 [sub_resource type="Skin" id="Skin_cyy1n"]
 resource_name = "Skin"
@@ -923,6 +924,11 @@ script = ExtResource("7_qvhrc")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BoneAttachment3D/Detection"]
 transform = Transform3D(1, -1.93264e-12, -4.79883e-12, 1.9329e-12, 1, 6.03412e-07, 4.68603e-12, -6.03502e-07, 1, 0.0693388, -3.13372e-06, 2.65597)
 shape = SubResource("BoxShape3D_ajh1n")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="BoneAttachment3D"]
+stream = ExtResource("8_ju5hp")
+max_distance = 10.0
+playback_type = 1
 
 [connection signal="area_entered" from="BoneAttachment3D/Detection" to="BoneAttachment3D/Detection" method="_on_area_entered"]
 

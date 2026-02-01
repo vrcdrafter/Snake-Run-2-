@@ -100,6 +100,11 @@ var num_players :int
 
 var player_in_scene :Array = []
 
+
+@onready var Snake_audio :AudioStreamPlayer3D = get_node("BoneAttachment3D/AudioStreamPlayer3D")
+var hiss_accumulator :float = 0 
+var hiss_timer :float = 3
+
 func _init() -> void:
 
 
@@ -724,7 +729,17 @@ func check_player_references() -> Array:
 		
 	
 	
+func give_hiss(delta):
 	
+	
+	hiss_accumulator += delta
+	if hiss_accumulator > hiss_timer:
+		var random_number :int = randi_range(0,10)
+		if random_number > 5 and Snake_audio != null:
+			Snake_audio.play()
+		hiss_accumulator = 0
+
+			
 	
 	
 	

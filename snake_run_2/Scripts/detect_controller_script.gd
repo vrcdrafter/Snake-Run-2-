@@ -115,7 +115,7 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 		
 func _player_has_items():
 	one_player_has_all_items = true
-	print("I Have all the items ")
+	
 	
 	save_level_access()
 	

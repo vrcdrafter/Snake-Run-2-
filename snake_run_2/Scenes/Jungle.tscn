@@ -126,7 +126,8 @@ script = ExtResource("2_i4sut")
 
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 handle_input_locally = false
-size = Vector2i(2, 2)
+audio_listener_enable_3d = true
+size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("3_udigb")]
@@ -264,7 +265,6 @@ transform = Transform3D(0.419769, 0, 0.907631, 0, 1, 0, -0.907631, 0, 0.419769, 
 
 [node name="jungle_ambient" type="AudioStreamPlayer" parent="sounds"]
 stream = ExtResource("10_vm8cy")
-autoplay = true
 
 [node name="Area3D" parent="." instance=ExtResource("11_mpbyw")]
 transform = Transform3D(0.721954, 0, 0.691942, 0, 1, 0, -0.691942, 0, 0.721954, 14.6041, 3.16057, -123.14)

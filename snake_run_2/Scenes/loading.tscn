@@ -1,10 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://c2stdiapbpqxp"]
+[gd_scene load_steps=19 format=3 uid="uid://c2stdiapbpqxp"]
 
 [ext_resource type="Script" path="res://Scripts/LOADING_SCREEN.gd" id="1_a2k8r"]
 [ext_resource type="FontFile" uid="uid://cfg2unidk3g2r" path="res://FONTS/PixeloidMono-nAOpP.ttf" id="2_2qqyc"]
 [ext_resource type="Texture2D" uid="uid://b36k66fuf5hde" path="res://textures/loading_snake.png" id="2_uvu1y"]
 [ext_resource type="Script" path="res://Scripts/animated_sprite_2d.gd" id="3_pyv2j"]
-[ext_resource type="Texture2D" uid="uid://ss630imxs0xk" path="res://textures/tip_get_gun.png" id="5_5rnym"]
 [ext_resource type="Script" path="res://slow_zoom_2d_sprite.gd" id="6_7ia4c"]
 
 [sub_resource type="FontFile" id="FontFile_cgd7t"]
@@ -126,10 +125,10 @@ text = "LOADING...,"
 
 [node name="Label2" type="Label" parent="."]
 layout_mode = 0
-offset_left = 323.0
-offset_top = 389.0
-offset_right = 782.0
-offset_bottom = 412.0
+offset_left = 320.0
+offset_top = 427.0
+offset_right = 779.0
+offset_bottom = 450.0
 theme = SubResource("Theme_e8rdu")
 text = "TIP , GET A WEAPON AS SOON AS POSSIBLE ...,"
 
@@ -144,7 +143,6 @@ script = ExtResource("3_pyv2j")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(551, 252)
 scale = Vector2(0.196753, 0.18608)
-texture = ExtResource("5_5rnym")
 script = ExtResource("6_7ia4c")
 base_scale = Vector2(0.2, 0.2)
 frequency_hz = 0.05
