@@ -55,6 +55,8 @@ var is_ensnared :bool = false
 var previous_thing_ensnared :Node3D
 var current_thing_ensnared :Node3D
 
+@onready var detection_area :Area3D = get_node("Detection")
+
 func set_movement_target(movement_target: Vector3):
 	navigation_agent.set_target_position(movement_target)
 
@@ -179,9 +181,6 @@ func run_targeting(delta :float) -> bool:
 			else:
 				tree.set("parameters/BlendSpace2D/blend_position", Vector2(1, 0))
 				return false
-	
-	
-
 			
 			
 func spawn_bullet(delta :float):
@@ -242,20 +241,20 @@ func _on_snake_ensnared(player_ensnared,position_ensnared,test):
 	print("should be ensnared ",player_ensnared.name)
 	if sname_local == "Mouse":
 		is_ensnared = true
+		detection_area.remove_from_group("NPC")
 	
 	
 func _snake_stunned(player_ensnared,the_state,test):
 	print(player_ensnared)
 	if the_state == "run" and player_ensnared == self:
-		
 		AI_STATE = "follow_player"
+		detection_area.add_to_group("NPC")
 		is_ensnared = false
 		
 
 func turn_off_ensnared(previous_thing_ensnared,current_thing_ensnared,test,test2):
 	if previous_thing_ensnared == self and current_thing_ensnared != self:
-
-	
+		detection_area.add_to_group("NPC")
 		AI_STATE = "follow_player"
 		is_ensnared = false
 # need a function incase the snake is dead 

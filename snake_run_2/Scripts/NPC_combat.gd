@@ -15,10 +15,8 @@ func _ready() -> void:
 	remake_connections()
 
 
-
 func _process(delta: float) -> void:
 	
-
 	
 	check_snakes_accum += delta
 	if check_snakes_accum > timer_check_ative_snakes:
