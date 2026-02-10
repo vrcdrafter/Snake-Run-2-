@@ -8,7 +8,8 @@ var accumulator :float = 0
 var time_to_check :float = 2
 
 var one_player_has_all_items  = false
-
+var resource_name :String = ""
+var test :String = ""
 
 func _ready() -> void:
 	
@@ -78,7 +79,11 @@ func poll_all_snakes_connections():
 	
 	for each in all_snakes:
 		if not each.is_connected("snake_removed",Callable(self,"add_new_snake")):
-			each.connect("snake_removed",Callable(self,"add_new_snake"))
+			
+			
+			each.connect("snake_removed",Callable(self,"add_new_snake").bind([resource_name,test]))
+			
+			
 			
 			
 func poll_all_player_connection():
@@ -91,11 +96,12 @@ func poll_all_player_connection():
 			pass
 	
 	
-func add_new_snake():
+func add_new_snake(resource_name,test):
 	
 	var spawn_points :Array[Node] = $snake_spawn_points.get_children()
-	var random_spawn_point = spawn_points[randi() % spawn_points.size()]
-	var new_snake = preload("res://Scenes/python_1V0.tscn").instantiate()
+	var random_spawn_point = spawn_points[randi() % spawn_points.size()]	
+	
+	var new_snake = load("res://Scenes/" + resource_name + ".tscn").instantiate()
 	new_snake.global_position = random_spawn_point.global_position
 	add_child(new_snake)
 	

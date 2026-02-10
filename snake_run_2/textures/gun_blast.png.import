@@ -2,21 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csr42iwdpp6n6"
-path.s3tc="res://.godot/imported/Forest_global_text.png-6b82139e8ae0fadf80460efbafb00858.s3tc.ctex"
+uid="uid://f8qr2m74jfr4"
+path="res://.godot/imported/gun_blast.png-2b466a71537cb62a43dfed1ead0366ba.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/Forest_global_text.png"
-dest_files=["res://.godot/imported/Forest_global_text.png-6b82139e8ae0fadf80460efbafb00858.s3tc.ctex"]
+source_file="res://textures/gun_blast.png"
+dest_files=["res://.godot/imported/gun_blast.png-2b466a71537cb62a43dfed1ead0366ba.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

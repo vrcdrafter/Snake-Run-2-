@@ -548,6 +548,7 @@ func handle_shoot(delta :float):
 			# make it so its loud 
 			box_shape.size = Vector3(20,20,20)
 			spawn_bullet(delta)
+			$BoneAttachment3D/MeshInstance3D/AnimatedSprite3D.play()
 			$AudioStreamPlayer2.play()
 			animation_tree_new.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	else:

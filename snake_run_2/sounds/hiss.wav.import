@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/hiss.wav-a65f0ea891de032aeea52e9f896499fb.sam
 [params]
 
 force/8_bit=false
-force/mono=false
+force/mono=true
 force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false

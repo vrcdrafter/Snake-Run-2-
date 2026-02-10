@@ -1,13 +1,18 @@
-[gd_scene load_steps=14 format=3 uid="uid://brs008iwtjduj"]
+[gd_scene load_steps=16 format=3 uid="uid://eeoh88nnekik"]
 
-[ext_resource type="Script" path="res://Scenes/snake_controller_4v1.gd" id="1_sd7b2"]
-[ext_resource type="ArrayMesh" uid="uid://d2iain5ujwgug" path="res://Resources/python_skin_cartoon.tres" id="2_yka2a"]
-[ext_resource type="Animation" uid="uid://bjghpxci8xo3k" path="res://Resources/anim_ensnare_4.res" id="3_10la3"]
-[ext_resource type="Animation" uid="uid://bl8iqapvbwqu5" path="res://Resources/anim_ensnare_5.res" id="4_bn1m1"]
-[ext_resource type="PackedScene" uid="uid://bpclxwra286ec" path="res://level_data/tounge_1.glb" id="5_xdkiv"]
-[ext_resource type="Script" path="res://Scripts/tounge.gd" id="6_wymce"]
-[ext_resource type="Script" path="res://Scripts/snake_sight.gd" id="7_qvhrc"]
-[ext_resource type="AudioStream" uid="uid://dwnao55tl0wa8" path="res://sounds/hiss.wav" id="8_ju5hp"]
+[ext_resource type="Script" path="res://Scenes/snake_controller_4v1.gd" id="1_djd14"]
+[ext_resource type="Texture2D" uid="uid://car0n2q2yr161" path="res://level_data/python_v4__snake_skin_cartoon.png" id="2_4scfs"]
+[ext_resource type="ArrayMesh" uid="uid://d2iain5ujwgug" path="res://Resources/python_skin_cartoon.tres" id="3_vyucr"]
+[ext_resource type="Animation" uid="uid://bjghpxci8xo3k" path="res://Resources/anim_ensnare_4.res" id="4_iad5c"]
+[ext_resource type="Animation" uid="uid://bl8iqapvbwqu5" path="res://Resources/anim_ensnare_5.res" id="5_16cjy"]
+[ext_resource type="PackedScene" uid="uid://bpclxwra286ec" path="res://level_data/tounge_1.glb" id="6_c1uji"]
+[ext_resource type="Script" path="res://Scripts/tounge.gd" id="7_eq1go"]
+[ext_resource type="Script" path="res://Scripts/snake_sight.gd" id="8_k1b5u"]
+[ext_resource type="AudioStream" uid="uid://dwnao55tl0wa8" path="res://sounds/hiss.wav" id="9_rsvy1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bg6i8"]
+albedo_color = Color(0.140174, 0.48129, 0.651953, 1)
+albedo_texture = ExtResource("2_4scfs")
 
 [sub_resource type="Skin" id="Skin_cyy1n"]
 resource_name = "Skin"
@@ -616,8 +621,8 @@ tracks/34/keys = PackedFloat32Array(0, 1, -1.94222e-07, -0.0159001, -0.999874, 8
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yksex"]
 _data = {
 "anim_ensnare_3": SubResource("Animation_h4y0n"),
-"anim_ensnare_4": ExtResource("3_10la3"),
-"anim_ensnare_5": ExtResource("4_bn1m1"),
+"anim_ensnare_4": ExtResource("4_iad5c"),
+"anim_ensnare_5": ExtResource("5_16cjy"),
 "ensnare_1": SubResource("Animation_b70vs")
 }
 
@@ -625,7 +630,7 @@ _data = {
 size = Vector3(6, 1, 19)
 
 [node name="Snake" type="Node3D" groups=["snake"]]
-script = ExtResource("1_sd7b2")
+script = ExtResource("1_djd14")
 hide_triangles = true
 
 [node name="snake_python" type="Node3D" parent="."]
@@ -873,8 +878,9 @@ bones/33/rotation = Quaternion(1.95957e-07, 0.0159001, 0.999874, 1.45914e-08)
 bones/33/scale = Vector3(1, 1, 1)
 
 [node name="export_snake_mesh" type="MeshInstance3D" parent="snake_python/snake_export/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_bg6i8")
 extra_cull_margin = 1000.0
-mesh = ExtResource("2_yka2a")
+mesh = ExtResource("3_vyucr")
 skin = SubResource("Skin_cyy1n")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="snake_python"]
@@ -889,7 +895,7 @@ bone_idx = 33
 use_external_skeleton = true
 external_skeleton = NodePath("../snake_python/snake_export/Skeleton3D")
 
-[node name="tounge_1" parent="BoneAttachment3D" instance=ExtResource("5_xdkiv")]
+[node name="tounge_1" parent="BoneAttachment3D" instance=ExtResource("6_c1uji")]
 transform = Transform3D(1, 2.07499e-06, 2.11596e-06, -2.20537e-06, 0.0460952, 0.998937, 1.9744e-06, -0.998937, 0.0460953, 0.00116313, 0.248009, 0.0851979)
 
 [node name="Skeleton3D" parent="BoneAttachment3D/tounge_1/tounge_phantom_001" index="0"]
@@ -915,18 +921,18 @@ bones/17/rotation = Quaternion(0.00159883, -1.15009e-05, -0.00114316, 0.999998)
 bones/18/rotation = Quaternion(0.00254758, -1.84833e-09, -0.00182065, 0.999995)
 
 [node name="AnimationPlayer" parent="BoneAttachment3D/tounge_1" index="1"]
-script = ExtResource("6_wymce")
+script = ExtResource("7_eq1go")
 
 [node name="Detection" type="Area3D" parent="BoneAttachment3D"]
 transform = Transform3D(1, 2.12876e-06, 3.06718e-07, -6.94289e-08, -0.110585, 0.993867, 2.14962e-06, -0.993867, -0.110585, 2.07254e-07, 0.529565, -0.0841033)
-script = ExtResource("7_qvhrc")
+script = ExtResource("8_k1b5u")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BoneAttachment3D/Detection"]
 transform = Transform3D(1, -1.93264e-12, -4.79883e-12, 1.9329e-12, 1, 6.03412e-07, 4.68603e-12, -6.03502e-07, 1, 0.0693388, -3.13372e-06, 2.65597)
 shape = SubResource("BoxShape3D_ajh1n")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="BoneAttachment3D"]
-stream = ExtResource("8_ju5hp")
+stream = ExtResource("9_rsvy1")
 max_distance = 10.0
 playback_type = 2
 

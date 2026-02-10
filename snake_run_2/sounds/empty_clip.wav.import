@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/empty_clip.wav-4d92b54a0c27b6431271e5377c7c0c
 [params]
 
 force/8_bit=false
-force/mono=false
+force/mono=true
 force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false

@@ -316,7 +316,9 @@ func _physics_process(delta: float) -> void:
 					area_examined.gravity_scale = .5
 					area_examined.mass = .1
 			if death_accumulator > death_timer + 3:
-				emit_signal("snake_removed")
+				var resource_name = self.get_scene_file_path().get_file().get_basename()
+				snake_removed.emit(resource_name)
+				
 				self.queue_free()
 			
 		"limp_RESET":

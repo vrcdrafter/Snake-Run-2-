@@ -384,8 +384,8 @@ func velocity_computed(safe_velocity: Vector3) -> void:
 
 	var distance = tri_array[0].get_child(0).global_position.distance_to(snake_target.global_position)
 
-	if distance < 3: # start clamping
-		wave_strength_narrow = clamp(wave_thing,distance * -1 ,distance)
+	if distance < 6: # start clamping
+		wave_strength_narrow = .2
 	else: 
 		wave_strength_narrow = 1
 
