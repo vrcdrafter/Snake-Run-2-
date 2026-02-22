@@ -3,7 +3,8 @@ var ensnare_state :String = "setup"
 var snake_state :String = "patrol"
 
 @onready var test_mesh :MeshInstance3D = get_node("../MeshInstance3D")
-
+var stunned_material :StandardMaterial3D = preload("res://Materials/snake_stunned.tres")
+var regular_material :StandardMaterial3D = preload("res://Materials/snake_friendly.tres")
 
 @onready var skel :Skeleton3D
 var all_animation_curves :Array[Curve3D]
@@ -273,7 +274,7 @@ func _physics_process(delta: float) -> void:
 		
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
 			aggressivness = randf_range(5.0, 7.0)
-			movement_speed = randf_range(5.0, 10.0)
+			movement_speed = randf_range(5.0, 7.0)
 			#find something to patrol to 
 			set_movement_target(snake_target.global_position) # assigns target
 			nav_startup_physics_process(delta,tri_array[0]) #starts up the navigation server 
@@ -293,6 +294,9 @@ func _physics_process(delta: float) -> void:
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
 			if simlation_oneshot:
 				let_go_prey.emit(snake_target_at_beginning, null, ensnare_state)
+				$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material
+				$BoneAttachment3D/Node3D.show()
+				$BoneAttachment3D/tounge_1/AnimationPlayer.stop()
 				for each in test2:
 					if each.get_child_count() > 0:
 						bone_simulation_phys.active = true
@@ -337,6 +341,7 @@ func _physics_process(delta: float) -> void:
 			let_go_prey.emit(snake_target_at_beginning, snake_target, ensnare_state)
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
 			if simlation_oneshot_stunn:
+				$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material
 				#dead_snake.emit($BoneAttachment3D/tounge_1)
 				for each in test2:
 					if each.get_child_count() > 0:
@@ -353,6 +358,7 @@ func _physics_process(delta: float) -> void:
 					area_examined.mass = .1			
 			stun_accumulator += delta
 			if stun_accumulator > stun_timer:
+				$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = regular_material
 				snake_state = "limp_RESET"
 				simlation_oneshot_stunn= true
 				stun_accumulator = 0

@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkfp4vtw5hyrt"]
+
+[ext_resource type="ArrayMesh" uid="uid://blny26121fmxf" path="res://level_data/stars_stun.obj" id="1_138gi"]
+[ext_resource type="Script" path="res://Scripts/spinn_stars.gd" id="2_4n2hq"]
+[ext_resource type="Material" uid="uid://b8wfrfxd6wv8l" path="res://Materials/jungle_global.tres" id="2_poevr"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.0171122, 0, 0.999747, 0, 0.999992, 0, -0.999761, 0, -0.0171127, 0, 0, 0)
+mesh = ExtResource("1_138gi")
+surface_material_override/0 = ExtResource("2_poevr")
+script = ExtResource("2_4n2hq")

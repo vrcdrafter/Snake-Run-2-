@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b1nvpgt817wpp"]
+
+[ext_resource type="Texture2D" uid="uid://6we62e5alvnc" path="res://textures/snake_skin_cartoon_friendly.png" id="1_f2d4f"]
+
+[resource]
+shading_mode = 0
+albedo_texture = ExtResource("1_f2d4f")
+texture_filter = 0

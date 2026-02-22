@@ -105,6 +105,9 @@ var player_in_scene :Array = []
 var hiss_accumulator :float = 0 
 var hiss_timer :float = 3
 
+var whoe_died = null
+var test2 = null
+
 func _init() -> void:
 
 
@@ -384,8 +387,8 @@ func velocity_computed(safe_velocity: Vector3) -> void:
 
 	var distance = tri_array[0].get_child(0).global_position.distance_to(snake_target.global_position)
 
-	if distance < 6: # start clamping
-		wave_strength_narrow = .2
+	if distance < 12: # start clamping
+		wave_strength_narrow = 0
 	else: 
 		wave_strength_narrow = 1
 
@@ -578,7 +581,7 @@ func connect_player_signals(): #what this does is connect the players signals if
 	var remake_connections_callable :Callable = Callable(self,"re_do_connections")
 	
 	for each in player_in_scene:
-		each.connect("dead",player_death_callable)
+		each.connect("dead",player_death_callable.bind([whoe_died,test2]))
 	
 		
 	
@@ -587,7 +590,8 @@ func found_prey(player_to_chase,test):
 	var prey_name =player_to_chase.name
 	target_player = player_to_chase
 	
-func prey_dead():
+func prey_dead(whoe_died,test2):
+	
 	found_player = false
 	snake_target = pick_new_target(snake_target)
 

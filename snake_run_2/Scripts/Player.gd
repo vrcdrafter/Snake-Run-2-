@@ -88,10 +88,12 @@ var has_weapon :bool = false
 @onready var vhs_icon :AnimatedSprite2D = get_node("/root/Node/vhs_icon")
 @onready var gold_icon :AnimatedSprite2D = get_node("/root/Node/gold_icon")
 @onready var chair_icon :AnimatedSprite2D = get_node("/root/Node/chair_icon")
-
+@onready var respawn_point :Marker3D = get_node("../../../../spawn_point_1")
 
 var item_accumulator :int = 3
 
+var respawn_timer :float = 1.0
+var respawn_accumulator :float = 0 
 
 signal can_leave
 
@@ -166,6 +168,12 @@ func _physics_process(delta: float) -> void:
 		$"source_fox/Armature (Mecha g)/Skeleton3D/PhysicalBoneSimulator3D".physical_bones_start_simulation()
 		
 		print("you died")
+		
+		respawn_accumulator += delta
+		if respawn_accumulator > respawn_timer:
+			respawn()
+			respawn_accumulator = 0 
+		# start rebirth timer 
 	
 	
 	if not death_oneshot:
@@ -252,17 +260,21 @@ func _physics_process(delta: float) -> void:
 				$AudioStreamPlayer.pitch_scale = 1
 
 			if direction:
-				if play_walk_once:
-					$AudioStreamPlayer.play()
-					play_walk_once = false
-				velocity.x = direction.x * SPEED
-				velocity.z = direction.z * SPEED
-				if has_weapon:
-					animation_tree_new.set("parameters/no_wep/blend_amount", 0)
-					animation_tree_new.set("parameters/Blend2/blend_amount", 0)
-				else: 
-					animation_tree_new.set("parameters/no_wep/blend_amount", 1)
-					animation_tree_new.set("parameters/Blend3/blend_amount", -1)
+				if is_on_floor():
+					if play_walk_once:
+						$AudioStreamPlayer.play()
+						play_walk_once = false
+					velocity.x = direction.x * SPEED
+					velocity.z = direction.z * SPEED
+					if has_weapon:
+						animation_tree_new.set("parameters/no_wep/blend_amount", 0)
+						animation_tree_new.set("parameters/Blend2/blend_amount", 0)
+					else: 
+						animation_tree_new.set("parameters/no_wep/blend_amount", 1)
+						animation_tree_new.set("parameters/Blend3/blend_amount", -1)
+				else:
+					$AudioStreamPlayer.stop()
+					play_walk_once = true
 			else:
 				play_walk_once = true
 				$AudioStreamPlayer.stop()
@@ -280,7 +292,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			var input_dir = Input.get_vector("pan_left_p"+player_id, "pan_right_p"+player_id, "move_forward_p"+player_id, "move_backward_p"+player_id)
 			
-			if Input.is_action_just_pressed("jump_p"+player_id) and is_on_floor() and (snakes_around_you < 2):
+			if Input.is_action_just_pressed("jump_p"+player_id) and is_on_floor():
 				velocity.y = JUMP_VELOCITY
 			
 			var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * accel * delta
@@ -289,17 +301,21 @@ func _physics_process(delta: float) -> void:
 				# speed up animations too 
 
 			if direction:
-				if play_walk_once:
-					$AudioStreamPlayer.play()
-					play_walk_once = false
-				velocity.x = direction.x * SPEED_CONTROLLER
-				velocity.z = direction.z * SPEED_CONTROLLER
-				if has_weapon:
-					animation_tree_new.set("parameters/no_wep/blend_amount", 0)
-					animation_tree_new.set("parameters/Blend2/blend_amount", 0)
-				else: 
-					animation_tree_new.set("parameters/no_wep/blend_amount", 1)
-					animation_tree_new.set("parameters/Blend3/blend_amount", -1)
+				if is_on_floor():
+					if play_walk_once:
+						$AudioStreamPlayer.play()
+						play_walk_once = false
+					velocity.x = direction.x * SPEED
+					velocity.z = direction.z * SPEED
+					if has_weapon:
+						animation_tree_new.set("parameters/no_wep/blend_amount", 0)
+						animation_tree_new.set("parameters/Blend2/blend_amount", 0)
+					else: 
+						animation_tree_new.set("parameters/no_wep/blend_amount", 1)
+						animation_tree_new.set("parameters/Blend3/blend_amount", -1)
+				else:
+					$AudioStreamPlayer.stop()
+					play_walk_once = true
 			else:
 				play_walk_once = true
 				$AudioStreamPlayer.stop()
@@ -337,7 +353,8 @@ func _physics_process(delta: float) -> void:
 				# turn off ability to be detected by snake 
 				collision_layer = 0
 				print("the colission should be off now ")
-				emit_signal("dead")
+				dead.emit(self)
+				
 				
 	else:
 		#move camera to death position . 
@@ -556,4 +573,14 @@ func handle_shoot(delta :float):
 			
 func play_reload_sound():
 	$reload.play()
+	
+	
+func respawn():
+	self.global_position = respawn_point.global_position
+	death_oneshot = false
+	$"source_fox/Armature (Mecha g)/Skeleton3D/PhysicalBoneSimulator3D".physical_bones_stop_simulation()
+	$rotation_helper/Camera3D.position = Vector3(0, .821, -.338)
+	$rotation_helper/Camera3D.rotation = Vector3(0,0,0)
+	health = 100
+	$health.value = 100
 	
