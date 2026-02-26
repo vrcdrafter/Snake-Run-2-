@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ddiq5n3w3534s"]
+
+[ext_resource type="Texture2D" uid="uid://csr42iwdpp6n6" path="res://textures/Forest_global_text.png" id="1_pux78"]
+
+[resource]
+shading_mode = 0
+albedo_texture = ExtResource("1_pux78")
+texture_filter = 0

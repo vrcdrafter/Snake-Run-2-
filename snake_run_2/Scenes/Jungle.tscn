@@ -127,7 +127,7 @@ script = ExtResource("2_i4sut")
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 handle_input_locally = false
 audio_listener_enable_3d = true
-size = Vector2i(1152, 648)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("3_udigb")]
@@ -214,7 +214,7 @@ mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="spawn_point_1" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.63474, 9.70182, -120.177)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.47612, 6.03344, -118.595)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = ExtResource("6_udigb")
@@ -312,7 +312,7 @@ transform = Transform3D(0.454789, -0.207767, 0, 0.207574, 0.454366, 0.0215481, -
 transform = Transform3D(0.134254, 0, 0.0669014, 0, 0.15, 0, -0.0669014, 0, 0.134254, 7.37068, 4.8828, -113.222)
 
 [node name="Node3D2" parent="." instance=ExtResource("18_j6r50")]
-transform = Transform3D(3.42, 0, 0, 0, 3.42, 0, 0, 0, 3.42, 10.2606, 3.34941, -119.183)
+transform = Transform3D(3.42, 0, 0, 0, 3.42, 0, 0, 0, 3.42, 7.95908, 3.34941, -129.455)
 
 [node name="vhs_icon" type="AnimatedSprite2D" parent="."]
 visible = false

@@ -591,9 +591,9 @@ func found_prey(player_to_chase,test):
 	target_player = player_to_chase
 	
 func prey_dead(whoe_died,test2):
-	
-	found_player = false
-	snake_target = pick_new_target(snake_target)
+	if snake_target == whoe_died:
+		found_player = false
+		snake_target = pick_new_target(snake_target)
 
 func widen_cull_margin():
 	var all_stuff :Array = self.find_children("*")

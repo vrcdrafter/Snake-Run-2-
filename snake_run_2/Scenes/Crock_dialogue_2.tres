@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3 uid="uid://dnb5msrgn73vw"]
+
+[ext_resource type="Script" path="res://addons/dialogue_nodes/objects/DialogueData.gd" id="1_obass"]
+
+[resource]
+script = ExtResource("1_obass")
+starts = {
+"2": &"0_1"
+}
+nodes = {
+"0_1": {
+"link": &"1_1",
+"offset": Vector2(-520, -140),
+"start_id": "2"
+},
+"0_2": {
+"link": "END",
+"offset": Vector2(-580, 80),
+"start_id": ""
+},
+"1_1": {
+"dialogue": "Did you find it yet?",
+"offset": Vector2(-260, -220),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 240),
+"speaker": -1
+}
+}
+variables = {}
+strays = Array[String](["0_2"])
+characters = ""

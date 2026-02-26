@@ -116,7 +116,7 @@ func run_targeting(delta :float) -> bool:
 	
 	velocity = (global_position - last_position) / delta
 	last_position = global_position
-	print(velocity.length())
+	
 	
 	
 	
