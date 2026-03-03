@@ -232,8 +232,10 @@ func move_segments_back_normal():
 	for i in snake_vertibrea.size(): #EXCLUDE THE TWO EYES AND JAW
 		tri_pos.append(tri_array[i].global_transform)
 		follow_path_array[i].remove_child(tri_array[i])
-		ensarement_path.remove_child(follow_path_array[i])
-
+		#ensarement_path.remove_child(follow_path_array[i])
+		follow_path_array[i].queue_free()
+	follow_path_array.clear()
+	
 	for i in snake_vertibrea.size(): #EXCLUDE THE TWO EYES AND JAW
 		add_child(tri_array[i])
 		tri_array[i].global_transform = tri_pos[i]

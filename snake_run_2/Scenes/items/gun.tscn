@@ -20,5 +20,6 @@ shape = SubResource("SphereShape3D_hortj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106237, 0.125599, 0.132276)
 material_override = SubResource("StandardMaterial3D_egm1s")
 material_overlay = ExtResource("1_w4jqb")
+visibility_range_end = 20.0
 mesh = ExtResource("3_avp8d")
 surface_material_override/0 = ExtResource("1_w4jqb")

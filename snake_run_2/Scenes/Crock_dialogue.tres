@@ -6,7 +6,8 @@
 script = ExtResource("1_rvcaf")
 starts = {
 "1": &"0_1",
-"2": &"0_2"
+"2": &"0_2",
+"3": &"0_3"
 }
 nodes = {
 "0_1": {
@@ -18,6 +19,11 @@ nodes = {
 "link": &"1_3",
 "offset": Vector2(0, 460),
 "start_id": "2"
+},
+"0_3": {
+"link": &"1_4",
+"offset": Vector2(-40, 880),
+"start_id": "3"
 },
 "1_1": {
 "dialogue": "Hey , umm its me Crocko , I got kicked out of my temple and lost some things ,",
@@ -48,6 +54,19 @@ nodes = {
 "1_3": {
 "dialogue": "Did you find it yet ? ",
 "offset": Vector2(300, 540),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 240),
+"speaker": "Crocko"
+},
+"1_4": {
+"dialogue": "OH MY GOSH YOU FOUND , Everything , thank you !!",
+"offset": Vector2(320, 960),
 "options": {
 0: {
 "condition": {},

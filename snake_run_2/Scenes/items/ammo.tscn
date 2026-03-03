@@ -19,4 +19,5 @@ shape = SubResource("SphereShape3D_hortj")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 material_override = ExtResource("1_30f5b")
 material_overlay = SubResource("StandardMaterial3D_p42wv")
+visibility_range_end = 20.0
 mesh = ExtResource("3_g43mk")

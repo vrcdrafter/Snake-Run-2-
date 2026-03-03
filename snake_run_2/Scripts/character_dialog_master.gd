@@ -57,11 +57,17 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept") and $AnimatedSprite2D.is_visible_in_tree() and lock_dialogue:
 		$AnimatedSprite2D.hide()
 		Bubble.start(dialogue_thread)
-		lock_dialogue = false
+		
 	
 	
 	#Bubble.follow_node = self
 	Bubble.smooth_follow
+	
+	if GlobalVars.items_collected == 3:
+
+		dialogue_thread = "3"
+		self.global_position = Vector3(7.37,4.68,-124.58)
+		self.rotation = Vector3(0,-70.3,0)
 
 
 
@@ -91,6 +97,10 @@ func _on_area_3d_body_exited(body: Node3D) -> void:
 		
 
 
-func _on_discussion_dialogue_ended() -> void:
-	lock_dialogue = true
-	dialogue_thread = "2"
+
+func _on_discussion_dialogue_processed(speaker: Variant, dialogue: String, options: Array[String]) -> void:
+	
+	if dialogue == "Can you help me fetch some of my stuff ? ":
+		lock_dialogue = true
+		dialogue_thread = "2"
+	

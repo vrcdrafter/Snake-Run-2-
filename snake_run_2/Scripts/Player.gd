@@ -95,6 +95,8 @@ var item_accumulator :int = 3
 var respawn_timer :float = 1.0
 var respawn_accumulator :float = 0 
 
+var treasure_counter :float = 0 
+
 signal can_leave
 
 func _ready():
@@ -134,6 +136,9 @@ func _ready():
 
 func _input(event: InputEvent) -> void:
 	
+	if Input.is_action_just_released("Debug_orphans"):
+		print_orphan_nodes()
+	
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
 
@@ -141,7 +146,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	if GlobalVars.items_collected > 3:
+	if GlobalVars.items_collected >= 3:
 		can_leave.emit()
 	
 	get_number_players = grid_container.get_children().size()
@@ -543,12 +548,15 @@ func handle_shoot(delta :float):
 			examined_item.queue_free()
 			var item_name = examined_item.name
 			if item_name == "VHS_new":
-				
 				vhs_icon.frame = 2
 				GlobalVars.items_collected += 1
 			elif item_name.contains("teasure"):
-				gold_icon.frame = 2
-				GlobalVars.items_collected += 1
+				
+				GlobalVars.items_collected += .25 # because there is 4 of them 
+				treasure_counter += .25
+				if treasure_counter == 1.0:
+					gold_icon.frame = 2
+				
 			elif item_name == "game_chair":
 				chair_icon.frame = 2
 				GlobalVars.items_collected += 1

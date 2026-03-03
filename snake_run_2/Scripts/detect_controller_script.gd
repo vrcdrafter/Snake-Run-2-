@@ -56,6 +56,10 @@ func act_on_connection(_device, _connected):
 		print("you have one controller")
 		print("This is the joy name ", Input.get_joy_info(0))
 		spawn_player($spawn_point_1.global_position,1)
+		
+	if _device == 0 and _connected == false:
+		print("remove a player ")
+		despawn_player()
 
 
 func spawn_player(spawn_position :Vector3,num :int):
@@ -70,6 +74,14 @@ func spawn_player(spawn_position :Vector3,num :int):
 	player_1_handle.global_position = spawn_position
 
 	emit_signal("player_added")
+	
+func despawn_player():
+	var grid_contrainer_childredn = $GridContainer.get_children()
+	
+	for each in grid_contrainer_childredn:
+		if each.name != "SubViewportContainer2":
+			each.queue_free()
+			$GridContainer.columns = 1
 	
 	
 	
@@ -109,8 +121,6 @@ func add_new_snake(resource_name,test):
 func back_to_title() -> void:
 	GlobalVars.next_level = "res://Scenes/"+"title"+".tscn"
 	get_tree().change_scene_to_file("res://Scenes/loading.tscn")
-
-
 
 
 
