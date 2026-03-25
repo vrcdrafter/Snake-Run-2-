@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfwutjjr5irrt"]
+
+[ext_resource type="Script" path="res://junk_test_get_name.gd" id="1_0lamk"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_0lamk")

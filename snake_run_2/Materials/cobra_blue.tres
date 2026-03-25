@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c0x0w8a2ace0v"]
+
+[ext_resource type="Texture2D" uid="uid://cxj4ndl2cfk62" path="res://level_data/Cobra_biting__snake_skin_cobra_friendly.png" id="1_hwcru"]
+
+[resource]
+shading_mode = 0
+albedo_texture = ExtResource("1_hwcru")

@@ -7,27 +7,45 @@ script = ExtResource("1_rvcaf")
 starts = {
 "1": &"0_1",
 "2": &"0_2",
-"3": &"0_3"
+"3": &"0_3",
+"4": &"0_4",
+"5": &"0_5",
+"6": &"0_6"
 }
 nodes = {
 "0_1": {
 "link": &"1_1",
-"offset": Vector2(-120, 220),
+"offset": Vector2(-1040, -160),
 "start_id": "1"
 },
 "0_2": {
 "link": &"1_3",
-"offset": Vector2(0, 460),
+"offset": Vector2(-1140, 340),
 "start_id": "2"
 },
 "0_3": {
 "link": &"1_4",
-"offset": Vector2(-40, 880),
+"offset": Vector2(-1180, 760),
 "start_id": "3"
+},
+"0_4": {
+"link": &"1_5",
+"offset": Vector2(-204, 322),
+"start_id": "4"
+},
+"0_5": {
+"link": &"1_6",
+"offset": Vector2(-100, 640),
+"start_id": "5"
+},
+"0_6": {
+"link": &"1_7",
+"offset": Vector2(20, 980),
+"start_id": "6"
 },
 "1_1": {
 "dialogue": "Hey , umm its me Crocko , I got kicked out of my temple and lost some things ,",
-"offset": Vector2(240, 140),
+"offset": Vector2(-680, -240),
 "options": {
 0: {
 "condition": {},
@@ -40,7 +58,7 @@ nodes = {
 },
 "1_2": {
 "dialogue": "Can you help me fetch some of my stuff ? ",
-"offset": Vector2(900, 100),
+"offset": Vector2(-20, -280),
 "options": {
 0: {
 "condition": {},
@@ -53,7 +71,7 @@ nodes = {
 },
 "1_3": {
 "dialogue": "Did you find it yet ? ",
-"offset": Vector2(300, 540),
+"offset": Vector2(-840, 420),
 "options": {
 0: {
 "condition": {},
@@ -66,7 +84,7 @@ nodes = {
 },
 "1_4": {
 "dialogue": "OH MY GOSH YOU FOUND , Everything , thank you !!",
-"offset": Vector2(320, 960),
+"offset": Vector2(-820, 840),
 "options": {
 0: {
 "condition": {},
@@ -76,6 +94,45 @@ nodes = {
 },
 "size": Vector2(300, 240),
 "speaker": "Crocko"
+},
+"1_5": {
+"dialogue": "HEY , Perfect timing my friend . Say , there some strange visitors in my forest and it seems they obscanded with my things . ",
+"offset": Vector2(96, 242),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 240),
+"speaker": "Barry "
+},
+"1_6": {
+"dialogue": "Welll, WHERE is my STUFF !!!",
+"offset": Vector2(220, 600),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 240),
+"speaker": "Barry"
+},
+"1_7": {
+"dialogue": "Nice , ! , you found it all . I think we will meet again ",
+"offset": Vector2(340, 940),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 240),
+"speaker": "Barry"
 }
 }
 variables = {}

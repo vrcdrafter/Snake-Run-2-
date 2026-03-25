@@ -4,7 +4,9 @@ var snake_state :String = "patrol"
 
 @onready var test_mesh :MeshInstance3D = get_node("../MeshInstance3D")
 var stunned_material :StandardMaterial3D = preload("res://Materials/snake_stunned.tres")
+var stunned_material2 :StandardMaterial3D = preload("res://Materials/cobra_blue.tres")
 var regular_material :StandardMaterial3D = preload("res://Materials/snake_friendly.tres")
+var regular_material2 :StandardMaterial3D = preload("res://Materials/cobra_blue.tres")
 
 @onready var skel :Skeleton3D
 var all_animation_curves :Array[Curve3D]
@@ -44,7 +46,7 @@ var animation_curve :Curve3D
 
 var ennarement_done :bool = false
 
-var target_animation :String
+
 
 var ensnared_position :Vector3 
 
@@ -178,8 +180,10 @@ func _physics_process(delta: float) -> void:
 					move_segments_to_path(total_curve_length - animation_curve.get_baked_length()) # so this 14.6 is the added curve length 
 					var target_name = snake_target.name
 					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse"))  and target_animation == "anim_ensnare_3":
-						ensnared.emit(snake_target,ensnared_position)
 						
+						if not target_animation == "anim_strike":
+							ensnared.emit(snake_target,ensnared_position)
+
 					ensnare_state = "run"
 				"run":
 					ensnared_position = snake_target.global_position
@@ -203,12 +207,20 @@ func _physics_process(delta: float) -> void:
 					else: # for any other animation 
 						
 						if local_target_distance < 10: # keep trying to ensnare 
-							ennarement_done = move_segments_along_path(delta,13)
+							if target_animation == "anim_strike":
+								ennarement_done = move_segments_along_path(delta,25)
+							else:
+							
+								ennarement_done = move_segments_along_path(delta,13)
 							
 							if ennarement_done and local_target_distance < 4:
 								move_segments_back_normal()
 								ensnare_state = "run_animation"
-								ensnared.emit(snake_target,ensnared_position) # run this if its the right animation or the player is in the rigth position
+								
+								# if its a biting animation there is no ensnare 
+								
+								if not target_animation == "anim_strike":
+									ensnared.emit(snake_target,ensnared_position) # run this if its the right animation or the player is in the rigth position
 							if ennarement_done and local_target_distance > 4:
 								ensnare_state = "abort_dynamic"
 						else:
@@ -244,7 +256,7 @@ func _physics_process(delta: float) -> void:
 						if snake_target.name == "Mouse":
 						# need another offset here . 
 							offset = Vector3(0,0,0)
-						self.global_transform.origin = snake_target.global_position
+						self.global_transform.origin = snake_target.global_position - offset
 						transform_onestart = false
 						
 					# check to see if player gets close 
@@ -294,7 +306,13 @@ func _physics_process(delta: float) -> void:
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
 			if simlation_oneshot:
 				let_go_prey.emit(snake_target_at_beginning, null, ensnare_state)
-				$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material
+				
+				var scene_path = self.scene_file_path
+				var scene_name = scene_path.get_file().get_basename()				
+				if scene_name == "Cobra_biting":
+					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material2
+				else:
+					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material
 				$BoneAttachment3D/Node3D.show()
 				$BoneAttachment3D/tounge_1/AnimationPlayer.stop()
 				for each in test2:
@@ -341,8 +359,12 @@ func _physics_process(delta: float) -> void:
 			let_go_prey.emit(snake_target_at_beginning, snake_target, ensnare_state)
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
 			if simlation_oneshot_stunn:
-				$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material
-				#dead_snake.emit($BoneAttachment3D/tounge_1)
+				var scene_path = self.scene_file_path
+				var scene_name = scene_path.get_file().get_basename()
+				if scene_name == "Cobra_biting":
+					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material2
+				else:
+					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material
 				for each in test2:
 					if each.get_child_count() > 0:
 						bone_simulation_phys.active = true
@@ -358,7 +380,16 @@ func _physics_process(delta: float) -> void:
 					area_examined.mass = .1			
 			stun_accumulator += delta
 			if stun_accumulator > stun_timer:
-				$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = regular_material
+				
+				var scene_path = self.scene_file_path
+				var scene_name = scene_path.get_file().get_basename()
+				
+				if scene_name == "Cobra_biting":
+					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = regular_material2
+				else:
+					
+				
+					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = regular_material
 				snake_state = "limp_RESET"
 				simlation_oneshot_stunn= true
 				stun_accumulator = 0

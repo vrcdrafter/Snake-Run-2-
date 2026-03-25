@@ -87,11 +87,11 @@ script = ExtResource("1_eysnh")
 
 [node name="Label" type="Label" parent="Control"]
 layout_mode = 0
-offset_left = 54.0
-offset_top = 576.0
-offset_right = 442.0
-offset_bottom = 639.0
-text = "fdsafdsa"
+offset_left = 8.0
+offset_top = 4.0
+offset_right = 396.0
+offset_bottom = 67.0
+text = "Save Data Info"
 
 [node name="Label2" type="Label" parent="Control"]
 auto_translate_mode = 1

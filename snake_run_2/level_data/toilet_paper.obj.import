@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b4s08xvx1lspm"
+path="res://.godot/imported/toilet_paper.obj-cf40655eb2301ea4c416bf5eb3b37077.mesh"
+
+[deps]
+
+files=["res://.godot/imported/toilet_paper.obj-cf40655eb2301ea4c416bf5eb3b37077.mesh"]
+
+source_file="res://level_data/toilet_paper.obj"
+dest_files=["res://.godot/imported/toilet_paper.obj-cf40655eb2301ea4c416bf5eb3b37077.mesh", "res://.godot/imported/toilet_paper.obj-cf40655eb2301ea4c416bf5eb3b37077.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

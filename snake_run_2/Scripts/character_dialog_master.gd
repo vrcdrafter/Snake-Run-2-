@@ -9,9 +9,9 @@ var dialoge_accum :float = 0
 var dialoge_time :float = 5.0
 var start_timer :bool = false
 
-@onready var VHS_ICON :AnimatedSprite2D = get_node("/root/Node/vhs_icon")
-@onready var gold_ICON :AnimatedSprite2D = get_node("/root/Node/gold_icon")
-@onready var chair_ICON :AnimatedSprite2D = get_node("/root/Node/chair_icon")
+@onready var treasure_1_icon :AnimatedSprite2D = get_node("/root/Node/treasure_1_icon")
+@onready var treasure_2_icon :AnimatedSprite2D = get_node("/root/Node/treasure_2_icon")
+@onready var treasure_3_icon :AnimatedSprite2D = get_node("/root/Node/treasure_3_icon")
 
 var lock_dialogue :bool = true
 
@@ -37,22 +37,20 @@ func _process(delta: float) -> void:
 			start_timer = false
 			
 			dialoge_accum = 0 
-			VHS_ICON.visible = true
+			treasure_1_icon.visible = true
 			var tween1 = create_tween()
-			tween1.tween_property(VHS_ICON, "scale", Vector2(.5,.5), 1.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-	
-			tween1.tween_property(VHS_ICON, "scale", Vector2(1,1), 1.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+			tween1.tween_property(treasure_1_icon, "scale", Vector2(.5,.5), 1.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+			tween1.tween_property(treasure_1_icon, "scale", Vector2(1,1), 1.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 			
 			var tween = create_tween()
 			
-			gold_ICON.visible = true
-			tween.tween_property(gold_ICON, "scale", Vector2(.5,.5), 1.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-			tween.tween_property(gold_ICON, "scale", Vector2(1,1), 1.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-			chair_ICON.visible = true
+			treasure_2_icon.visible = true
+			tween.tween_property(treasure_2_icon, "scale", Vector2(.5,.5), 1.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+			tween.tween_property(treasure_2_icon, "scale", Vector2(1,1), 1.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+			treasure_3_icon.visible = true
 			var tween2 = create_tween()
-			tween2.tween_property(chair_ICON, "scale", Vector2(.5,.5), 1.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-	
-			tween2.tween_property(chair_ICON, "scale", Vector2(1,1), 1.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+			tween2.tween_property(treasure_3_icon, "scale", Vector2(.5,.5), 1.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+			tween2.tween_property(treasure_3_icon, "scale", Vector2(1,1), 1.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 
 	if Input.is_action_just_pressed("ui_accept") and $AnimatedSprite2D.is_visible_in_tree() and lock_dialogue:
 		$AnimatedSprite2D.hide()

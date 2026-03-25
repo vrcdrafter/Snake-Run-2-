@@ -7,7 +7,7 @@ signal player_added
 var accumulator :float = 0 
 var time_to_check :float = 2
 
-var one_player_has_all_items  = false
+@export var one_player_has_all_items  = false
 var resource_name :String = ""
 var test :String = ""
 
@@ -20,6 +20,8 @@ func _ready() -> void:
 	
 	# make the grid columns 1 at statup 
 	$GridContainer.columns = 1
+	# initilize so the items is zero again 
+	GlobalVars.items_collected = 0
 	
 	
 
@@ -126,13 +128,12 @@ func back_to_title() -> void:
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	var name_object = area.get_parent().name
-	if name_object == "Player" and one_player_has_all_items:
+	var area_child :CollisionShape3D= area.get_child(0)
+	if name_object == "Player" and one_player_has_all_items and area_child.shape.size.x < 6:
 		back_to_title()
 		
 func _player_has_items():
 	one_player_has_all_items = true
-	
-	
 	save_level_access()
 	
 func setup_level():
@@ -143,9 +144,13 @@ func setup_level():
 	
 func save_level_access():
 	const path :String = "user://.save"
+	var path1 := get_tree().current_scene.scene_file_path  # e.g. "res://scenes/MainMenu.tscn"
+	var current_scene := path1.get_file().get_basename()     
 	var file = FileAccess.open(path,FileAccess.WRITE)
-	if get_tree().current_scene.name == "level_2":
+	if current_scene == "Jungle":
 		file.store_string("2")
+	elif  current_scene == "Winter forest":
+		file.store_string("3")
 	else:
-		file.store_string("2")
+		file.store_string("Bad_save")
 	file.close()

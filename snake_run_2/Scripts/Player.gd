@@ -85,9 +85,13 @@ var has_weapon :bool = false
 ## This is the strength at which snakes have on the player when ensnared 
 @export var snake_strength :float = 15
 
-@onready var vhs_icon :AnimatedSprite2D = get_node("/root/Node/vhs_icon")
-@onready var gold_icon :AnimatedSprite2D = get_node("/root/Node/gold_icon")
-@onready var chair_icon :AnimatedSprite2D = get_node("/root/Node/chair_icon")
+@onready var treasure_1_icon :AnimatedSprite2D = get_node("/root/Node/treasure_1_icon")
+@onready var treasure_2_icon :AnimatedSprite2D = get_node("/root/Node/treasure_2_icon")
+@onready var treasure_3_icon :AnimatedSprite2D = get_node("/root/Node/treasure_3_icon")
+
+
+
+
 @onready var respawn_point :Marker3D = get_node("../../../../spawn_point_1")
 
 var item_accumulator :int = 3
@@ -547,21 +551,21 @@ func handle_shoot(delta :float):
 			
 			examined_item.queue_free()
 			var item_name = examined_item.name
-			if item_name == "VHS_new":
-				vhs_icon.frame = 2
+			if item_name == "treasure_1":
+				treasure_1_icon.frame = 2
 				GlobalVars.items_collected += 1
-			elif item_name.contains("teasure"):
+			elif item_name.contains("treasure_2"):
 				
 				GlobalVars.items_collected += .25 # because there is 4 of them 
 				treasure_counter += .25
 				if treasure_counter == 1.0:
-					gold_icon.frame = 2
-				
-			elif item_name == "game_chair":
-				chair_icon.frame = 2
+					treasure_2_icon.frame = 2
+			elif item_name == "treasure_3":
+				treasure_3_icon.frame = 2
 				GlobalVars.items_collected += 1
 			else:
 				pass
+				
 			
 			
 	elif has_weapon:

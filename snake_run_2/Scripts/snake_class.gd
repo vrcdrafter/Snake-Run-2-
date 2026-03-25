@@ -29,6 +29,7 @@ var SPEED :float = 10
 var target :Node3D
 var snake_target :Node3D = null
 var patrol_objects :Array[MeshInstance3D]
+var target_animation :String
 
 var debug = false
 
@@ -377,10 +378,16 @@ func add_colission_shapes():
 		colission_snake_shape.shape = colission_shape
 		
 		var snake_took_hit :Callable = Callable(self,"_on_snake_hitbox_body_entered")
+		var snake_bite :Callable = Callable(self, "_on_snake_bite")
 		colis_area.area_entered.connect(Callable(snake_took_hit))
-		# migth need to connect now all them areas . 
-		colis_area.collision_layer = 1
-		colis_area.collision_mask = 2
+	
+		if colis_area.name == "hitbox0" or  colis_area.name == "hitbox1":
+			colis_area.area_entered.connect(Callable(snake_bite))
+			colis_area.collision_layer = 1
+			colis_area.collision_mask = 2050 # careful with this , it will break everyting . 
+		else:
+			colis_area.collision_layer = 1
+			colis_area.collision_mask = 2
 
 
 # navigation stuff 
@@ -487,13 +494,30 @@ func initialize_patrol_objects():
 			
 func find_target_animation(target_local :Node3D ) ->String:
 	var anim_name_local_array :Array[StringName] = target_local.get_groups()
+	
+	
 	var all_ensnare_animations :Array[StringName]
 	
 	for i in anim_name_local_array.size():
 		var test :StringName = anim_name_local_array[i]
 		if test.contains("anim"):
+			
+			# note if your not a striking snake dont load in a strike animation 
+
 			all_ensnare_animations.append(anim_name_local_array[i])
 			
+	var scene_path = self.scene_file_path
+	var scene_name = scene_path.get_file().get_basename()
+	
+	var random_animation :StringName = all_ensnare_animations.pick_random()
+	if scene_name != "Cobra_biting":
+		while random_animation.contains("strike"):
+			# pick a new one 
+			random_animation = all_ensnare_animations.pick_random()
+			
+	return random_animation
+	
+
 	return all_ensnare_animations.pick_random()
 	
 
@@ -643,10 +667,19 @@ func make_physical_skeleton():
 
 
 func _on_snake_hitbox_body_entered(test):
-	health -= 1
-	 # you would need to do a damage operation 
-	health_decremented = true
+	if not test.name == "Sound_area":
+		health -= 1
+		 # you would need to do a damage operation 
+		health_decremented = true
 	
+	
+func _on_snake_bite(test :Node):
+	var name_of_object :String = test.name
+	var name_of_parent :String = test.get_parent().name
+	
+	target_animation
+	if name_of_object.contains("Sound") and target_animation.contains("strike"):
+		print("this SSSSDshould be a bite")
 	
 func make_transition_key(anim_player :AnimationPlayer, Skel :Skeleton3D):
 	
