@@ -3,6 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://csr42iwdpp6n6" path="res://textures/Forest_global_text.png" id="1_pux78"]
 
 [resource]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
 shading_mode = 0
 albedo_texture = ExtResource("1_pux78")
 texture_filter = 0

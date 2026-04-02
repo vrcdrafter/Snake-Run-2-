@@ -1,5 +1,6 @@
 extends SubViewportContainer
-@export var mouse_event :Vector2
+var mouse_event :Vector2
+
 
 func _input(event: InputEvent) -> void:
 

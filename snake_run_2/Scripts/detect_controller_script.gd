@@ -3,6 +3,7 @@ extends Node
 
 var ping_controllers :bool = true 
 signal player_added
+signal player_removed
 
 var accumulator :float = 0 
 var time_to_check :float = 2
@@ -73,13 +74,14 @@ func spawn_player(spawn_position :Vector3,num :int):
 	var path_player_1 = "GridContainer/" + new_player.name + "/SubViewport/Player"
 	var player_1_handle :CharacterBody3D = get_node(path_player_1)
 	var sub_viewport_sizing :SubViewport = get_node(new_player.name + "/SubViewport")
+
 	player_1_handle.global_position = spawn_position
 
 	emit_signal("player_added")
 	
 func despawn_player():
 	var grid_contrainer_childredn = $GridContainer.get_children()
-	
+	emit_signal("player_removed")
 	for each in grid_contrainer_childredn:
 		if each.name != "SubViewportContainer2":
 			each.queue_free()

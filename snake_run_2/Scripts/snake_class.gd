@@ -66,6 +66,7 @@ var snake_vertibrea :PackedInt32Array
 
 signal ensnared(player_id :Node3D)
 signal dead_snake(snake_id :Node3D)
+signal venom_bite(player_node: Node3D)
 
 # for finding players 
 var found_player :bool = false
@@ -432,7 +433,7 @@ func nav_startup_physics_process(delta,head_object :MeshInstance3D):
 	if time_accumulator > nav_mesh_calc_time:
 		next_path_position = navigation_agent.get_next_path_position()
 		time_accumulator = 0
-	
+	var head_object_position = head_object.global_position
 	var new_velocity: Vector3 = head_object.global_position.direction_to(next_path_position) * movement_delta
 	if navigation_agent.avoidance_enabled:
 		navigation_agent.set_velocity(new_velocity)
@@ -680,6 +681,7 @@ func _on_snake_bite(test :Node):
 	target_animation
 	if name_of_object.contains("Sound") and target_animation.contains("strike"):
 		print("this SSSSDshould be a bite")
+		venom_bite.emit(snake_target)
 	
 func make_transition_key(anim_player :AnimationPlayer, Skel :Skeleton3D):
 	

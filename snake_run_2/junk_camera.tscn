@@ -12,7 +12,6 @@ fov = 77.5265
 script = ExtResource("1_r4qaq")
 max_fov_amount = 50.0
 max_rotation_amt_deg = 50.0
-color_filter_path = NodePath("../ColorRect")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -41.8643, -44.6997)

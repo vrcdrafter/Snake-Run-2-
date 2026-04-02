@@ -40,6 +40,8 @@ var stun_timer :float = .2
 
 signal snake_removed
 
+
+
 var ensnarement_transform_snapline :Transform3D
 
 var animation_curve :Curve3D
@@ -59,6 +61,7 @@ var old_target_position :Vector3 = Vector3(0,0,0)
 signal let_go_prey
 
 var snake_target_at_beginning :Node3D 
+var new_patrol_instance :bool = false
 
 func _ready() -> void:
 
@@ -94,6 +97,8 @@ func _ready() -> void:
 	
 	game_manager_connect_sripts()
 	
+	
+	
 func _physics_process(delta: float) -> void:
 	
 
@@ -120,10 +125,13 @@ func _physics_process(delta: float) -> void:
 		
 		
 		"patrol":
+			
+			if new_patrol_instance:
+				new_patrol_instance = false
+				old_target_position = Vector3(0,0,0) # the reason for this is that is prevents a odd edge case where the snake is targeting a position right under its chin. 
+			var name_local = snake_target.name
+			
 			if found_player:
-				
-				
-				
 				snake_state = "chase"
 			
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
@@ -132,9 +140,7 @@ func _physics_process(delta: float) -> void:
 			aggressivness = 12
 			movement_speed = 3
 			#find something to patrol to 
-			
 			if old_target_position.distance_to(snake_target.global_position) > .1  or  snake_target.is_in_group("Player"):
-			
 				set_movement_target(snake_target.global_position) # assigns target
 			nav_startup_physics_process(delta,tri_array[0]) #starts up the navigation server 
 			#start tris following eachother
@@ -149,6 +155,7 @@ func _physics_process(delta: float) -> void:
 				if target_distance < 1 and not snake_target.is_in_group("A"): # meaning its just a way point 
 					# pick new object
 					snake_target = pick_new_target(snake_target)
+					
 				# if condition if its a animated object 
 				if target_distance < 1 and snake_target.is_in_group("A"):
 					# its a animated spot run an animated ensnar 
@@ -230,6 +237,9 @@ func _physics_process(delta: float) -> void:
 							
 				"run_animation":
 					bone_simulation_phys.active = true
+					var dist_1 = snake_target.global_position
+					var dist_2 = self.global_position
+					
 					var local_target_distance_self :float = (snake_target.global_position - self.global_position).length() # this is the true snake to player at this point
 					var local_target_distance_tri :float = (snake_target.global_position - tri_array[0].global_position).length() 
 					var discernment_distance :float = 0 
@@ -260,7 +270,8 @@ func _physics_process(delta: float) -> void:
 						transform_onestart = false
 						
 					# check to see if player gets close 
-
+					var name_local :String = snake_target.name
+					# so a odd edge error occurs here where the snaek is targetsing the mouse , but cant move into if statement , onestart is true 
 					if onestart and not (snake_target.name.contains("Player") or snake_target.name.contains("Mouse")):  #do not run this if you have a player 
 						timer_move_on.start() # start the timer for how long to be there .
 						onestart = false
@@ -296,6 +307,7 @@ func _physics_process(delta: float) -> void:
 			# chase is intereting because it stays here unless the target is far away , 
 			if target_distance > 17:
 				snake_state = "patrol"
+				new_patrol_instance = true
 			if target_distance < 1: 
 				snake_state = "ensnare_anim"
 			
@@ -354,6 +366,7 @@ func _physics_process(delta: float) -> void:
 					each.physical_bones_stop_simulation()
 			abort_universal_reset()
 			snake_state = "patrol"
+			new_patrol_instance = true
 			
 		"stunned":
 			let_go_prey.emit(snake_target_at_beginning, snake_target, ensnare_state)
@@ -445,6 +458,7 @@ func abort_universal_reset():
 		snake_state = "chase"
 	else :
 		snake_state = "patrol"
+		new_patrol_instance = true
 	ensnare_state = "setup"
 	change_masking_bones(7)
 	

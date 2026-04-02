@@ -50,7 +50,7 @@ var bullet_scene :PackedScene = preload("res://Scenes/bullet.tscn")
 var health :int = 100
 var death_oneshot :bool = false
 
-signal dead 
+signal dead(player_id :CharacterBody3D)
 var previous_thing_ensnared :Node3D
 var current_thing_ensnared :Node3D
 var player_ensnared :Node3D
@@ -552,16 +552,16 @@ func handle_shoot(delta :float):
 			examined_item.queue_free()
 			var item_name = examined_item.name
 			if item_name == "treasure_1":
-				treasure_1_icon.frame = 2
+				treasure_1_icon.frame = 1
 				GlobalVars.items_collected += 1
 			elif item_name.contains("treasure_2"):
 				
 				GlobalVars.items_collected += .25 # because there is 4 of them 
 				treasure_counter += .25
 				if treasure_counter == 1.0:
-					treasure_2_icon.frame = 2
+					treasure_2_icon.frame = 1
 			elif item_name == "treasure_3":
-				treasure_3_icon.frame = 2
+				treasure_3_icon.frame = 1
 				GlobalVars.items_collected += 1
 			else:
 				pass
