@@ -345,7 +345,7 @@ func _physics_process(delta: float) -> void:
 			health_accumulator += delta
 			if health_accumulator > health_decrement_timer:
 				health -= 1
-				$health.value -= 1
+				
 				health_accumulator = 0
 			time+= delta
 			
@@ -594,5 +594,5 @@ func respawn():
 	$rotation_helper/Camera3D.position = Vector3(0, .821, -.338)
 	$rotation_helper/Camera3D.rotation = Vector3(0,0,0)
 	health = 100
-	$health.value = 100
+	
 	

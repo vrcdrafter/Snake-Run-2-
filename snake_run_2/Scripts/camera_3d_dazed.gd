@@ -11,7 +11,11 @@ extends Camera3D
 # === Timings (seconds) ===
 @export var ramp_up_time: float = 4
 @export var mature_hold_time: float = 20.0
+
 @export var ramp_down_time: float = 1.25
+var timer_start :bool = false
+var poison_accumulator :float = 0
+var poison_time :float = 0
 
 # === Motion feel ===
 @export var wobble_speed: float = 1.0 # Hz-ish feel controller
@@ -21,6 +25,10 @@ extends Camera3D
 var _t := 0.0
 var _intensity :float  = 0.0 # 0..1 driven by tween
 var _current_tween: Tween
+
+# poison node 
+@onready var  sprite_poison :AnimatedSprite2D = get_node("../../poison")
+@onready var health_2 :AnimatedSprite2D = get_node("../../health2")
 
 # Optional: link to the color overlay to feed intensity
 
@@ -37,10 +45,10 @@ var timer_accumulator :float = 0
 
 
 func _ready() -> void:
-	
-		
+	health_2.frame = 6
+	poison_time = mature_hold_time
 	remake_connections()
-	
+	sprite_poison.frame = 0
 	var player_base :CharacterBody3D = self.get_parent().get_parent()
 	var lose_bite = Callable(self, "_reset_bitten")
 	player_base.connect("dead",lose_bite)
@@ -61,12 +69,32 @@ func _process(delta: float) -> void:
 	fov = base_fov + w * fov_amount
 	# Triple-axis wobble — Z tamed a bit
 	
+
+	
 	# problem occurs here , if the player dies, the camera goes to a position that shows the ragdoll, 
 	# but then the line below resets the rotation >=( , 
+	if timer_start:
+		poison_accumulator += delta
+		var value = poison_accumulator
+		var result = (value / 20.0) * 9.0 # Result: 9.0
+		var integer_result = int(round(result)) # Rounded to 9
+		sprite_poison.frame = integer_result
+		if poison_accumulator > poison_time:
+			timer_start = false
+			poison_accumulator = 0
+			sprite_poison.frame = 0
+
+		
+		
 	var health_read = player_script.health
 	if health_read > 0:
 		rotation_degrees = Vector3(w2 * rotation_amt_deg * 0.35,w  * rotation_amt_deg,sin(_t * wobble_speed * 0.6) * rotation_amt_deg * z_wobble_scale)
-	
+		health_2.frame = 6
+	# do a health check for the bar 
+	if health_read < 100:
+		var result = (health_read / 100.0) * 6.0 # Result: 9.0
+		var integer_result = int(round(result)) # Rounded to 9
+		health_2.frame = integer_result
 	
 		# Feed intensity to overlay if present
 	if _color_filter and _color_filter.has_method("set_intensity"):
@@ -80,6 +108,7 @@ func _process(delta: float) -> void:
 
 # Call this when the player gets bitten.
 func on_player_bitten() -> void:
+	timer_start = true
 	# If we’re already in a cycle, restart cleanly
 	if _current_tween and _current_tween.is_valid():
 		_current_tween.kill()

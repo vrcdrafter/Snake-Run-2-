@@ -218,7 +218,7 @@ light_energy = 0.518
 [node name="snake_spawn_points" type="Node3D" parent="."]
 
 [node name="Marker3D" type="Marker3D" parent="snake_spawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6763, 9.59972, 62.6381)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.71517, -5.77698, 37.6939)
 
 [node name="Marker3D2" type="Marker3D" parent="snake_spawn_points"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.1625, -8.39073, 14.7031)
@@ -227,7 +227,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.1625, -8.39073, 14.7031)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.8185, -11.6121, -28.1726)
 
 [node name="Marker3D4" type="Marker3D" parent="snake_spawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.9752, 3.10168, 10.8635)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.9752, 3.10168, 9.52293)
 
 [node name="treasure" type="Node3D" parent="."]
 
@@ -363,34 +363,34 @@ process_material = SubResource("ParticleProcessMaterial_bpoon")
 draw_pass_1 = SubResource("QuadMesh_gd0rj")
 
 [node name="Snake" parent="." instance=ExtResource("21_vqlso")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5184, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.8856, -10.8865, -34.696)
 
 [node name="Snake2" parent="." instance=ExtResource("21_vqlso")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5184, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.8856, -10.8865, -34.696)
 
 [node name="Snake3" parent="." instance=ExtResource("21_vqlso")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5184, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.8856, -10.8865, -34.696)
 
 [node name="Snake4" parent="." instance=ExtResource("21_vqlso")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.9965, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.41968, 0.309245, -38.6295)
 
 [node name="Snake5" parent="." instance=ExtResource("21_vqlso")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.9031, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.3263, 0.309245, -38.6295)
 
 [node name="Snake6" parent="." instance=ExtResource("21_vqlso")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.4676, 0.0856819, -4.07391)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6211, 0.0856819, 24.003)
 
 [node name="Snake7" parent="." instance=ExtResource("21_vqlso")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.4676, 0.0856819, -4.07391)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6211, 0.0856819, 24.003)
 
 [node name="Snake8" parent="." instance=ExtResource("21_vqlso")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.4676, 0.0856819, -4.07391)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.6263, -7.86855, 0.98022)
 
 [node name="Snake9" parent="." instance=ExtResource("21_vqlso")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.9457, 0.0856819, -4.07391)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.1044, -7.86855, 0.98022)
 
 [node name="Snake10" parent="." instance=ExtResource("21_vqlso")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.8523, 0.0856819, -4.07391)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.011, -7.86855, 0.98022)
 
 [node name="treasure_1_icon" type="AnimatedSprite2D" parent="."]
 position = Vector2(57, 309)
