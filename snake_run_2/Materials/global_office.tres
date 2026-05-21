@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://r3v20mduiv3k"]
+
+[ext_resource type="Texture2D" uid="uid://b1h6ac86tkp10" path="res://level_data/office_global_office_level_text.png" id="1_t5p3a"]
+[ext_resource type="Texture2D" uid="uid://ckorh2vdf1yql" path="res://level_data/office_global_office_leve_shadows.png" id="2_qxl6f"]
+
+[resource]
+shading_mode = 0
+albedo_texture = ExtResource("1_t5p3a")
+detail_enabled = true
+detail_blend_mode = 3
+detail_uv_layer = 1
+detail_albedo = ExtResource("2_qxl6f")

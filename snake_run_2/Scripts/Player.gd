@@ -194,6 +194,7 @@ func _physics_process(delta: float) -> void:
 
 			event = top_container_handle.mouse_event
 			
+			
 			# run a reload if you want 
 			if $AnimatedSprite2D2.frame !=0:
 				if Input.is_action_just_pressed("reload") and  has_weapon:
@@ -201,7 +202,7 @@ func _physics_process(delta: float) -> void:
 					if $AnimatedSprite2D2.frame != 0:
 						$AnimatedSprite2D2.frame -= 1 # decrement that frame
 				
-				
+		
 			if previous_event == event:
 				event = Vector2(0,0)
 			else:
@@ -209,7 +210,7 @@ func _physics_process(delta: float) -> void:
 			
 			rotation_helper.rotate_x(deg_to_rad(event.y * MOUSE_SENSITIVITY * -1))
 			self.rotate_y(deg_to_rad(event.x * MOUSE_SENSITIVITY * -1))
-
+		
 			var camera_rot = rotation_helper.rotation
 			camera_rot.x = clampf(camera_rot.x, -1.4, 1.4)
 			rotation_helper.rotation = camera_rot
@@ -496,11 +497,11 @@ func check_ray(delta,ray :RayCast3D):
 				if get_number_players == 1:
 					
 					$pickup.global_position = Vector2i(270,311)
-					print("halved")
+					
 				else :
 					
 					$pickup.global_position = Vector2i(270,311)
-					print("halved")
+					
 				$pickup.play()
 				
 				if has_weapon:

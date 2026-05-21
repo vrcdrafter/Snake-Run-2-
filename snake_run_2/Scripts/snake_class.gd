@@ -3,7 +3,7 @@ extends Node3D
 class_name Snake
 
 @export var aggressivness :float = 1.0
-
+@export var home: MeshInstance3D
 
 @export var hide_triangles :bool = false
 var ensarement_path :Path3D
@@ -28,6 +28,7 @@ var skeleton :Skeleton3D
 var SPEED :float = 10
 var target :Node3D
 var snake_target :Node3D = null
+var snake_target_at_beginning :Node3D 
 var patrol_objects :Array[MeshInstance3D]
 var target_animation :String
 
@@ -536,7 +537,11 @@ func make_anim_timer() -> Timer: # at startup makes a timer in the tree
 
 func _on_timer_timeout():    # Code to execute when the timer times out
 	
-	timer_up = true
+	# if its a snake with a Home , then it doenst move on , so skip over line below
+	var name_at_beginning = snake_target_at_beginning.name  
+	var name_at_momnet = snake_target.name
+	if home == null: # there is a problem here if it just defeated the player it cant start up the timer again . 
+		timer_up = true
 	
 	
 func pick_new_target(snake_target :Node3D) -> Node3D:
@@ -620,7 +625,12 @@ func found_prey(player_to_chase,test):
 func prey_dead(whoe_died,test2):
 	if snake_target == whoe_died:
 		found_player = false
-		snake_target = pick_new_target(snake_target)
+		
+		if home == null:
+			snake_target = pick_new_target(snake_target)
+		else:
+			snake_target = home
+			timer_up = true # this is because the timer one no longer works when home is set. 
 
 func widen_cull_margin():
 	var all_stuff :Array = self.find_children("*")
@@ -677,8 +687,6 @@ func _on_snake_hitbox_body_entered(test):
 func _on_snake_bite(test :Node):
 	var name_of_object :String = test.name
 	var name_of_parent :String = test.get_parent().name
-	
-	target_animation
 	if name_of_object.contains("Sound") and target_animation.contains("strike"):
 		print("this SSSSDshould be a bite")
 		venom_bite.emit(snake_target)
@@ -781,6 +789,12 @@ func give_hiss(delta):
 		hiss_accumulator = 0
 
 			
-	
+func set_tongue_enabled(enabled: bool, tongue :Node3D, tongue_anim :AnimationPlayer):
+	tongue.visible = enabled
+	if tongue_anim:
+		tongue_anim.active = enabled
+	tongue.set_process(enabled)
+	tongue.set_physics_process(enabled)
+
 	
 	

@@ -6,7 +6,7 @@ func _input(event: InputEvent) -> void:
 
 	if self.name == "SubViewportContainer2":
 		if event is InputEventMouseMotion:
-			mouse_event = event.relative
+			mouse_event = event.relative.clampf(-89,89)
 			
 	else:
 		pass

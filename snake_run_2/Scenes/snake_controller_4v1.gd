@@ -5,8 +5,10 @@ var snake_state :String = "patrol"
 @onready var test_mesh :MeshInstance3D = get_node("../MeshInstance3D")
 var stunned_material :StandardMaterial3D = preload("res://Materials/snake_stunned.tres")
 var stunned_material2 :StandardMaterial3D = preload("res://Materials/cobra_blue.tres")
+var stunned_material3 :StandardMaterial3D = preload("res://Materials/adder.tres")
 var regular_material :StandardMaterial3D = preload("res://Materials/snake_friendly.tres")
 var regular_material2 :StandardMaterial3D = preload("res://Materials/cobra_blue.tres")
+var regular_material3 :StandardMaterial3D = preload("res://Materials/adder.tres")
 
 @onready var skel :Skeleton3D
 var all_animation_curves :Array[Curve3D]
@@ -60,8 +62,11 @@ var old_target_position :Vector3 = Vector3(0,0,0)
 
 signal let_go_prey
 
-var snake_target_at_beginning :Node3D 
+
 var new_patrol_instance :bool = false
+
+var toung_enabled :bool = true
+
 
 func _ready() -> void:
 
@@ -81,7 +86,11 @@ func _ready() -> void:
 	
 	initialize_patrol_objects()
 	
-	snake_target = fetch_random_patrol_object() # just pick a first target . 
+	if home == null:
+	
+		snake_target = fetch_random_patrol_object() # just pick a first target . 
+	else:
+		snake_target = home
 	
 	all_animation_curves = _make_curve_from_animation(skel,false) # register animations if ther is any on the model
 
@@ -123,9 +132,7 @@ func _physics_process(delta: float) -> void:
 	
 	match snake_state:
 		
-		
 		"patrol":
-			
 			if new_patrol_instance:
 				new_patrol_instance = false
 				old_target_position = Vector3(0,0,0) # the reason for this is that is prevents a odd edge case where the snake is targeting a position right under its chin. 
@@ -152,16 +159,26 @@ func _physics_process(delta: float) -> void:
 				snake_state = "chase" # go back to chasing 
 				
 			else: # go ahead and pick a new waypoint 
-				if target_distance < 1 and not snake_target.is_in_group("A"): # meaning its just a way point 
-					# pick new object
-					snake_target = pick_new_target(snake_target)
-					
-				# if condition if its a animated object 
-				if target_distance < 1 and snake_target.is_in_group("A"):
-					# its a animated spot run an animated ensnar 
-					snake_state = "ensnare_anim"			
-					var snake_target_name4 = snake_target.name
-					ensnared_position = snake_target.global_position
+				
+				# so if there is no Home , do the regular 
+				if home == null: # then its not assigned and doesne need to go back to its desk .  
+				
+					if target_distance < 1 and not snake_target.is_in_group("A"): # meaning its just a way point 
+						# pick new object
+						snake_target = pick_new_target(snake_target)					
+					# if condition if its a animated object 
+					if target_distance < 1 and snake_target.is_in_group("A"):
+						# its a animated spot run an animated ensnar 
+						snake_state = "ensnare_anim"			
+						ensnared_position = snake_target.global_position
+						
+				else: 
+					# go back to your desk . 
+					snake_target = home
+					if target_distance < 1 and snake_target.is_in_group("A"):
+						# its a animated spot run an animated ensnar 
+						snake_state = "ensnare_anim"			
+						ensnared_position = snake_target.global_position
 				
 			old_target_position = snake_target.global_position
 		"ensnare_anim": # meaning animated ensnarement
@@ -233,8 +250,6 @@ func _physics_process(delta: float) -> void:
 						else:
 							# means the prey esaped 						
 							ensnare_state = "abort_dynamic"
-							
-							
 				"run_animation":
 					bone_simulation_phys.active = true
 					var dist_1 = snake_target.global_position
@@ -260,6 +275,7 @@ func _physics_process(delta: float) -> void:
 						transform_save = self.global_transform # note this line needs to run once too 
 						snake_animations.play(target_animation)
 						
+						
 						var rot_y = Transform3D(Basis(Vector3.UP, angle_local), Vector3.ZERO)
 						self.global_transform = ensnarement_transform_snapline * rot_y # this doesnt quite work
 						var offset :Vector3 = Vector3(0,1,0)
@@ -279,14 +295,18 @@ func _physics_process(delta: float) -> void:
 					if timer_up:
 						# you need to skip some of these frames too . 
 						ensnare_state = "abort_static"
-						
 				"abort_static":
 					abort_universal_reset()
 					self.global_transform = transform_save# # this is a PROBLEM PROBLEM , be careful where abort comes form 
 					if snake_target.name.contains("Player") or snake_target.name.contains("Mouse"):
 						pass # make this so theres a otpion to target the player!!!!!!!!!!!!!!!
 					else:
-						snake_target = pick_new_target(snake_target)
+						
+						# do a check to see if the snake has a home 
+						if home == null:
+							snake_target = pick_new_target(snake_target)
+						else:
+							snake_target = home
 				"abort_dynamic":
 					abort_universal_reset()
 		"chase":
@@ -308,13 +328,9 @@ func _physics_process(delta: float) -> void:
 			if target_distance > 17:
 				snake_state = "patrol"
 				new_patrol_instance = true
-			if target_distance < 1: 
+			if target_distance < 2:  
 				snake_state = "ensnare_anim"
-			
-			
 		"null":
-			
-			
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
 			if simlation_oneshot:
 				let_go_prey.emit(snake_target_at_beginning, null, ensnare_state)
@@ -323,6 +339,9 @@ func _physics_process(delta: float) -> void:
 				var scene_name = scene_path.get_file().get_basename()				
 				if scene_name == "Cobra_biting":
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material2
+				elif scene_name == "adder_biting":
+					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material3
+				
 				else:
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material
 				$BoneAttachment3D/Node3D.show()
@@ -354,11 +373,7 @@ func _physics_process(delta: float) -> void:
 				snake_removed.emit(resource_name)
 				
 				self.queue_free()
-			
 		"limp_RESET":
-			
-			
-			
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
 			for each in test2:
 				if each.get_child_count() > 0:
@@ -367,7 +382,6 @@ func _physics_process(delta: float) -> void:
 			abort_universal_reset()
 			snake_state = "patrol"
 			new_patrol_instance = true
-			
 		"stunned":
 			let_go_prey.emit(snake_target_at_beginning, snake_target, ensnare_state)
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
@@ -376,6 +390,8 @@ func _physics_process(delta: float) -> void:
 				var scene_name = scene_path.get_file().get_basename()
 				if scene_name == "Cobra_biting":
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material2
+				elif scene_name == "adder_biting":
+					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material3
 				else:
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material
 				for each in test2:
@@ -399,9 +415,9 @@ func _physics_process(delta: float) -> void:
 				
 				if scene_name == "Cobra_biting":
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = regular_material2
+				elif scene_name == "adder_biting":
+					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material3
 				else:
-					
-				
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = regular_material
 				snake_state = "limp_RESET"
 				simlation_oneshot_stunn= true
@@ -430,8 +446,22 @@ func _physics_process(delta: float) -> void:
 			frame_counter = 0
 			override_skeleton(skel)  #Run all the time 
 			
+			# enable that tounge again 
+			if !toung_enabled: # starts off true but so does the tounge . 
+				set_tongue_enabled(true,$BoneAttachment3D/tounge_1,$BoneAttachment3D/tounge_1/AnimationPlayer)
+				toung_enabled = true
+			
 		else:
+			
+			# turn off that tounge
+			
+			if toung_enabled:
+				
+				set_tongue_enabled(false,$BoneAttachment3D/tounge_1,$BoneAttachment3D/tounge_1/AnimationPlayer)
+				toung_enabled = false
+			
 			if frame_counter > 50:
+				
 				override_skeleton(skel) 
 				frame_counter = 0
 			else:
