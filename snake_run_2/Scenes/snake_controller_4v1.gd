@@ -129,7 +129,7 @@ func _physics_process(delta: float) -> void:
 	snake_target_at_beginning = snake_target
 	
 	give_hiss(delta)
-	
+	var name_of_target = snake_target.name
 	match snake_state:
 		
 		"patrol":
@@ -137,9 +137,6 @@ func _physics_process(delta: float) -> void:
 				new_patrol_instance = false
 				old_target_position = Vector3(0,0,0) # the reason for this is that is prevents a odd edge case where the snake is targeting a position right under its chin. 
 			var name_local = snake_target.name
-			
-			if found_player:
-				snake_state = "chase"
 			
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
 						# when you go into patrol , just skip a frame , see how bad it looks 
@@ -180,6 +177,9 @@ func _physics_process(delta: float) -> void:
 						snake_state = "ensnare_anim"			
 						ensnared_position = snake_target.global_position
 				
+			if found_player:
+				snake_state = "chase"
+				
 			old_target_position = snake_target.global_position
 		"ensnare_anim": # meaning animated ensnarement
 			match ensnare_state:
@@ -203,7 +203,7 @@ func _physics_process(delta: float) -> void:
 					var total_curve_length = curve.get_baked_length()
 					move_segments_to_path(total_curve_length - animation_curve.get_baked_length()) # so this 14.6 is the added curve length 
 					var target_name = snake_target.name
-					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse"))  and target_animation == "anim_ensnare_3":
+					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse"))  and (target_animation == "anim_ensnare_3" or target_animation == "anim_typing"):
 						
 						if not target_animation == "anim_strike":
 							ensnared.emit(snake_target,ensnared_position)
@@ -215,7 +215,7 @@ func _physics_process(delta: float) -> void:
 					twist_triangles(0)
 					# turn off the colission on the stupid snake 
 					change_masking_bones(0)
-					if target_animation == "anim_ensnare_3":
+					if target_animation == "anim_ensnare_3" or target_animation == "anim_typing":
 						if local_target_distance < 4: # keep trying to ensnare 
 							ennarement_done = move_segments_along_path(delta,5)
 							
@@ -266,6 +266,7 @@ func _physics_process(delta: float) -> void:
 					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse")) and discernment_distance > 3:
 						
 						timer_up = true
+					var immedate_name = snake_target.name
 					if found_player and not (snake_target.name.contains("Player") or snake_target.name.contains("Mouse")): 
 						timer_up = true
 						
@@ -276,13 +277,13 @@ func _physics_process(delta: float) -> void:
 						snake_animations.play(target_animation)
 						
 						
-						var rot_y = Transform3D(Basis(Vector3.UP, angle_local), Vector3.ZERO)
-						self.global_transform = ensnarement_transform_snapline * rot_y # this doesnt quite work
+					
+						self.global_transform = snake_target.global_transform #doesnt quite work
 						var offset :Vector3 = Vector3(0,1,0)
 						if snake_target.name == "Mouse":
 						# need another offset here . 
 							offset = Vector3(0,0,0)
-						self.global_transform.origin = snake_target.global_position - offset
+						self.global_transform.origin = self.global_transform.origin - offset
 						transform_onestart = false
 						
 					# check to see if player gets close 
@@ -297,6 +298,7 @@ func _physics_process(delta: float) -> void:
 						ensnare_state = "abort_static"
 				"abort_static":
 					abort_universal_reset()
+					var local_name = snake_target.name
 					self.global_transform = transform_save# # this is a PROBLEM PROBLEM , be careful where abort comes form 
 					if snake_target.name.contains("Player") or snake_target.name.contains("Mouse"):
 						pass # make this so theres a otpion to target the player!!!!!!!!!!!!!!!
@@ -343,7 +345,7 @@ func _physics_process(delta: float) -> void:
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material3
 				
 				else:
-					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material
+					$snake_python/snake_export/SkeleAton3D/export_snake_mesh.material_override = stunned_material
 				$BoneAttachment3D/Node3D.show()
 				$BoneAttachment3D/tounge_1/AnimationPlayer.stop()
 				for each in test2:
@@ -370,7 +372,7 @@ func _physics_process(delta: float) -> void:
 					area_examined.mass = .1
 			if death_accumulator > death_timer + 3:
 				var resource_name = self.get_scene_file_path().get_file().get_basename()
-				snake_removed.emit(resource_name)
+				snake_removed.emit(resource_name,home)
 				
 				self.queue_free()
 		"limp_RESET":

@@ -14,6 +14,7 @@ func _ready() -> void:
 
 		
 func set_intensity(i: float) -> void:
+
 	_intensity = clamp(i, 0.0, 1.0)
 	self.modulate.a = _intensity * max_alpha
 

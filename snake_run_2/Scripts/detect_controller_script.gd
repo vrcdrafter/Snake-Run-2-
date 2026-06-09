@@ -11,6 +11,7 @@ var time_to_check :float = 2
 @export var one_player_has_all_items  = false
 var resource_name :String = ""
 var test :String = ""
+var node_name :MeshInstance3D = null
 
 func _ready() -> void:
 	
@@ -97,7 +98,7 @@ func poll_all_snakes_connections():
 		if not each.is_connected("snake_removed",Callable(self,"add_new_snake")):
 			
 			
-			each.connect("snake_removed",Callable(self,"add_new_snake").bind([resource_name,test]))
+			each.connect("snake_removed",Callable(self,"add_new_snake").bind([resource_name,node_name,test]))
 			
 			
 			
@@ -111,13 +112,11 @@ func poll_all_player_connection():
 			each.get_child(0).get_child(0).connect("can_leave",Callable(self,"_player_has_items"))
 			pass
 	
-	
-func add_new_snake(resource_name,test):
-	
+func add_new_snake(resource_name,node_name,test):
 	var spawn_points :Array[Node] = $snake_spawn_points.get_children()
-	var random_spawn_point = spawn_points[randi() % spawn_points.size()]	
-	
+	var random_spawn_point = spawn_points[randi() % spawn_points.size()]
 	var new_snake = load("res://Scenes/" + resource_name + ".tscn").instantiate()
+	new_snake.home = node_name # does this line work ? 
 	new_snake.global_position = random_spawn_point.global_position
 	add_child(new_snake)
 	
@@ -153,6 +152,8 @@ func save_level_access():
 		file.store_string("2")
 	elif  current_scene == "Winter forest":
 		file.store_string("3")
+	elif current_scene == "Office":
+		file.store_string("4") # meaning unlock level 4. 
 	else:
-		file.store_string("Bad_save")
+		file.store_string("2") # just default it back to 0 please. 
 	file.close()

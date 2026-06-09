@@ -59,6 +59,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_t += delta
 	# Drive amounts from current intensity
+	
 	var fov_amount :float = lerp(0.0, max_fov_amount, _intensity)
 	var rotation_amt_deg :float = lerp(0.0, max_rotation_amt_deg, _intensity)
 	# Wobble
@@ -98,6 +99,7 @@ func _process(delta: float) -> void:
 	
 		# Feed intensity to overlay if present
 	if _color_filter and _color_filter.has_method("set_intensity"):
+		
 		_color_filter.set_intensity(_intensity)
 	
 	timer_accumulator += delta
@@ -129,7 +131,9 @@ func remake_connections():
 			
 			
 func _on_snake_bitten(player_node):
+	
 	if self.get_parent().get_parent() == player_node:
+		var name = player_node.name
 		on_player_bitten()
 
 func _reset_bitten(player_node):

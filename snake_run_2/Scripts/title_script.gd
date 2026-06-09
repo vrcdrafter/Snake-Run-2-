@@ -52,11 +52,11 @@ func _ready() -> void:
 	else:
 		# make a new one and make a default value 
 		
-		file = FileAccess.open(path,FileAccess.WRITE)
+		
 		save(data)
 		print("file does not exist we made one here ",file.get_path_absolute())
 		terminal.text = "file does not exist we made one here \n " + file.get_path_absolute()
-		file.close()
+
 	print(load_game())
 	
 	# asses what levels the player gets 
@@ -77,12 +77,14 @@ func _process(delta: float) -> void:
 	path_handle.progress = lerp(path_handle.progress, target_progress, delta * lerp_speed)
 	
 func save(content):
-	
+	file = FileAccess.open(path,FileAccess.WRITE)
 	file.store_string(content)
+	file.close()
 	
 func load_game():
 	var file = FileAccess.open(path,FileAccess.READ)
 	var content = file.get_as_text()
+	file.close()
 	return content
 	
 	
@@ -92,7 +94,8 @@ func level_access(current_level: int) -> void:
 	var highest_unlocked: int = 0
 	highest_unlocked = int(save_raw)
 		
-	$TextureButton4.disabled = current_level >= highest_unlocked
+	var test_local :bool = current_level >= highest_unlocked
+	$TextureButton4.disabled = test_local
 			
 
 
@@ -135,4 +138,11 @@ func setup_level_menu():
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
+	
+
+
+func _on_button_pressed() -> void:
+	if file:
+		save("1")
+		$Label.text = "cleared the info in the save file , you only have level 1 now . "
 	

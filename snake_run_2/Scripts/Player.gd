@@ -3,8 +3,8 @@ extends CharacterBody3D
 const ACCEL = 10
 const DEACCEL = 30
 
-const SPEED = 5
-const SPEED_CONTROLLER = 7
+const SPEED = 7
+const SPEED_CONTROLLER = 9
 const SPRINT_MULT = 3
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.12
@@ -119,12 +119,12 @@ func _ready():
 
 	
 	player_id = find_id()
-	print("the player identified is ", player_id)
+
 	
 	box_shape = sound_shape.shape
 	if box_shape is BoxShape3D:
 		box_shape.size = Vector3(5, 5, 5)  # Set to desired size
-		print("set")
+	
 		
 		
 	if has_weapon:
@@ -221,11 +221,9 @@ func _physics_process(delta: float) -> void:
 			if Input.is_action_just_pressed("jump") and is_on_floor():
 				velocity.y = JUMP_VELOCITY
 			
-		else:			
+		else:
 			if Input.is_action_just_pressed("shoot_p" + player_id):
 				handle_shoot(delta)
-
-				
 			if Input.is_action_just_pressed("reload_p" + player_id):
 				animation_tree_new.set("parameters/reload/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 			
@@ -235,15 +233,9 @@ func _physics_process(delta: float) -> void:
 			rotation_helper.rotate_x(joy_y_accum * -1)
 			#joystick left right
 			self.rotate_y(look_stick_angle.x * Joy_sensativity * -1 * delta)
-		
-		
-		
 		# Add the gravity. Pulls value from project settings.
 		if not is_on_floor():
 			velocity.y -= gravity * delta
-
-
-
 		# This just controls acceleration. Don't touch it.
 		var accel
 		if dir.dot(velocity) > 0:
@@ -251,7 +243,6 @@ func _physics_process(delta: float) -> void:
 		
 		else:
 			accel = DEACCEL
-		
 			
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with a custom keymap depending on your control scheme. These strings default to the arrow keys layout.
@@ -305,8 +296,9 @@ func _physics_process(delta: float) -> void:
 			if Input.is_action_just_pressed("jump_p"+player_id) and is_on_floor():
 				velocity.y = JUMP_VELOCITY
 			
-			var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * accel * delta
-			if Input.is_key_pressed(KEY_SHIFT) or Input.is_action_pressed("sprint_p"+player_id):
+			var direction :Vector3 = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * accel * delta
+			
+			if Input.is_action_pressed("sprint_p"+player_id):
 				direction = direction * SPRINT_MULT
 				# speed up animations too 
 
@@ -315,8 +307,8 @@ func _physics_process(delta: float) -> void:
 					if play_walk_once:
 						$AudioStreamPlayer.play()
 						play_walk_once = false
-					velocity.x = direction.x * SPEED
-					velocity.z = direction.z * SPEED
+					velocity.x = direction.x * SPEED_CONTROLLER
+					velocity.z = direction.z * SPEED_CONTROLLER
 					if has_weapon:
 						animation_tree_new.set("parameters/no_wep/blend_amount", 0)
 						animation_tree_new.set("parameters/Blend2/blend_amount", 0)

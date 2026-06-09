@@ -60,7 +60,7 @@ class rem_constraint(bpy.types.Operator):
         for bone in bones:
             
             bpy.context.object.data.bones.active = bone.bone
-            bone.bone.select = True
+         #   bone.bone.select = True
             
             bpy.ops.constraint.delete(constraint="Copy Transforms", owner='BONE')
             i += 1
@@ -77,21 +77,23 @@ class WM_OT_HelloWorld(bpy.types.Operator):
 
     def execute(self, context):
         # Report "Hello World" to the Console
-        
-        bones = bpy.context.object.pose.bones
-        i = 0 
-        for bone in bones:
-            if "Neck" in bone.name:
-                
-                bpy.context.object.data.bones.active = bone.bone
-                bone.bone.select = True
-                bpy.ops.pose.constraint_add(type='COPY_TRANSFORMS')
-                
-                bpy.context.object.pose.bones[bone.name].constraints["Copy Transforms"].target = bpy.data.objects["phantom_snake"]
-                bpy.context.object.pose.bones[bone.name].constraints["Copy Transforms"].subtarget = bone.name
-                i += 1
+            
+        obj = bpy.context.object
+
+        for bone in obj.pose.bones:
+            
+            # Add constraint directly (no ops, no selection)
+            const = bone.constraints.new(type='COPY_TRANSFORMS')
+            
+            # Set target + subtarget
+            const.target = bpy.data.objects["phantom_snake"]
+            const.subtarget = bone.name
+
+            print(bone.name)
+
         self.report({'INFO'}, "Hello World")
         return {'FINISHED'}
+
 
 
 
@@ -110,7 +112,7 @@ class app_constraint(bpy.types.Operator):
         for bone in bones:
             
             bpy.context.object.data.bones.active = bone.bone
-            bone.bone.select = True
+        #    bone.bone.select = True
             bpy.ops.constraint.apply(constraint="Copy Transforms", owner='BONE')
             i += 1
             

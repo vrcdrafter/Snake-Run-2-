@@ -198,83 +198,83 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_xdsl7")
 
-[node name="section_1_1" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.2904, 0.614311, -21.6623)
+[node name="section_1_1" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
+transform = Transform3D(-0.988433, 0, 0.151657, 0, 1, 0, -0.151657, 0, -0.988433, 22.0151, 1.0199, -16.3743)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_2" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.2904, 0.614311, -16.6538)
+[node name="section_1_2" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
+transform = Transform3D(-0.0317771, 0, 0.999495, 0, 1, 0, -0.999495, 0, -0.0317771, 27.2904, 0.614311, -16.6538)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_3" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+[node name="section_1_3" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.8711, 0.614311, -8.14758)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_4" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+[node name="section_1_4" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.0187, 0.614311, 0.3289)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_5" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+[node name="section_1_5" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.9049, 0.614311, 0.3289)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_6" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+[node name="section_1_6" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.2294, 0.614311, 2.71869)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_8" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+[node name="section_1_8" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.5225, 0.614311, -7.67297)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_9" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+[node name="section_1_9" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.1701, 0.614311, -12.7316)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_10" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+[node name="section_1_10" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.1701, 0.614311, -5.04565)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_11" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+[node name="section_1_11" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.0638, 0.614311, -24.7714)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_12" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+[node name="section_1_12" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.7671, 0.614311, -36.2004)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_13" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+[node name="section_1_13" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9154, 0.614311, -41.534)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_14" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+[node name="section_1_14" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50229, 0.614311, -44.1584)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_15" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+[node name="section_1_15" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.84719, 0.614311, -48.4761)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
-[node name="section_1_7" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
+[node name="section_1_7" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
 transform = Transform3D(0.632692, 0, 0.774404, 0, 1, 0, -0.774404, 0, 0.632692, -11.1905, 0.614311, 7.34591)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="spawn_point_1" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0407, 4.53689, -27.1505)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5273, 4.13595, -24.6496)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = ExtResource("2_k550t")
@@ -304,7 +304,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.9752, 3.10168, 9.52293)
 transform = Transform3D(-0.782521, 0, 0.622624, 0, 1, 0, -0.622624, 0, -0.782521, 40.6845, 2.46583, -11.7854)
 
 [node name="gun4" parent="treasure" instance=ExtResource("8_73vk3")]
-transform = Transform3D(-0.782521, 0, 0.622624, 0, 1, 0, -0.622624, 0, -0.782521, 40.6845, 2.46583, -13.1534)
+transform = Transform3D(-0.782521, 0, 0.622624, 0, 1, 0, -0.622624, 0, -0.782521, 13.2588, 2.46583, -29.3189)
 
 [node name="gun5" parent="treasure" instance=ExtResource("8_73vk3")]
 transform = Transform3D(-0.953212, 0, -0.302303, 0, 1, 0, 0.302303, 0, -0.953212, 33.2734, 2.10896, -10.9862)
@@ -341,10 +341,10 @@ volume_db = -10.0
 autoplay = true
 
 [node name="Area3D" parent="." instance=ExtResource("13_xo1bk")]
-transform = Transform3D(0.721954, 0, 0.691942, 0, 1, 0, -0.691942, 0, 0.721954, 33.0036, 0.719803, -12.2842)
+transform = Transform3D(0.721954, 0, 0.691942, 0, 1, 0, -0.691942, 0, 0.721954, 11.9873, 0.719803, -29.5019)
 
 [node name="Area3D2" parent="." instance=ExtResource("13_xo1bk")]
-transform = Transform3D(0.967625, 0, -0.25239, 0, 1, 0, 0.25239, 0, 0.967625, 33.0036, 0.570762, -10.7269)
+transform = Transform3D(0.967625, 0, -0.25239, 0, 1, 0, 0.25239, 0, 0.967625, 9.98897, 0.570762, -25.7303)
 
 [node name="Area3D9" parent="." instance=ExtResource("13_xo1bk")]
 transform = Transform3D(0.721954, 0, 0.691942, 0, 1, 0, -0.691942, 0, 0.721954, 7.07801, -0.990176, 19.4877)
