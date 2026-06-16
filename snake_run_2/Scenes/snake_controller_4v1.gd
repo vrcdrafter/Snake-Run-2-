@@ -197,8 +197,11 @@ func _physics_process(delta: float) -> void:
 				"path":
 					bone_simulation_phys.active = false
 					ensnarement_transform_snapline = snake_target.global_transform
-					make_ensnarement_curve(ensnarement_points,tri_array,snake_target,animation_curve)
-
+					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse")):
+					
+						make_ensnarement_curve2(ensnarement_points,tri_array,snake_target,animation_curve) # this one angles the snake accorind to the approash
+					else:
+						make_ensnarement_curve(ensnarement_points,tri_array,snake_target,animation_curve)
 					
 					var total_curve_length = curve.get_baked_length()
 					move_segments_to_path(total_curve_length - animation_curve.get_baked_length()) # so this 14.6 is the added curve length 
@@ -264,9 +267,7 @@ func _physics_process(delta: float) -> void:
 						discernment_distance = local_target_distance_self
 					
 					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse")) and discernment_distance > 3:
-						
 						timer_up = true
-					var immedate_name = snake_target.name
 					if found_player and not (snake_target.name.contains("Player") or snake_target.name.contains("Mouse")): 
 						timer_up = true
 						
@@ -276,9 +277,10 @@ func _physics_process(delta: float) -> void:
 						transform_save = self.global_transform # note this line needs to run once too 
 						snake_animations.play(target_animation)
 						
-						
-					
-						self.global_transform = snake_target.global_transform #doesnt quite work
+						if(snake_target.name.contains("Player") or snake_target.name.contains("Mouse")):
+							self.global_transform = ensnarement_transform_snapline * Transform3D(Basis(Vector3.UP, angle_local), Vector3.ZERO) # this doesnt quite work
+						else:
+							self.global_transform = snake_target.global_transform
 						var offset :Vector3 = Vector3(0,1,0)
 						if snake_target.name == "Mouse":
 						# need another offset here . 

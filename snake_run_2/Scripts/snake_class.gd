@@ -210,23 +210,49 @@ func make_ensnarement_curve(ensnarement_data :PackedVector3Array, body_segment_p
 	ensarement_path.curve = curve
 	
 func make_ensnarement_curve2(ensnarement_data :PackedVector3Array, body_segment_pimitived :Array[MeshInstance3D],target :Node3D ,anim_curve :Curve3D = null):
-	var snake_transform = self.global_transform
+	curve.clear_points()
+	var anim_ensnare_points :PackedVector3Array 
+	var anim_ensnare_points2 :PackedVector3Array 
+	var anim_ensnare_point_2_translated :PackedVector3Array
+	# make the curve where the snake is currently at . 
+	for each in body_segment_pimitived:
+		var local_transform :Vector3 = ensarement_path.to_local(each.global_position)
+		anim_ensnare_points.append(local_transform)
+	anim_ensnare_points.reverse()
+	# make the curve to slither into 
 
-	var new_points :PackedVector3Array
-	for i in ensnarement_data.size():
-		# 1. Snake local → world
-		var world_pos = snake_transform * ensnarement_data[i]
-	# 2. World → green8 local (optional, if you want them relative to green8)
-		var new_local = target.global_transform.affine_inverse() * world_pos
-		new_points.append(new_local)
-	# Debug draw
-	for p in new_points:
-		var s := MeshInstance3D.new()
-		s.mesh = SphereMesh.new()
-		s.scale = Vector3.ONE * 0.1
-		s.global_position = p
-		add_child(s)
-	return new_points
+# Create a rotation transform (180° around Y) 	
+	for each in anim_curve.get_baked_points():
+		anim_ensnare_points2.append(each)
+
+
+	var snake_head_global_position :Vector3 = attacker.global_position
+	var global_vector :Vector3 = target.global_position - snake_head_global_position
+	var local_vector_appoach :Vector3 = target.to_local(global_vector)
+	# how do I get the local angle between the target and the approach 
+	angle_local = atan2(local_vector_appoach.x, local_vector_appoach.z)
+
+
+	var rot_y = Transform3D(Basis(Vector3.UP, angle_local), Vector3.ZERO)
+	var offset :Vector3 = Vector3(0,-1,0)
+	var snake_target_name = snake_target.name
+	if snake_target_name == "Mouse":
+		offset = Vector3(0,0,0)
+	for each in anim_ensnare_points2:
+		var transform_test :Vector3 = (target.global_transform * rot_y) * each
+
+
+
+		var local_transform :Vector3 = ensarement_path.to_local(transform_test)
+		anim_ensnare_point_2_translated.append(local_transform + offset)
+
+
+	anim_ensnare_points.append_array(anim_ensnare_point_2_translated)
+
+	for each in anim_ensnare_points:
+		curve.add_point(each)
+
+	ensarement_path.curve = curve
 	
 	
 func move_segments_to_path(offset_head):

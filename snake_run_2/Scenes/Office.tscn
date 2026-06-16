@@ -8,9 +8,9 @@
 [ext_resource type="Script" path="res://Scripts/color_rect.gd" id="5_xdsl7"]
 [ext_resource type="PackedScene" uid="uid://y0scseug4ia2" path="res://Scenes/items/gun.tscn" id="8_73vk3"]
 [ext_resource type="PackedScene" uid="uid://c58fck2kdxucr" path="res://Scenes/items/mallow.tscn" id="9_djxcv"]
-[ext_resource type="PackedScene" uid="uid://b103gt166e6is" path="res://Scenes/items/toilet_paper.tscn" id="10_mnfvb"]
+[ext_resource type="PackedScene" uid="uid://mrnb4snsrove" path="res://Scenes/items/radio.tscn" id="9_nhg3t"]
+[ext_resource type="AudioStream" uid="uid://6qui8w5utn1l" path="res://sounds/hum_lights.wav" id="11_apj43"]
 [ext_resource type="PackedScene" uid="uid://dqmru7ce75dj3" path="res://Scenes/items/lite_brite.tscn" id="11_kbsmd"]
-[ext_resource type="AudioStream" uid="uid://1gc66jnr7do3" path="res://sounds/1. Bells and Synth.wav" id="12_wvu2y"]
 [ext_resource type="PackedScene" uid="uid://duj445gwmyx3u" path="res://Scenes/items/ammo.tscn" id="13_xo1bk"]
 [ext_resource type="Script" path="res://Scripts/re_enable_mouse.gd" id="14_i28yk"]
 [ext_resource type="PackedScene" uid="uid://k1xk3gxjiuco" path="res://Scenes/portal.tscn" id="15_qywix"]
@@ -199,12 +199,12 @@ grow_vertical = 2
 script = ExtResource("5_xdsl7")
 
 [node name="section_1_1" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
-transform = Transform3D(-0.988433, 0, 0.151657, 0, 1, 0, -0.151657, 0, -0.988433, 22.0151, 1.0199, -16.3743)
+transform = Transform3D(0.996103, 0, -0.0881983, 0, 1, 0, 0.0881983, 0, 0.996103, 24.1506, 1.0199, -20.5769)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="section_1_2" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
-transform = Transform3D(-0.0317771, 0, 0.999495, 0, 1, 0, -0.999495, 0, -0.0317771, 27.2904, 0.614311, -16.6538)
+transform = Transform3D(-0.999942, 0, -0.0107336, 0, 1, 0, 0.0107336, 0, -0.999942, 27.9169, 0.614311, -17.2327)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
@@ -214,47 +214,47 @@ mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="section_1_4" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.0187, 0.614311, 0.3289)
+transform = Transform3D(0.724148, 0, 0.689645, 0, 1, 0, -0.689645, 0, 0.724148, 34.0187, 0.614311, 0.3289)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="section_1_5" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.9049, 0.614311, 0.3289)
+transform = Transform3D(0.842255, 0, -0.53908, 0, 1, 0, 0.53908, 0, 0.842255, 24.2765, 0.614311, -1.00747)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="section_1_6" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.2294, 0.614311, 2.71869)
+transform = Transform3D(-0.00792368, 0, 0.999969, 0, 1, 0, -0.999969, 0, -0.00792368, -17.2294, 0.614311, 2.71869)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="section_1_8" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.5225, 0.614311, -7.67297)
+transform = Transform3D(-0.058836, 0, -0.998268, 0, 1, 0, 0.998268, 0, -0.058836, -37.3821, 0.614311, -7.60576)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="section_1_9" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.1701, 0.614311, -12.7316)
+transform = Transform3D(0.00239105, 0, 0.999997, 0, 1, 0, -0.999997, 0, 0.00239105, -28.9626, 0.614311, -12.7335)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="section_1_10" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.1701, 0.614311, -5.04565)
+transform = Transform3D(-0.0223733, 0, 0.99975, 0, 1, 0, -0.99975, 0, -0.0223733, -28.9649, 0.614311, -5.38658)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="section_1_11" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.0638, 0.614311, -24.7714)
+transform = Transform3D(0.714009, 0, 0.700137, 0, 1, 0, -0.700137, 0, 0.714009, -16.1681, 0.614311, -23.8001)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="section_1_12" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.7671, 0.614311, -36.2004)
+transform = Transform3D(0.0166322, 0, 0.999862, 0, 1, 0, -0.999862, 0, 0.0166322, -7.75982, 0.614311, -36.638)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="section_1_13" type="MeshInstance3D" parent="." groups=["A", "anim_typing", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9154, 0.614311, -41.534)
+transform = Transform3D(-0.00237362, 0, 0.999997, 0, 1, 0, -0.999997, 0, -0.00237362, -11.2779, 0.614311, -41.5355)
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
@@ -287,48 +287,39 @@ light_energy = 0.518
 [node name="snake_spawn_points" type="Node3D" parent="."]
 
 [node name="Marker3D" type="Marker3D" parent="snake_spawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.71517, -5.77698, 37.6939)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.2574, -3.12519, 9.27715)
 
 [node name="Marker3D2" type="Marker3D" parent="snake_spawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.1625, -8.39073, 14.7031)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.0965, -1.04065, -21.2633)
 
 [node name="Marker3D3" type="Marker3D" parent="snake_spawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.8185, -11.6121, -28.1726)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5003, -11.6121, -17.7559)
 
 [node name="Marker3D4" type="Marker3D" parent="snake_spawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.9752, 3.10168, 9.52293)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.4907, 3.10168, 11.7549)
 
 [node name="treasure" type="Node3D" parent="."]
 
 [node name="gun" parent="treasure" instance=ExtResource("8_73vk3")]
-transform = Transform3D(-0.782521, 0, 0.622624, 0, 1, 0, -0.622624, 0, -0.782521, 40.6845, 2.46583, -11.7854)
+transform = Transform3D(-0.929062, 0, -0.369925, 0, 1, 0, 0.369925, 0, -0.929062, 17.0578, 0.91603, -23.7284)
 
 [node name="gun4" parent="treasure" instance=ExtResource("8_73vk3")]
-transform = Transform3D(-0.782521, 0, 0.622624, 0, 1, 0, -0.622624, 0, -0.782521, 13.2588, 2.46583, -29.3189)
-
-[node name="gun5" parent="treasure" instance=ExtResource("8_73vk3")]
-transform = Transform3D(-0.953212, 0, -0.302303, 0, 1, 0, 0.302303, 0, -0.953212, 33.2734, 2.10896, -10.9862)
+transform = Transform3D(-0.782521, 0, 0.622624, 0, 1, 0, -0.622624, 0, -0.782521, 15.6945, 0.946075, -22.9836)
 
 [node name="gun2" parent="treasure" instance=ExtResource("8_73vk3")]
 transform = Transform3D(0.942874, 0, 0.333149, 0, 1, 0, -0.333149, 0, 0.942874, -6.0146, 14.0798, -6.98553)
 
-[node name="gun3" parent="treasure" instance=ExtResource("8_73vk3")]
-transform = Transform3D(0.419769, 0, 0.907631, 0, 1, 0, -0.907631, 0, 0.419769, 34.633, 2.2785, 1.28964)
-
 [node name="treasure_1" parent="treasure" instance=ExtResource("9_djxcv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.44369, 2.74951, -39.2353)
 
-[node name="treasure_2_1" parent="treasure" instance=ExtResource("10_mnfvb")]
-transform = Transform3D(0.691021, 0.722835, 0, -0.722835, 0.691021, 0, 0, 0, 1, -36.5871, -6.48115, 0.8048)
+[node name="treasure_2_1" parent="treasure" instance=ExtResource("9_nhg3t")]
+transform = Transform3D(0.99281, 0.119704, 0, -0.119704, 0.99281, 0, 0, 0, 1, 34.4786, 1.0113, -14.2096)
 
-[node name="treasure_2_2" parent="treasure" instance=ExtResource("10_mnfvb")]
-transform = Transform3D(0.691021, 0.722835, 0, -0.722835, 0.691021, 0, 0, 0, 1, -36.5871, -6.48115, 4.55784)
+[node name="treasure_2_2" parent="treasure" instance=ExtResource("9_nhg3t")]
+transform = Transform3D(0.655582, 0.119704, -0.745576, -0.0790441, 0.99281, 0.0898948, 0.750976, 7.45058e-09, 0.660329, -16.5668, 0.996862, 2.03965)
 
-[node name="treasure_2_3" parent="treasure" instance=ExtResource("10_mnfvb")]
-transform = Transform3D(0.691021, 0.722835, 0, -0.722835, 0.691021, 0, 0, 0, 1, -36.5871, -6.48115, -3.15627)
-
-[node name="treasure_2_4" parent="treasure" instance=ExtResource("10_mnfvb")]
-transform = Transform3D(0.691021, 0.722835, 0, -0.722835, 0.691021, 0, 0, 0, 1, -26.8359, -5.82566, 7.63012)
+[node name="treasure_2_3" parent="treasure" instance=ExtResource("9_nhg3t")]
+transform = Transform3D(0.99036, 0.119704, 0.0697043, -0.119409, 0.99281, -0.00840432, -0.0702091, 4.51486e-09, 0.997532, -5.95414, 0.962167, -49.2336)
 
 [node name="treasure_3" parent="treasure" instance=ExtResource("11_kbsmd")]
 transform = Transform3D(0.25801, 0, 0.966142, 0, 1, 0, -0.966142, 0, 0.25801, 22.6418, 3.56621, 40.4889)
@@ -336,8 +327,8 @@ transform = Transform3D(0.25801, 0, 0.966142, 0, 1, 0, -0.966142, 0, 0.25801, 22
 [node name="sounds" type="Node" parent="."]
 
 [node name="winter_music" type="AudioStreamPlayer" parent="sounds"]
-stream = ExtResource("12_wvu2y")
-volume_db = -10.0
+stream = ExtResource("11_apj43")
+volume_db = -0.785
 autoplay = true
 
 [node name="Area3D" parent="." instance=ExtResource("13_xo1bk")]
@@ -427,17 +418,9 @@ sprite_frames = SubResource("SpriteFrames_ixywf")
 [node name="Node3D" parent="." instance=ExtResource("22_ltst8")]
 transform = Transform3D(-0.0978003, 0, 0.077847, 0, 0.125, 0, -0.077847, 0, -0.0978003, 16.3258, 1.60458, -21.1598)
 
-[node name="Snake" parent="." node_paths=PackedStringArray("home") instance=ExtResource("20_fnlf4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1611, 0.0319071, -7.95202)
-home = NodePath("../section_1_1")
-
 [node name="Snake2" parent="." node_paths=PackedStringArray("home") instance=ExtResource("20_fnlf4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1611, 0.0319071, -5.71897)
 home = NodePath("../section_1_2")
-
-[node name="Snake3" parent="." node_paths=PackedStringArray("home") instance=ExtResource("20_fnlf4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1611, 0.0319071, -10.5207)
-home = NodePath("../section_1_3")
 
 [node name="Snake4" parent="." node_paths=PackedStringArray("home") instance=ExtResource("20_fnlf4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1611, 0.0319071, -12.7222)
@@ -460,7 +443,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.2469, 0.0319071, -19.4347
 home = NodePath("../section_1_9")
 
 [node name="Snake9" parent="." node_paths=PackedStringArray("home") instance=ExtResource("20_fnlf4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.7937, 0.0319071, -25.0633)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9423, 0.0319071, -25.0633)
 home = NodePath("../section_1_11")
 
 [node name="Snake10" parent="." node_paths=PackedStringArray("home") instance=ExtResource("20_fnlf4")]

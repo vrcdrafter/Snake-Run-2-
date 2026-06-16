@@ -176,6 +176,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.64423, 0.307357, 0)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_yu0ss")
+volume_db = -30.093
 
 [connection signal="pressed" from="Control/TextureButton" to="Control" method="_on_texture_button_pressed"]
 [connection signal="pressed" from="Control/TextureButton4" to="Control" method="_on_texture_button_4_pressed"]

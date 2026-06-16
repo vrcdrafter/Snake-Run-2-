@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://mrnb4snsrove"]
+
+[ext_resource type="Material" uid="uid://bkt64se33y38w" path="res://Materials/shine.tres" id="1_by3nh"]
+[ext_resource type="Texture2D" uid="uid://c2ch4sv2tipe6" path="res://level_data/radio_hires.png" id="2_qm5n2"]
+[ext_resource type="ArrayMesh" uid="uid://b4d13o334n3eo" path="res://Resources/radio.tres" id="3_ndkhq"]
+[ext_resource type="AudioStream" uid="uid://cohkgq6htjhho" path="res://sounds/Galeb - Elevators music.wav" id="4_lmnus"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hortj"]
+radius = 0.623894
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7rfig"]
+shading_mode = 0
+albedo_texture = ExtResource("2_qm5n2")
+
+[node name="Area3D" type="Area3D" groups=["item"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_hortj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -0.207374, 0)
+material_override = ExtResource("1_by3nh")
+material_overlay = SubResource("StandardMaterial3D_7rfig")
+visibility_range_end = 20.0
+mesh = ExtResource("3_ndkhq")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_lmnus")
+volume_db = -40.601
+unit_size = 19.2
+autoplay = true
+stream_paused = true
+max_distance = 50.0
