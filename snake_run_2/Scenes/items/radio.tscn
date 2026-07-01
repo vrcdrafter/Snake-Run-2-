@@ -3,7 +3,7 @@
 [ext_resource type="Material" uid="uid://bkt64se33y38w" path="res://Materials/shine.tres" id="1_by3nh"]
 [ext_resource type="Texture2D" uid="uid://c2ch4sv2tipe6" path="res://level_data/radio_hires.png" id="2_qm5n2"]
 [ext_resource type="ArrayMesh" uid="uid://b4d13o334n3eo" path="res://Resources/radio.tres" id="3_ndkhq"]
-[ext_resource type="AudioStream" uid="uid://cohkgq6htjhho" path="res://sounds/Galeb - Elevators music.wav" id="4_lmnus"]
+[ext_resource type="AudioStream" uid="uid://f5eqsbti5mos" path="res://sounds/Galeb - Elevators music.mp3" id="4_yl0q8"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_hortj"]
 radius = 0.623894
@@ -25,9 +25,8 @@ visibility_range_end = 20.0
 mesh = ExtResource("3_ndkhq")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("4_lmnus")
+stream = ExtResource("4_yl0q8")
 volume_db = -40.601
 unit_size = 19.2
 autoplay = true
-stream_paused = true
 max_distance = 50.0

@@ -83,7 +83,7 @@ var box_shape :BoxShape3D
 var has_weapon :bool = false
 
 ## This is the strength at which snakes have on the player when ensnared 
-@export var snake_strength :float = 15
+@export var snake_strength :float = 14
 
 @onready var treasure_1_icon :AnimatedSprite2D = get_node("/root/Node/treasure_1_icon")
 @onready var treasure_2_icon :AnimatedSprite2D = get_node("/root/Node/treasure_2_icon")
@@ -343,7 +343,7 @@ func _physics_process(delta: float) -> void:
 			time+= delta
 			
 
-			slow_move_back(ensnared_position,delta,wave(1,3,time,delta)+snake_strength)
+			slow_move_back(ensnared_position,delta,wave(1,8,time,delta)+snake_strength)
 			var distance_to_free = (ensnared_position-self.get_global_position()).length()
 			if ((ensnared_position-self.get_global_position()).length() > .58):
 				snakes_around_you = 0 
@@ -386,7 +386,7 @@ func slow_move_back(pos:Vector3, delta:float, move_strength:float):
 func wave(amplitude:float, freq:int, time:float, delta):
 		
 		freq = 1
-		amplitude = .1
+	
 		var variation 
 		variation = sin(time * freq) * amplitude
 		return variation

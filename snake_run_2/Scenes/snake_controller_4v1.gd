@@ -347,7 +347,8 @@ func _physics_process(delta: float) -> void:
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material3
 				
 				else:
-					$snake_python/snake_export/SkeleAton3D/export_snake_mesh.material_override = stunned_material
+					
+					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material
 				$BoneAttachment3D/Node3D.show()
 				$BoneAttachment3D/tounge_1/AnimationPlayer.stop()
 				for each in test2:

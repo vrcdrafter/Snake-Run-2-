@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b103gt166e6is" path="res://Scenes/items/toilet_paper.tscn" id="9_kw7nf"]
 [ext_resource type="PackedScene" uid="uid://y0scseug4ia2" path="res://Scenes/items/gun.tscn" id="10_lfco2"]
 [ext_resource type="PackedScene" uid="uid://dqmru7ce75dj3" path="res://Scenes/items/lite_brite.tscn" id="10_w3qh1"]
-[ext_resource type="AudioStream" uid="uid://1gc66jnr7do3" path="res://sounds/1. Bells and Synth.wav" id="12_jtnfv"]
+[ext_resource type="AudioStream" uid="uid://bfg211uydx2mq" path="res://sounds/1. Bells and Synth.mp3" id="12_l5csm"]
 [ext_resource type="PackedScene" uid="uid://duj445gwmyx3u" path="res://Scenes/items/ammo.tscn" id="12_yce01"]
 [ext_resource type="Script" path="res://Scripts/re_enable_mouse.gd" id="13_7ch05"]
 [ext_resource type="PackedScene" uid="uid://k1xk3gxjiuco" path="res://Scenes/portal.tscn" id="15_hn5up"]
@@ -155,7 +155,7 @@ script = ExtResource("3_30711")
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 handle_input_locally = false
 audio_listener_enable_3d = true
-size = Vector2i(2, 2)
+size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("4_1x6v2")]
@@ -272,7 +272,7 @@ transform = Transform3D(0.25801, 0, 0.966142, 0, 1, 0, -0.966142, 0, 0.25801, 22
 [node name="sounds" type="Node" parent="."]
 
 [node name="winter_music" type="AudioStreamPlayer" parent="sounds"]
-stream = ExtResource("12_jtnfv")
+stream = ExtResource("12_l5csm")
 volume_db = -10.0
 autoplay = true
 

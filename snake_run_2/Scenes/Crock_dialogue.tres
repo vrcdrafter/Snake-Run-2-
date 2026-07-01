@@ -10,7 +10,10 @@ starts = {
 "3": &"0_3",
 "4": &"0_4",
 "5": &"0_5",
-"6": &"0_6"
+"6": &"0_6",
+"7": &"0_7",
+"8": &"0_8",
+"9": &"0_9"
 }
 nodes = {
 "0_1": {
@@ -43,6 +46,21 @@ nodes = {
 "offset": Vector2(20, 980),
 "start_id": "6"
 },
+"0_7": {
+"link": &"1_8",
+"offset": Vector2(580, 280),
+"start_id": "7"
+},
+"0_8": {
+"link": &"1_9",
+"offset": Vector2(545.993, 602.349),
+"start_id": "8"
+},
+"0_9": {
+"link": &"1_10",
+"offset": Vector2(780, 1020),
+"start_id": "9"
+},
 "1_1": {
 "dialogue": "Hey , umm its me Crocko , I got kicked out of my temple and lost some things ,",
 "offset": Vector2(-680, -240),
@@ -55,6 +73,19 @@ nodes = {
 },
 "size": Vector2(300, 240),
 "speaker": "Crocko"
+},
+"1_10": {
+"dialogue": "EXCELLENT ! least all my stuff is present , now to get HR to fire the little things. Take care. ",
+"offset": Vector2(1080, 1040),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 240),
+"speaker": "bird"
 },
 "1_2": {
 "dialogue": "Can you help me fetch some of my stuff ? ",
@@ -133,6 +164,32 @@ nodes = {
 },
 "size": Vector2(300, 240),
 "speaker": "Barry"
+},
+"1_8": {
+"dialogue": "HEY Hello , umm , well these snakes invaded the office ...can we retrieve the Tunes , my stapler and my sandwich",
+"offset": Vector2(860, 260),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 240),
+"speaker": "bird"
+},
+"1_9": {
+"dialogue": "Did you get any of the stuff yet ? ",
+"offset": Vector2(883.401, 662.455),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 240),
+"speaker": "bird"
 }
 }
 variables = {}
