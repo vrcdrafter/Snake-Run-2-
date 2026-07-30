@@ -55,6 +55,8 @@ var is_ensnared :bool = false
 var previous_thing_ensnared :Node3D
 var current_thing_ensnared :Node3D
 
+var snake_strength :float = 0 
+
 @onready var detection_area :Area3D = get_node("Detection")
 
 func set_movement_target(movement_target: Vector3):
@@ -230,13 +232,13 @@ func remake_connections():
 	
 	for n in all_snakes:
 	
-		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test])):
-			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test]))
+		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_strength,test])):
+			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_strength,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
 			n.connect("let_go_prey",callable_changed_target.bind([previous_thing_ensnared,current_thing_ensnared,test,test2]))
 			print("connected")
 	
-func _on_snake_ensnared(player_ensnared,position_ensnared,test):
+func _on_snake_ensnared(player_ensnared,position_ensnared,snake_strength,test):
 	var sname_local = player_ensnared.name
 	print("should be ensnared ",player_ensnared.name)
 	if sname_local == "Mouse":

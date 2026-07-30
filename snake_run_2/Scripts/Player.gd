@@ -55,6 +55,9 @@ var previous_thing_ensnared :Node3D
 var current_thing_ensnared :Node3D
 var player_ensnared :Node3D
 var position_ensnared :Vector3
+var snake_stength :int
+var active_strength :float = 0 # not sure why I need this . 
+ 
 var snake_that_died :Node3D
 var snake_previous_state :String
 signal player_added
@@ -83,7 +86,7 @@ var box_shape :BoxShape3D
 var has_weapon :bool = false
 
 ## This is the strength at which snakes have on the player when ensnared 
-@export var snake_strength :float = 14
+
 
 @onready var treasure_1_icon :AnimatedSprite2D = get_node("/root/Node/treasure_1_icon")
 @onready var treasure_2_icon :AnimatedSprite2D = get_node("/root/Node/treasure_2_icon")
@@ -341,9 +344,8 @@ func _physics_process(delta: float) -> void:
 				
 				health_accumulator = 0
 			time+= delta
-			
 
-			slow_move_back(ensnared_position,delta,wave(1,8,time,delta)+snake_strength)
+			slow_move_back(ensnared_position,delta,wave(1,8,time,delta)+active_strength)
 			var distance_to_free = (ensnared_position-self.get_global_position()).length()
 			if ((ensnared_position-self.get_global_position()).length() > .58):
 				snakes_around_you = 0 
@@ -354,7 +356,7 @@ func _physics_process(delta: float) -> void:
 				ensnared = false
 				# turn off ability to be detected by snake 
 				collision_layer = 0
-				print("the colission should be off now ")
+
 				dead.emit(self)
 				
 				
@@ -367,9 +369,10 @@ func _on_button_button_down():
 	emit_signal("remove_mouse")
 	GlobalVars.game_started = true
 
-func _on_snake_ensnared(player_ensnared,position_ensnared,test):
-	print("should be ensnared ",player_ensnared.name)
+func _on_snake_ensnared(player_ensnared,position_ensnared,snake_stength,test):
+
 	if self == player_ensnared:
+		active_strength = snake_stength
 		ensnared = true
 		ensnared_position = self.get_global_position() # may want a different position , 
 		snakes_around_you += 1
@@ -420,8 +423,8 @@ func remake_connections():
 	var test2
 	for n in all_snakes:
 		
-		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test])):
-			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,test]))
+		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,test])):
+			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
 			n.connect("let_go_prey",callable_changed_target.bind([previous_thing_ensnared,current_thing_ensnared,test,test2]))
 			#	timer_handle.connect("timeout",timer_callable)

@@ -67,6 +67,9 @@ var new_patrol_instance :bool = false
 
 var toung_enabled :bool = true
 
+var all_snake_animations :PackedStringArray = []
+
+var snake_strength
 
 func _ready() -> void:
 
@@ -89,8 +92,10 @@ func _ready() -> void:
 	if home == null:
 	
 		snake_target = fetch_random_patrol_object() # just pick a first target . 
+		set_movement_target(snake_target.global_position) # assigns target
 	else:
 		snake_target = home
+		set_movement_target(snake_target.global_position) # assigns target
 	
 	all_animation_curves = _make_curve_from_animation(skel,false) # register animations if ther is any on the model
 
@@ -106,7 +111,18 @@ func _ready() -> void:
 	
 	game_manager_connect_sripts()
 	
+	all_snake_animations= snake_animations.get_animation_list()
 	
+	init_snake_names()
+	print("the snakes name is ", scene_name)
+	if scene_name == "BOSS_python":
+		snake_strength = 20
+	if scene_name == "Cobra_biting":
+		snake_strength = 14
+	if scene_name == "adder_biting":
+		snake_strength = 14
+	
+	print("snake strength is ", snake_strength)
 	
 func _physics_process(delta: float) -> void:
 	
@@ -141,41 +157,30 @@ func _physics_process(delta: float) -> void:
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
 						# when you go into patrol , just skip a frame , see how bad it looks 
 						# just be casual agressivness 
-			aggressivness = 12
-			movement_speed = 3
+			if scene_name == "BOSS_python":
+				aggressivness = 12
+				movement_speed = 8
+			else:
+				aggressivness = 12
+				movement_speed = 3
 			#find something to patrol to 
-			if old_target_position.distance_to(snake_target.global_position) > .1  or  snake_target.is_in_group("Player"):
-				set_movement_target(snake_target.global_position) # assigns target
 			nav_startup_physics_process(delta,tri_array[0]) #starts up the navigation server 
 			#start tris following eachother
 			follower(delta,tri_array,bone_length)
 			# if condition if its just a relay point
 			
-			# so here is a odd edge, sometimes your still chasing the player 
-			if target_distance < 1 and snake_target.name.contains("Player") or snake_target.name.contains("Mouse"):
-				snake_state = "chase" # go back to chasing 
-				
-			else: # go ahead and pick a new waypoint 
-				
-				# so if there is no Home , do the regular 
-				if home == null: # then its not assigned and doesne need to go back to its desk .  
-				
-					if target_distance < 1 and not snake_target.is_in_group("A"): # meaning its just a way point 
-						# pick new object
-						snake_target = pick_new_target(snake_target)					
-					# if condition if its a animated object 
-					if target_distance < 1 and snake_target.is_in_group("A"):
-						# its a animated spot run an animated ensnar 
-						snake_state = "ensnare_anim"			
-						ensnared_position = snake_target.global_position
+			
+			# meaning give the snake a larger reach to get back home 
+			if target_distance < 1 or (target_distance < 4 and snake_target == home):
+				if not snake_target.is_in_group("A"):
+					snake_target = pick_new_target(snake_target)
+					set_movement_target(snake_target.global_position)
+				else:
+					snake_state = "ensnare_anim"
+					ensnared_position = snake_target.global_position
+
 						
-				else: 
-					# go back to your desk . 
-					snake_target = home
-					if target_distance < 1 and snake_target.is_in_group("A"):
-						# its a animated spot run an animated ensnar 
-						snake_state = "ensnare_anim"			
-						ensnared_position = snake_target.global_position
+
 				
 			if found_player:
 				snake_state = "chase"
@@ -186,13 +191,20 @@ func _physics_process(delta: float) -> void:
 
 				"setup":
 					# need to find right curve to use 
-					target_animation = find_target_animation(snake_target)
+					
+					var name_local = snake_target.name
+					
+					target_animation = find_target_animation2(snake_target,all_snake_animations)
 					 # for now just play the first curve found
-					for i in all_animation_curves.size():
-						if all_animation_curves[i].resource_name == target_animation:
-							animation_curve = all_animation_curves[i]
-							
-					ensnare_state = "path"
+					
+					if target_animation == "":
+						ensnare_state = "abort_static"
+					else:
+						for i in all_animation_curves.size():
+							if all_animation_curves[i].resource_name == target_animation:
+								animation_curve = all_animation_curves[i]
+								
+						ensnare_state = "path"
 					# if at some point the player gets too close resume chase 			
 				"path":
 					bone_simulation_phys.active = false
@@ -209,7 +221,7 @@ func _physics_process(delta: float) -> void:
 					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse"))  and (target_animation == "anim_ensnare_3" or target_animation == "anim_typing"):
 						
 						if not target_animation == "anim_strike":
-							ensnared.emit(snake_target,ensnared_position)
+							ensnared.emit(snake_target,ensnared_position,snake_strength)
 
 					ensnare_state = "run"
 				"run":
@@ -247,7 +259,7 @@ func _physics_process(delta: float) -> void:
 								# if its a biting animation there is no ensnare 
 								
 								if not target_animation == "anim_strike":
-									ensnared.emit(snake_target,ensnared_position) # run this if its the right animation or the player is in the rigth position
+									ensnared.emit(snake_target,ensnared_position,snake_strength) # run this if its the right animation or the player is in the rigth position
 							if ennarement_done and local_target_distance > 4:
 								ensnare_state = "abort_dynamic"
 						else:
@@ -305,12 +317,13 @@ func _physics_process(delta: float) -> void:
 					if snake_target.name.contains("Player") or snake_target.name.contains("Mouse"):
 						pass # make this so theres a otpion to target the player!!!!!!!!!!!!!!!
 					else:
-						
 						# do a check to see if the snake has a home 
 						if home == null:
 							snake_target = pick_new_target(snake_target)
+							set_movement_target(snake_target.global_position) # assigns target
 						else:
 							snake_target = home
+							set_movement_target(snake_target.global_position) # assigns target
 				"abort_dynamic":
 					abort_universal_reset()
 		"chase":
@@ -320,8 +333,13 @@ func _physics_process(delta: float) -> void:
 			snake_target = target_player
 		
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
-			aggressivness = randf_range(5.0, 7.0)
-			movement_speed = randf_range(5.0, 7.0)
+			
+			if scene_name == "BOSS_python":
+				aggressivness = 15
+				movement_speed = 8
+			else:
+				aggressivness = randf_range(5.0, 7.0)
+				movement_speed = randf_range(5.0, 7.0)
 			#find something to patrol to 
 			set_movement_target(snake_target.global_position) # assigns target
 			nav_startup_physics_process(delta,tri_array[0]) #starts up the navigation server 
@@ -329,8 +347,15 @@ func _physics_process(delta: float) -> void:
 			follower(delta,tri_array,bone_length)
 			
 			# chase is intereting because it stays here unless the target is far away , 
-			if target_distance > 17:
+			if target_distance > 15:
 				snake_state = "patrol"
+				# so if your chasing go back to patrol 
+				if home == null:
+					snake_target = pick_new_target(snake_target)					
+				
+				else:
+					snake_target = home
+				set_movement_target(snake_target.global_position) # assigns target				
 				new_patrol_instance = true
 			if target_distance < 2:  
 				snake_state = "ensnare_anim"
@@ -482,7 +507,7 @@ func _physics_process(delta: float) -> void:
 		let_go_prey.emit(snake_target_at_beginning, snake_target, ensnare_state)
 func abort_universal_reset():
 	
-	transform_onestart = true # reset this so it can grab the next transform when the time comes . 
+	transform_onestart = true #w reset this so it can grab the next transform when the time comes . 
 	onestart = true
 	bone_overriding = true
 	timer_up = false

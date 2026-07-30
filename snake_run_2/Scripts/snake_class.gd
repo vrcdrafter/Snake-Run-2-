@@ -111,6 +111,9 @@ var hiss_timer :float = 3
 var whoe_died = null
 var test2 = null
 
+var scene_path
+var scene_name 
+
 func _init() -> void:
 
 
@@ -479,9 +482,11 @@ func nav_startup_physics_process(delta,head_object :MeshInstance3D):
 	
 	movement_delta = movement_speed * delta
 	time_accumulator += delta
-	if time_accumulator > nav_mesh_calc_time:
+	var refresh_distance = movement_speed * nav_mesh_calc_time
+	if time_accumulator > nav_mesh_calc_time \
+	or head_object.global_position.distance_to(next_path_position) < refresh_distance:
 		next_path_position = navigation_agent.get_next_path_position()
-		time_accumulator = 0
+		time_accumulator = 0.0
 	var head_object_position = head_object.global_position
 	var new_velocity: Vector3 = head_object.global_position.direction_to(next_path_position) * movement_delta
 	if navigation_agent.avoidance_enabled:
@@ -542,7 +547,7 @@ func initialize_patrol_objects():
 			patrol_objects.append(child)
 			
 			
-func find_target_animation(target_local :Node3D ) ->String:
+func find_target_animation(target_local :Node3D) ->String:
 	var anim_name_local_array :Array[StringName] = target_local.get_groups()
 	
 	
@@ -555,9 +560,7 @@ func find_target_animation(target_local :Node3D ) ->String:
 			# note if your not a striking snake dont load in a strike animation 
 
 			all_ensnare_animations.append(anim_name_local_array[i])
-			
-	var scene_path = self.scene_file_path
-	var scene_name = scene_path.get_file().get_basename()
+
 	
 	var random_animation :StringName = all_ensnare_animations.pick_random()
 	if scene_name != "Cobra_biting":
@@ -569,6 +572,36 @@ func find_target_animation(target_local :Node3D ) ->String:
 	
 
 	return all_ensnare_animations.pick_random()
+	
+	
+	# so sometimes the snake does not have a animation at all that is in the target group animations . 
+	
+func find_target_animation2(target_local: Node3D, snake_animations: Array[String]) -> String:
+	var target_groups: Array[StringName] = target_local.get_groups()
+	var valid_animations: Array[StringName] = []
+	for group_name in target_groups:
+		if !group_name.contains("anim"):
+			continue
+		# Skip animations this snake doesn't have
+		if String(group_name) not in snake_animations:
+			continue
+		valid_animations.append(group_name)
+		
+	# what if valid_animations has lenght 0 
+	
+
+	# Remove strike animations from non-cobras
+	if scene_name != "Cobra_biting":
+		var filtered: Array[StringName] = []
+		for anim in valid_animations:
+			if !anim.contains("strike"):
+				filtered.append(anim)
+		valid_animations = filtered
+	if valid_animations.is_empty():
+		push_warning("%s found no valid target animations" % name)
+		return ""
+
+	return String(valid_animations.pick_random())
 	
 
 func make_anim_timer() -> Timer: # at startup makes a timer in the tree
@@ -597,7 +630,7 @@ func pick_new_target(snake_target :Node3D) -> Node3D:
 	var next_target :MeshInstance3D = fetch_random_patrol_object()
 	while next_target == snake_target or (snake_target.is_in_group("occupied")):
 		next_target = patrol_objects.pick_random() # keep picking till its a new unoccupied group
-	next_target .add_to_group("occupied")
+	next_target.add_to_group("occupied")
 	return next_target
 
 
@@ -843,5 +876,7 @@ func set_tongue_enabled(enabled: bool, tongue :Node3D, tongue_anim :AnimationPla
 	tongue.set_process(enabled)
 	tongue.set_physics_process(enabled)
 
-	
+func init_snake_names():
+	scene_path = self.scene_file_path
+	scene_name = scene_path.get_file().get_basename()
 	
