@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://0jk2dou3wrjk"]
+[gd_scene load_steps=21 format=4 uid="uid://0jk2dou3wrjk"]
 
 [ext_resource type="Script" path="res://Scenes/snake_controller_4v1.gd" id="1_vwfyw"]
 [ext_resource type="Texture2D" uid="uid://1tgdcdp8xbex" path="res://level_data/python_Boss_v1__snake_skin_cartoon_friendly.png" id="2_yc3tb"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/tounge.gd" id="9_uahoj"]
 [ext_resource type="Script" path="res://Scripts/snake_sight.gd" id="10_gaa4g"]
 [ext_resource type="AudioStream" uid="uid://dwnao55tl0wa8" path="res://sounds/hiss.wav" id="11_lrjmb"]
+[ext_resource type="Texture2D" uid="uid://v0mmv1spmxsw" path="res://textures/eyes.png" id="11_ojdpw"]
 [ext_resource type="PackedScene" uid="uid://bkfp4vtw5hyrt" path="res://Scenes/stars_stunn.tscn" id="12_3xkul"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6f4ni"]
@@ -234,6 +235,35 @@ _data = {
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ajh1n"]
 size = Vector3(3.5722, 1, 5.45319)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c27d2"]
+atlas = ExtResource("11_ojdpw")
+region = Rect2(0, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6161y"]
+atlas = ExtResource("11_ojdpw")
+region = Rect2(0, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h040e"]
+atlas = ExtResource("11_ojdpw")
+region = Rect2(0, 2048, 1024, 1024)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7huwv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c27d2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6161y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h040e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Snake" type="Node3D" groups=["snake"]]
 script = ExtResource("1_vwfyw")
@@ -733,6 +763,11 @@ playback_type = 2
 [node name="Node3D" parent="BoneAttachment3D" instance=ExtResource("12_3xkul")]
 transform = Transform3D(-0.0546522, 0.00969636, -0.0227843, -0.0239775, -0.0069391, 0.0545612, -0.00618238, -0.0588033, -0.0101955, -0.00746831, 0.23585, 0.515385)
 visible = false
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="BoneAttachment3D"]
+transform = Transform3D(0.019055, 0.00705736, 0.0220703, 0.0231604, -0.00667346, -0.0178622, 0.000707513, 0.0283841, -0.00968715, -0.264383, 0.711048, 0.235959)
+sprite_frames = SubResource("SpriteFrames_7huwv")
+frame = 1
 
 [connection signal="area_entered" from="BoneAttachment3D/Detection" to="BoneAttachment3D/Detection" method="_on_area_entered"]
 

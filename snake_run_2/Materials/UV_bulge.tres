@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dq1p5df6hvptf"]
+
+[ext_resource type="Shader" path="res://Materials/UV_shader.gdshader" id="1_5m8ln"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_5m8ln")
+shader_parameter/bulge_pos = 0.985
+shader_parameter/bulge_size = 0.04
+shader_parameter/bulge_amount = 3.155
+shader_parameter/uv_mode = 1

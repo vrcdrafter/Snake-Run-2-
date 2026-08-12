@@ -71,6 +71,15 @@ var all_snake_animations :PackedStringArray = []
 
 var snake_strength
 
+var can_be_ensnared := [
+"anim_ensnare_3",
+"anim_ensnare_4",
+"anim_ensnare_5",
+"anim_typing",
+"anim_boss_ensnare_1"
+]
+
+
 func _ready() -> void:
 
 	#initialize spine 
@@ -115,7 +124,7 @@ func _ready() -> void:
 	
 	init_snake_names()
 	print("the snakes name is ", scene_name)
-	if scene_name == "BOSS_python":
+	if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
 		snake_strength = 20
 	if scene_name == "Cobra_biting":
 		snake_strength = 14
@@ -157,7 +166,7 @@ func _physics_process(delta: float) -> void:
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
 						# when you go into patrol , just skip a frame , see how bad it looks 
 						# just be casual agressivness 
-			if scene_name == "BOSS_python":
+			if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
 				aggressivness = 12
 				movement_speed = 8
 			else:
@@ -218,7 +227,7 @@ func _physics_process(delta: float) -> void:
 					var total_curve_length = curve.get_baked_length()
 					move_segments_to_path(total_curve_length - animation_curve.get_baked_length()) # so this 14.6 is the added curve length 
 					var target_name = snake_target.name
-					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse"))  and (target_animation == "anim_ensnare_3" or target_animation == "anim_typing"):
+					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse"))  and (target_animation in can_be_ensnared):
 						
 						if not target_animation == "anim_strike":
 							ensnared.emit(snake_target,ensnared_position,snake_strength)
@@ -334,7 +343,7 @@ func _physics_process(delta: float) -> void:
 		
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
 			
-			if scene_name == "BOSS_python":
+			if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
 				aggressivness = 15
 				movement_speed = 8
 			else:
@@ -422,8 +431,10 @@ func _physics_process(delta: float) -> void:
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material2
 				elif scene_name == "adder_biting":
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material3
-				else:
+				elif scene_name == "python_2V0":
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material
+				else:
+					pass
 				for each in test2:
 					if each.get_child_count() > 0:
 						bone_simulation_phys.active = true
@@ -447,8 +458,10 @@ func _physics_process(delta: float) -> void:
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = regular_material2
 				elif scene_name == "adder_biting":
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material3
-				else:
+				elif scene_name == "python_2V0":
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = regular_material
+				else:
+					pass
 				snake_state = "limp_RESET"
 				simlation_oneshot_stunn= true
 				stun_accumulator = 0

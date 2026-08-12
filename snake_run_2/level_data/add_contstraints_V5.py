@@ -102,21 +102,51 @@ bpy.utils.register_class(WM_OT_HelloWorld)
 
 class app_constraint(bpy.types.Operator):
     bl_idname = "wm.apply_constraint"
-    bl_label = "Minimal Operator"
+    bl_label = "Apply Constraints"
+
+    def make_keyframes(self, obj):
+
+        current_frame = bpy.context.scene.frame_current
+
+        for bone in obj.pose.bones:
+
+            bone.keyframe_insert(
+                data_path="location",
+                frame=current_frame
+            )
+
+            bone.keyframe_insert(
+                data_path="rotation_quaternion",
+                frame=current_frame
+            )
+
+            bone.keyframe_insert(
+                data_path="scale",
+                frame=current_frame
+            )
 
     def execute(self, context):
-        # Report "Hello World" to the Console
-        
-        bones = bpy.context.object.pose.bones
-        i = 0 
+
+        obj = context.object
+
+        # Gather all bones first
+        bones = list(obj.pose.bones)
+
+        # Apply constraints
         for bone in bones:
-            
-            bpy.context.object.data.bones.active = bone.bone
-        #    bone.bone.select = True
-            bpy.ops.constraint.apply(constraint="Copy Transforms", owner='BONE')
-            i += 1
-            
-        self.report({'INFO'}, "Hello World")
+
+            obj.data.bones.active = bone.bone
+
+            bpy.ops.constraint.apply(
+                constraint="Copy Transforms",
+                owner='BONE'
+            )
+
+        # Create keys after constraints applied
+        self.make_keyframes(obj)
+
+        self.report({'INFO'}, "Constraints applied and keys created")
+
         return {'FINISHED'}
 
 
