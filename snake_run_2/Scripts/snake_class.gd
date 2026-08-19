@@ -488,7 +488,8 @@ func nav_startup_physics_process(delta,head_object :MeshInstance3D):
 	movement_delta = movement_speed * delta
 	time_accumulator += delta
 	var refresh_distance = movement_speed * nav_mesh_calc_time
-	if head_object.global_position.distance_to(next_path_position) < 0.1:
+	if time_accumulator > nav_mesh_calc_time \
+	or head_object.global_position.distance_to(next_path_position) < refresh_distance:
 		next_path_position = navigation_agent.get_next_path_position()
 		time_accumulator = 0.0
 	var head_object_position = head_object.global_position
