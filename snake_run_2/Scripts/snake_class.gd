@@ -114,6 +114,11 @@ var test2 = null
 var scene_path
 var scene_name 
 
+@onready var mesh_instance :MeshInstance3D = get_node("snake_python/snake_export/Skeleton3D/export_snake_mesh")
+@onready var skin_material : Material = mesh_instance.get_surface_override_material(0)
+var bulge_pos := 1.0
+var animate_bulge := false
+
 func _init() -> void:
 
 
@@ -483,11 +488,14 @@ func nav_startup_physics_process(delta,head_object :MeshInstance3D):
 	movement_delta = movement_speed * delta
 	time_accumulator += delta
 	var refresh_distance = movement_speed * nav_mesh_calc_time
-	if time_accumulator > nav_mesh_calc_time \
-	or head_object.global_position.distance_to(next_path_position) < refresh_distance:
+	if head_object.global_position.distance_to(next_path_position) < 0.1:
 		next_path_position = navigation_agent.get_next_path_position()
 		time_accumulator = 0.0
 	var head_object_position = head_object.global_position
+	
+	
+	
+	
 	var new_velocity: Vector3 = head_object.global_position.direction_to(next_path_position) * movement_delta
 	if navigation_agent.avoidance_enabled:
 		navigation_agent.set_velocity(new_velocity)
@@ -879,4 +887,16 @@ func set_tongue_enabled(enabled: bool, tongue :Node3D, tongue_anim :AnimationPla
 func init_snake_names():
 	scene_path = self.scene_file_path
 	scene_name = scene_path.get_file().get_basename()
+	
+
+
+
+
+func move_shape(delta: float) -> void:
+
+	bulge_pos = lerp(bulge_pos, 0.27, 1.0 * delta)
+
+	skin_material.set_shader_parameter("bulge_size", 0.08)
+	skin_material.set_shader_parameter("bulge_amount", 3.0)
+	skin_material.set_shader_parameter("bulge_pos", bulge_pos)
 	

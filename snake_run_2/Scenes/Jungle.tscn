@@ -129,105 +129,84 @@ script = ExtResource("2_i4sut")
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 handle_input_locally = false
 audio_listener_enable_3d = true
-size = Vector2i(2, 2)
+size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("3_udigb")]
 transform = Transform3D(-0.911876, 0, -0.410464, 0, 1, 0, 0.410464, 0, -0.911876, 12.1581, 3.12048, -122.579)
 
-[node name="green" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6163, 11.9418, 56.6279)
-visible = false
-mesh = SubResource("PrismMesh_ws20n")
-surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
-
 [node name="green3" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.7224, 3.91449, -12.4454)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green4" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60.8384, 5.64139, -22.732)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green7" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.1108, 10.4264, -70.8248)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green8" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77974, 3.18344, -73.5072)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green6" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.70665, 3.42322, 2.02643)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green5" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.9515, 6.3993, -51.4957)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green9" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63.8521, 4.78907, -18.4373)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green10" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63.8521, 13.2362, 69.5583)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green11" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.6783, 8.84605, 59.9771)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green12" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.65434, 13.8126, 86.9088)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green13" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.5423, 6.20264, 44.1551)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green14" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.004, 3.3317, -18.2419)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green15" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.7395, 5.96653, -48.2389)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green16" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.9285, 2.94012, -42.8043)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
 [node name="green2" type="MeshInstance3D" parent="." groups=["A", "anim_ensnare_3", "patrol_object"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.68659, 11.0678, 6.75489)
-visible = false
 mesh = SubResource("PrismMesh_ws20n")
 surface_material_override/0 = SubResource("StandardMaterial3D_3x3by")
 
@@ -357,7 +336,7 @@ sprite_frames = SubResource("SpriteFrames_ie2k7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2447, 2.37739, -109.336)
 
 [node name="Snake" parent="." instance=ExtResource("20_p2dbi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.62487, 2.78192, -37.4323)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.08324, 2.78192, -101.461)
 
 [node name="Snake2" parent="." instance=ExtResource("20_p2dbi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.62487, 2.78192, -37.4323)

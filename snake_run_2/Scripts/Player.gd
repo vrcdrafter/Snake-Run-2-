@@ -73,6 +73,7 @@ var check_stuf_timer :float = .5
 
 var health_accumulator :float = 0
 var health_decrement_timer :float = .1
+var health_hurt_speed_local :float = 0 
 
 var remake_connections_accuulator :float = 0 
 var timer_remake_connections :float = 2
@@ -178,8 +179,8 @@ func _physics_process(delta: float) -> void:
 	if death_oneshot:
 
 		$"source_fox/Armature (Mecha g)/Skeleton3D/PhysicalBoneSimulator3D".physical_bones_start_simulation()
-		
-		print("you died")
+		$rotation_helper/Camera3D.global_transform = $rotation_helper/Camera3D.global_transform.interpolate_with($Marker3D.global_transform,1)
+
 		
 		respawn_accumulator += delta
 		if respawn_accumulator > respawn_timer:
@@ -188,7 +189,7 @@ func _physics_process(delta: float) -> void:
 		# start rebirth timer 
 	
 	
-	if not death_oneshot:
+	else:
 		
 		if player_id == "0": # then its the regular player with mouse and keybaord 
 			
@@ -340,7 +341,7 @@ func _physics_process(delta: float) -> void:
 			# decrement health too 
 			health_accumulator += delta
 			if health_accumulator > health_decrement_timer:
-				health -= 1
+				health -= health_hurt_speed_local
 				
 				health_accumulator = 0
 			time+= delta
@@ -356,22 +357,21 @@ func _physics_process(delta: float) -> void:
 				ensnared = false
 				# turn off ability to be detected by snake 
 				collision_layer = 0
-
 				dead.emit(self)
 				
 				
-	else:
-		#move camera to death position . 
-		$rotation_helper/Camera3D.global_transform = $rotation_helper/Camera3D.global_transform.interpolate_with($Marker3D.global_transform,1)
+
+		
 
 func _on_button_button_down():
 	
 	emit_signal("remove_mouse")
 	GlobalVars.game_started = true
 
-func _on_snake_ensnared(player_ensnared,position_ensnared,snake_stength,test):
+func _on_snake_ensnared(player_ensnared,position_ensnared,snake_stength,health_hurt_speed,test):
 
 	if self == player_ensnared:
+		health_hurt_speed_local = health_hurt_speed
 		active_strength = snake_stength
 		ensnared = true
 		ensnared_position = self.get_global_position() # may want a different position , 
@@ -421,10 +421,11 @@ func remake_connections():
 	var callable_changed_target = Callable(self,"turn_off_ensnared")
 	var test
 	var test2
+	var health_hurt_speed 
 	for n in all_snakes:
 		
-		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,test])):
-			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,test]))
+		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,health_hurt_speed,test])):
+			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,health_hurt_speed,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
 			n.connect("let_go_prey",callable_changed_target.bind([previous_thing_ensnared,current_thing_ensnared,test,test2]))
 			#	timer_handle.connect("timeout",timer_callable)
@@ -591,4 +592,8 @@ func respawn():
 	$rotation_helper/Camera3D.rotation = Vector3(0,0,0)
 	health = 100
 	
+func been_nommed():
+	# we need to do a few special and odd things here . we need to disable key input . 
+	# we need to remove the colission all of the 
 	
+	pass

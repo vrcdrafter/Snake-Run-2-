@@ -42,7 +42,7 @@ var stun_timer :float = .2
 
 signal snake_removed
 
-
+signal nommed 
 
 var ensnarement_transform_snapline :Transform3D
 
@@ -79,6 +79,11 @@ var can_be_ensnared := [
 "anim_boss_ensnare_1"
 ]
 
+var damage_strength :float = 0.0 
+
+
+
+
 
 func _ready() -> void:
 
@@ -99,8 +104,9 @@ func _ready() -> void:
 	initialize_patrol_objects()
 	
 	if home == null:
-	
+		
 		snake_target = fetch_random_patrol_object() # just pick a first target . 
+		var name_local = snake_target.name
 		set_movement_target(snake_target.global_position) # assigns target
 	else:
 		snake_target = home
@@ -121,15 +127,21 @@ func _ready() -> void:
 	game_manager_connect_sripts()
 	
 	all_snake_animations= snake_animations.get_animation_list()
-	
+
 	init_snake_names()
 	print("the snakes name is ", scene_name)
 	if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
 		snake_strength = 20
+		damage_strength = 0.0 # because you get eaten 
 	if scene_name == "Cobra_biting":
 		snake_strength = 14
+		damage_strength = 3.0
 	if scene_name == "adder_biting":
 		snake_strength = 14
+		damage_strength = 3.0
+	else:
+		snake_strength = 14
+		damage_strength = 3.0
 	
 	print("snake strength is ", snake_strength)
 	
@@ -147,7 +159,8 @@ func _physics_process(delta: float) -> void:
 		snake_state = "stunned"
 		health_decremented = false
 		
-
+	if animate_bulge:
+		move_shape(delta)
 		#snake_state = "null"
 	# have snake start to chase target 
 	
@@ -158,6 +171,8 @@ func _physics_process(delta: float) -> void:
 	match snake_state:
 		
 		"patrol":
+			
+			
 			if new_patrol_instance:
 				new_patrol_instance = false
 				old_target_position = Vector3(0,0,0) # the reason for this is that is prevents a odd edge case where the snake is targeting a position right under its chin. 
@@ -178,12 +193,14 @@ func _physics_process(delta: float) -> void:
 			follower(delta,tri_array,bone_length)
 			# if condition if its just a relay point
 			
+
 			
 			# meaning give the snake a larger reach to get back home 
 			if target_distance < 1 or (target_distance < 4 and snake_target == home):
 				if not snake_target.is_in_group("A"):
 					snake_target = pick_new_target(snake_target)
 					set_movement_target(snake_target.global_position)
+
 				else:
 					snake_state = "ensnare_anim"
 					ensnared_position = snake_target.global_position
@@ -230,7 +247,7 @@ func _physics_process(delta: float) -> void:
 					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse"))  and (target_animation in can_be_ensnared):
 						
 						if not target_animation == "anim_strike":
-							ensnared.emit(snake_target,ensnared_position,snake_strength)
+							ensnared.emit(snake_target,ensnared_position,snake_strength,damage_strength) # you have to pass the damage rate here too . how fast it dies . 
 
 					ensnare_state = "run"
 				"run":
@@ -268,7 +285,7 @@ func _physics_process(delta: float) -> void:
 								# if its a biting animation there is no ensnare 
 								
 								if not target_animation == "anim_strike":
-									ensnared.emit(snake_target,ensnared_position,snake_strength) # run this if its the right animation or the player is in the rigth position
+									ensnared.emit(snake_target,ensnared_position,snake_strength,damage_strength) # run this if its the right animation or the player is in the rigth position
 							if ennarement_done and local_target_distance > 4:
 								ensnare_state = "abort_dynamic"
 						else:
@@ -297,7 +314,9 @@ func _physics_process(delta: float) -> void:
 					if transform_onestart:
 						transform_save = self.global_transform # note this line needs to run once too 
 						snake_animations.play(target_animation)
-						
+						if target_animation == "anim_boss_wrapped_pre_nom":
+							if !snake_animations.is_playing():
+								print("Animation finished")
 						if(snake_target.name.contains("Player") or snake_target.name.contains("Mouse")):
 							self.global_transform = ensnarement_transform_snapline * Transform3D(Basis(Vector3.UP, angle_local), Vector3.ZERO) # this doesnt quite work
 						else:
@@ -308,7 +327,6 @@ func _physics_process(delta: float) -> void:
 							offset = Vector3(0,0,0)
 						self.global_transform.origin = self.global_transform.origin - offset
 						transform_onestart = false
-						
 					# check to see if player gets close 
 					var name_local :String = snake_target.name
 					# so a odd edge error occurs here where the snaek is targetsing the mouse , but cant move into if statement , onestart is true 
@@ -473,6 +491,19 @@ func _physics_process(delta: float) -> void:
 				#snake_state = "null2"
 		"null2":
 			pass
+			
+		"nom":
+			pass
+			# so from here , its nomed . , but the player becomes invisible . 
+			# thats a custom signal 
+			nommed.emit("been nommed")
+			# then we play the idle animation while moving the materia. 
+			snake_animations.play("anim_boss_wrapped_post_nom")
+			animate_bulge = true 
+			snake_state = "limp_RESET"
+			
+			
+			
 
 	if bone_overriding:
 		frame_counter += 1
@@ -535,4 +566,5 @@ func abort_universal_reset():
 	ensnare_state = "setup"
 	change_masking_bones(7)
 	
-	
+func go_toNom():
+	snake_state = "nom"

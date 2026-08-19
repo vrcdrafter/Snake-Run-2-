@@ -1,11 +1,12 @@
-[gd_scene load_steps=21 format=4 uid="uid://s0a6bhi36c2v"]
+[gd_scene load_steps=22 format=4 uid="uid://s0a6bhi36c2v"]
 
 [ext_resource type="Script" path="res://Scenes/snake_controller_4v1.gd" id="1_rnuua"]
 [ext_resource type="Texture2D" uid="uid://dduiuptry7y0r" path="res://level_data/python_Boss_v1__boss_python_skin.png" id="2_xqpje"]
 [ext_resource type="Material" uid="uid://dq1p5df6hvptf" path="res://Materials/UV_bulge.tres" id="3_2wnmt"]
 [ext_resource type="Animation" uid="uid://ck2bu5esq5hp1" path="res://Resources/anim_boss_above_beam.res" id="4_o7rwy"]
-[ext_resource type="Animation" uid="uid://cvqtiw60tslu6" path="res://Resources/anim_boss_ensnare_1.res" id="5_oxq3v"]
 [ext_resource type="PackedScene" uid="uid://bpclxwra286ec" path="res://level_data/tounge_1.glb" id="6_mahnb"]
+[ext_resource type="Animation" uid="uid://by1o5h2i6xon8" path="res://Resources/anim_boss_wrapped_post_nom.res" id="6_w1mat"]
+[ext_resource type="Animation" uid="uid://dk72omehq3fi7" path="res://Resources/anim_boss_wrapped_pre_nom.res" id="7_awg35"]
 [ext_resource type="Script" path="res://Scripts/tounge.gd" id="7_mjq36"]
 [ext_resource type="Script" path="res://Scripts/snake_sight.gd" id="8_dw5ug"]
 [ext_resource type="AudioStream" uid="uid://dwnao55tl0wa8" path="res://sounds/hiss.wav" id="9_6ydw0"]
@@ -229,7 +230,8 @@ bind/60/pose = Transform3D(1, -2.38419e-07, 0, 0, 0, -1, 2.38419e-07, 1, 0, -0.0
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vat7v"]
 _data = {
 "anim_boss_above_beam": ExtResource("4_o7rwy"),
-"anim_boss_ensnare_1": ExtResource("5_oxq3v")
+"anim_boss_wrapped_post_nom": ExtResource("6_w1mat"),
+"anim_boss_wrapped_pre_nom": ExtResource("7_awg35")
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ajh1n"]
@@ -286,7 +288,7 @@ bones/1/parent = 0
 bones/1/rest = Transform3D(-1, -7.58079e-09, 3.89535e-07, 1.99627e-08, -0.999494, 0.0317962, 3.89097e-07, 0.0317962, 0.999495, 3.54474e-08, 1.01271, -0.148677)
 bones/1/enabled = true
 bones/1/position = Vector3(3.54474e-08, 1.01271, -0.148677)
-bones/1/rotation = Quaternion(1.94683e-07, 0.0159001, 0.999874, 6.88674e-09)
+bones/1/rotation = Quaternion(1.9385e-07, 0.0159003, 0.999874, -1.30815e-08)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "neck.002"
 bones/2/parent = 0
@@ -713,7 +715,7 @@ libraries = {
 }
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="."]
-transform = Transform3D(-0.458107, 0.854625, 0.244446, -0.271495, -0.396383, 0.877024, 0.846421, 0.335405, 0.413612, 0.143806, 3.46894, -1.6899)
+transform = Transform3D(-0.458107, 0.854626, 0.244445, -0.271495, -0.396382, 0.877024, 0.846421, 0.335405, 0.413612, 0.143806, 3.46894, -1.6899)
 bone_name = "jaw"
 bone_idx = 1
 use_external_skeleton = true
