@@ -68,6 +68,7 @@ var snake_vertibrea :PackedInt32Array
 signal ensnared(player_id :Node3D)
 signal dead_snake(snake_id :Node3D)
 signal venom_bite(player_node: Node3D)
+signal nommed(snake_id :Node3D)
 
 # for finding players 
 var found_player :bool = false
@@ -713,7 +714,7 @@ func found_prey(player_to_chase,test):
 	
 func prey_dead(whoe_died,test2):
 	if snake_target == whoe_died:
-		found_player = false
+		found_player = false 
 		
 		if home == null:
 			snake_target = pick_new_target(snake_target)
@@ -897,7 +898,12 @@ func move_shape(delta: float) -> void:
 
 	bulge_pos = lerp(bulge_pos, 0.27, 1.0 * delta)
 
-	skin_material.set_shader_parameter("bulge_size", 0.08)
+	skin_material.set_shader_parameter("bulge_size", 0.00)
 	skin_material.set_shader_parameter("bulge_amount", 3.0)
 	skin_material.set_shader_parameter("bulge_pos", bulge_pos)
 	
+	
+func initialize_swallow_shape() -> void:
+	skin_material.set_shader_parameter("bulge_size", 0.00) # .008 
+	skin_material.set_shader_parameter("bulge_amount", 3.0)
+	skin_material.set_shader_parameter("bulge_pos", 1)

@@ -42,7 +42,7 @@ var stun_timer :float = .2
 
 signal snake_removed
 
-signal nommed 
+
 
 var ensnarement_transform_snapline :Transform3D
 
@@ -81,7 +81,7 @@ var can_be_ensnared := [
 
 var damage_strength :float = 0.0 
 
-
+var one_shot_have_snack :bool = false
 
 
 
@@ -144,6 +144,8 @@ func _ready() -> void:
 		damage_strength = 3.0
 	
 	print("snake strength is ", snake_strength)
+	
+	initialize_swallow_shape()
 	
 func _physics_process(delta: float) -> void:
 	
@@ -284,7 +286,13 @@ func _physics_process(delta: float) -> void:
 								
 								# if its a biting animation there is no ensnare 
 								
-								if not target_animation == "anim_strike":
+								if target_animation == "anim_strike":
+									# if its a biting animation there is no ensnare 
+									pass
+								elif target_animation == "anim_boss_wrapped_pre_nom":
+									# then the character is being eaten , do not constrrict 
+									ensnared.emit(snake_target,ensnared_position,snake_strength,0) 
+								else: 
 									ensnared.emit(snake_target,ensnared_position,snake_strength,damage_strength) # run this if its the right animation or the player is in the rigth position
 							if ennarement_done and local_target_distance > 4:
 								ensnare_state = "abort_dynamic"
@@ -492,18 +500,6 @@ func _physics_process(delta: float) -> void:
 		"null2":
 			pass
 			
-		"nom":
-			pass
-			# so from here , its nomed . , but the player becomes invisible . 
-			# thats a custom signal 
-			nommed.emit("been nommed")
-			# then we play the idle animation while moving the materia. 
-			snake_animations.play("anim_boss_wrapped_post_nom")
-			animate_bulge = true 
-			snake_state = "limp_RESET"
-			
-			
-			
 
 	if bone_overriding:
 		frame_counter += 1
@@ -566,5 +562,8 @@ func abort_universal_reset():
 	ensnare_state = "setup"
 	change_masking_bones(7)
 	
-func go_toNom():
-	snake_state = "nom"
+func run_a_swallow_and_emit():
+	nommed.emit(self,ensnared_position)
+	timer_up = true # except you dont really want to do that untill the animation finishes. 
+# then we play the idle animation while moving the materia. 		
+	animate_bulge = true 

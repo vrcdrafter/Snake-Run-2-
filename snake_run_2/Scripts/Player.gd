@@ -21,6 +21,7 @@ signal remove_mouse
 signal snakes_go
 # esnanremente data   hi
 var ensnared = false
+var held = false
 var ensnared_position:Vector3 
 var snakes_around_you :int = 0 
 # for seeding the sine wave for heavier ensarement snap back
@@ -49,6 +50,7 @@ var bullet_scene :PackedScene = preload("res://Scenes/bullet.tscn")
 # health stuff 
 var health :int = 100
 var death_oneshot :bool = false
+var nommed_oneshot :bool = true
 
 signal dead(player_id :CharacterBody3D)
 var previous_thing_ensnared :Node3D
@@ -106,6 +108,9 @@ var respawn_accumulator :float = 0
 var treasure_counter :float = 0 
 
 signal can_leave
+
+var snake_that_nommed :Node3D = null
+var snake_that_nommed2 :Node3D = null # because the first did not work . 
 
 func _ready():
 	camera = $rotation_helper/Camera3D
@@ -187,8 +192,18 @@ func _physics_process(delta: float) -> void:
 			respawn()
 			respawn_accumulator = 0 
 		# start rebirth timer 
-	
-	
+	elif held:
+		
+		if nommed_oneshot:
+			$rotation_helper/Camera3D.global_transform = $rotation_helper/Camera3D.global_transform.interpolate_with($nom_camera_pos.global_transform,1)
+			make_inert()
+			nommed_oneshot = false
+			dead.emit(self) # your not really dead but undetected. 
+		# now you need to move the player to that snake anchor point . 
+		var anchor = snake_that_nommed2.get_node("player_internal_anchor/player_pos")
+		self.global_position = anchor.global_position
+		
+		
 	else:
 		
 		if player_id == "0": # then its the regular player with mouse and keybaord 
@@ -337,10 +352,10 @@ func _physics_process(delta: float) -> void:
 
 			move_and_slide()
 		
-		if ensnared: # remember ensnared needs to be player indendent , plain signals is not good enough 
+		if ensnared or held: # remember ensnared needs to be player indendent , plain signals is not good enough 
 			# decrement health too 
 			health_accumulator += delta
-			if health_accumulator > health_decrement_timer:
+			if health_accumulator > health_decrement_timer and ensnared:
 				health -= health_hurt_speed_local
 				
 				health_accumulator = 0
@@ -351,10 +366,12 @@ func _physics_process(delta: float) -> void:
 			if ((ensnared_position-self.get_global_position()).length() > .58):
 				snakes_around_you = 0 
 				ensnared = false
+				held = false
 				
 			if health < 0:
 				death_oneshot = true
 				ensnared = false
+				held = false
 				# turn off ability to be detected by snake 
 				collision_layer = 0
 				dead.emit(self)
@@ -419,14 +436,17 @@ func remake_connections():
 	var reset_level = Callable(self,"_on_button_pressed")
 	var callable_dead_snake = Callable(self,"turn_off_ensnared")
 	var callable_changed_target = Callable(self,"turn_off_ensnared")
+	var callable_nommed = Callable(self, "been_nommed")
 	var test
 	var test2
+	var test3
 	var health_hurt_speed 
 	for n in all_snakes:
 		
 		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,health_hurt_speed,test])):
 			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,health_hurt_speed,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
+			n.connect("nommed",callable_nommed.bind([snake_that_nommed,position_ensnared,test]))
 			n.connect("let_go_prey",callable_changed_target.bind([previous_thing_ensnared,current_thing_ensnared,test,test2]))
 			#	timer_handle.connect("timeout",timer_callable)
 #	game_over_button_handle.connect("pressed",reset_level)
@@ -592,8 +612,52 @@ func respawn():
 	$rotation_helper/Camera3D.rotation = Vector3(0,0,0)
 	health = 100
 	
-func been_nommed():
+func been_nommed(snake_that_nommed,position_ensnared,test):
+	print("been eaten")
 	# we need to do a few special and odd things here . we need to disable key input . 
 	# we need to remove the colission all of the 
+	snake_that_nommed2 = snake_that_nommed
+	held = true
+	nommed_oneshot = true
+
 	
 	pass
+	
+func make_inert():
+	# so this function takes all of the 
+	# get the current mask settings . 
+	var current_mask :int = collision_mask
+	var current_layer :int = collision_layer
+	self.hide()
+	# make them 0 
+	collision_mask = 0 
+	collision_layer = 0 
+	
+	# no more movement. 
+	velocity = Vector3.ZERO
+	# how do I turn off the gravity on kinematic body ? 
+	$Sound_area.monitorable = false 
+	
+	pass
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
