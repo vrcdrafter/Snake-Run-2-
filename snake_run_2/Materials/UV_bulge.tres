@@ -1,11 +1,12 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dq1p5df6hvptf"]
 
-[ext_resource type="Shader" path="res://Materials/UV_shader.gdshader" id="1_5m8ln"]
+[ext_resource type="Shader" path="res://shaders/uv_bulge_w_struggle.gdshader" id="1_sq6fr"]
 
 [resource]
 render_priority = 0
-shader = ExtResource("1_5m8ln")
+shader = ExtResource("1_sq6fr")
 shader_parameter/bulge_pos = 1.02
 shader_parameter/bulge_size = 0.08
 shader_parameter/bulge_amount = 3.155
+shader_parameter/struggle_offset = null
 shader_parameter/uv_mode = 1

@@ -133,6 +133,7 @@ func _ready() -> void:
 	if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
 		snake_strength = 20
 		damage_strength = 0.0 # because you get eaten 
+		initialize_swallow_shape()
 	if scene_name == "Cobra_biting":
 		snake_strength = 14
 		damage_strength = 3.0
@@ -145,7 +146,7 @@ func _ready() -> void:
 	
 	print("snake strength is ", snake_strength)
 	
-	initialize_swallow_shape()
+	
 	
 func _physics_process(delta: float) -> void:
 	
@@ -185,7 +186,7 @@ func _physics_process(delta: float) -> void:
 						# just be casual agressivness 
 			if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
 				aggressivness = 12
-				movement_speed = 8
+				movement_speed = 4
 			else:
 				aggressivness = 12
 				movement_speed = 3
@@ -563,7 +564,10 @@ func abort_universal_reset():
 	change_masking_bones(7)
 	
 func run_a_swallow_and_emit():
-	nommed.emit(self,ensnared_position)
-	timer_up = true # except you dont really want to do that untill the animation finishes. 
+	var my_name = self.name
+	var name_of_target = snake_target.name
+	if target_animation == "anim_boss_wrapped_pre_nom": # because of a glitch where it pre_triggers
+		nommed.emit(self,ensnared_position,skin_material)
+		timer_up = true # except you dont really want to do that untill the animation finishes. 
 # then we play the idle animation while moving the materia. 		
-	animate_bulge = true 
+		animate_bulge = true 

@@ -898,12 +898,12 @@ func move_shape(delta: float) -> void:
 
 	bulge_pos = lerp(bulge_pos, 0.27, 1.0 * delta)
 
-	skin_material.set_shader_parameter("bulge_size", 0.00)
+	skin_material.set_shader_parameter("bulge_size", 0.08)
 	skin_material.set_shader_parameter("bulge_amount", 3.0)
 	skin_material.set_shader_parameter("bulge_pos", bulge_pos)
 	
 	
 func initialize_swallow_shape() -> void:
-	skin_material.set_shader_parameter("bulge_size", 0.00) # .008 
+	skin_material.set_shader_parameter("bulge_size", 0.08) # .008 
 	skin_material.set_shader_parameter("bulge_amount", 3.0)
 	skin_material.set_shader_parameter("bulge_pos", 1)

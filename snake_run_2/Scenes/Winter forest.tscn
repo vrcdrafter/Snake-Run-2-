@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://ckhfv62q3d3u"]
+[gd_scene load_steps=38 format=3 uid="uid://ckhfv62q3d3u"]
 
 [ext_resource type="Script" path="res://Scripts/detect_controller_script.gd" id="1_gojc7"]
 [ext_resource type="ArrayMesh" uid="uid://bdbrcg2oqa6um" path="res://level_data/forest_nav.obj" id="2_rvigj"]
@@ -15,8 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://duj445gwmyx3u" path="res://Scenes/items/ammo.tscn" id="12_yce01"]
 [ext_resource type="Script" path="res://Scripts/re_enable_mouse.gd" id="13_7ch05"]
 [ext_resource type="PackedScene" uid="uid://k1xk3gxjiuco" path="res://Scenes/portal.tscn" id="15_hn5up"]
-[ext_resource type="PackedScene" uid="uid://dtjmtnv35shjq" path="res://Scenes/mouse.tscn" id="19_hws3f"]
-[ext_resource type="PackedScene" uid="uid://0jk2dou3wrjk" path="res://Scenes/BOSS_python.tscn" id="19_jre6u"]
 [ext_resource type="Texture2D" uid="uid://bsckaieoidiut" path="res://textures/mallow.png" id="19_qrcy4"]
 [ext_resource type="Texture2D" uid="uid://caoqri4e4muer" path="res://textures/perfect_tp.png" id="20_86xa3"]
 [ext_resource type="Texture2D" uid="uid://cmajq0xlkyebt" path="res://textures/lite_brite.png" id="21_kpi5a"]
@@ -135,100 +133,117 @@ use_collision = true
 mesh = ExtResource("2_rvigj")
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="NavigationRegion3D"]
+visible = false
 height = 10.95
 vertices = PackedVector3Array(50.2417, 0, -2.77516, 30.5332, 0, -2.75837, 30.2813, 0, -28.9365, 49.5103, 0, -28.3922)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D2" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.29719, 6.08431, -4.32589)
+visible = false
 vertices = PackedVector3Array(13.1956, 0, -22.2194, 18.7694, 0, -22.5635, 19.6296, 0, -17.8498, 11.8021, 0, -16.4219, 11.4409, 0, -22.0646)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D3" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.29719, 2.45121, -3.73092)
+visible = false
 vertices = PackedVector3Array(10.0789, 0, 29.9158, 7.84078, 0, 30.0813, 7.87973, 0, 27.9959, 9.99473, 0, 27.941)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D4" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, -6.889, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(1.73811, 0, 34.601, 15.4667, 0, 35.5219, 22.624, 0, 29.7039, 22.321, 0, 24.0481, 10.122, 0, 22.8734, 9.67017, 0, 17.8131, 25.7548, 0, 18.8071, 29.4596, 0, 26.3976, 25.574, 0, 34.7109, 17.351, 0, 40.7653, 1.44715, 0, 40.0424)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D5" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, -6.889, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(-3.10102, 0, 20.2579, -1.97815, 0, 11.4703, 3.92909, 0, 5.70947, 13.0097, 0, 5.12362, 12.7167, 0, 9.56626, 5.1496, 0, 11.812, 2.17157, 0, 16.2546, 2.12274, 0, 21.1367)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D6" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, -6.889, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(-13.5153, 0, -16.8779, -9.99948, 0, -17.3801, -3.97229, 0, -12.6923, -3.97229, 0, -9.00902, -7.23702, 0, -8.33933, -11.59, 0, -11.4366, -16.2778, 0, -11.7296, -19.3333, 0, -6.24656, -19.4588, 0, -2.39586, -22.2631, 0, -2.18658, -22.305, 0, -8.88346, -17.0312, 0, -15.0362)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D7" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, -6.889, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(-16.9473, 0, 37.2708, -3.28073, 0, 36.8152, -2.54046, 0, 33.3416, -9.54456, 0, 32.2597, -16.7764, 0, 31.918)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D8" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, -10.679, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(-19.7213, 0, 9.90814, -18.2178, 0, 13.759, -14.657, 0, 13.1524, -14.3669, 0, 10.9368, -15.5538, 0, 9.16961, -18.0332, 0, 8.72121)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D9" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, -10.679, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(-9.76848, 0, 4.94343, -6.84074, 0, 5.15444, -5.3373, 0, 8.29319, -7.89578, 0, 10.4824, -11.9313, 0, 9.18998)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D10" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, -10.679, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(-9.89931, 0, -1.55874, -6.12753, 0, -1.53236, -5.78464, 0, 2.45042, -9.87294, 0, 2.31854)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D11" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, -10.679, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(-14.4418, 0, 16.1405, -6.99665, 0, 21.5244, -8.65797, 0, 25.0009, -13.9188, 0, 20.663, -16.6569, 0, 20.5707, -16.9953, 0, 17.4634)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D12" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, -10.679, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(-10.0944, 0, -27.4041, -4.74131, 0, -35.526, -0.711082, 0, -33.5878, -1.23409, 0, -30.1729, -5.78732, 0, -24.3276, -9.44837, 0, -24.9429)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D13" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, -10.679, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(-25.1334, 0, -21, -20.4571, 0, -30.5372, -16.4269, 0, -29.2759, -19.7495, 0, -18.3542)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D14" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, -10.679, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(-42.8889, 0, 32.2177, -37.4703, 0, 26.1891, -34.0972, 0, 28.1628, -33.6307, 0, 30.4235, -29.1093, 0, 30.2082, -28.3557, 0, 34.2631, -33.1283, 0, 34.9449, -36.7885, 0, 39.9329, -40.0899, 0, 38.031, -40.0899, 0, 35.0167)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D15" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, -10.679, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(-14.2075, 0, -39.5207, -42.5622, 0, -39.2883, -39.2561, 0, -12.0242, -41.9965, 0, -8.22985, -46.5453, 0, 17.5729, -46.1237, 0, 20.5241, -41.3807, 0, 21.6835, -41.9077, 0, 25.8994, -47.0723, 0, 27.7966, -48.0208, 0, 30.7478, -44.5427, 0, 46.347, -39.5889, 0, 47.7171, -37.5863, 0, 43.712, -34.6351, 0, 43.8174, -34.3189, 0, 48.0333, -30.8407, 0, 49.1927, -19.036, 0, 41.1824, -16.8226, 0, 44.239, -20.4062, 0, 48.0333, 21.7537, 0, 47.0848, 23.3346, 0, 54.1465, -14.2813, 0, 70.4848, -78.2699, 0, 57.2189, -78.907, 0, -60.6721, -7.11488, 0, -65.7444, 32.7484, 0, -50.944, 31.7998, 0, -35.7664, 21.1545, 0, -38.4014, 16.5169, 0, -38.5068, 16.6223, 0, -33.8692, 11.9847, 0, -33.9746, 9.13894, 0, -38.5068, -8.56818, 0, -39.9824)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D16" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, -10.679, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(31.3904, 0, -36.1258, 32.5498, 0, -46.982, 53.4189, 0, -39.7094, 49.6246, 0, -22.8455, 53.0722, 0, 56.4819, 20.9253, 0, 55.9549, 20.3983, 0, 47.6283, 35.8921, 0, 44.2556, 38.6325, 0, 30.2374, 39.6865, 0, 21.9108, 36.5245, 0, 14.9545, 37.5785, 0, -1.69866, 39.4428, 0, -19.4142, 37.4402, 0, -33.9594)
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D17" type="NavigationObstacle3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.297, 9.436, -3.731)
+visible = false
 height = 20.0
 vertices = PackedVector3Array(7.48531, 0, -24.9074, 18.1585, 0, -24.74, 17.9074, 0, -10.0068, 5.85294, 0, -9.71379, 5.30882, 0, -24.5725)
 affect_navigation_mesh = true
@@ -253,7 +268,7 @@ script = ExtResource("3_30711")
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 handle_input_locally = false
 audio_listener_enable_3d = true
-size = Vector2i(2, 2)
+size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("4_1x6v2")]
@@ -445,9 +460,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.32008, 0, 30.755)
 [node name="CollisionShape3D" parent="Node3D2/Area3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.32008, 0, 30.755)
 
-[node name="Mouse" parent="." groups=["anim_boss_ensnare_1"] instance=ExtResource("19_hws3f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.1833, 0.803647, 7.22602)
-
 [node name="FPS" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
@@ -491,9 +503,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.6263, -7.86855, 0.98022)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.1044, -7.86855, 0.98022)
 home = NodePath("../barn")
 
-[node name="Snake2" parent="." node_paths=PackedStringArray("home") instance=ExtResource("19_jre6u")]
-home = NodePath("../barn")
-
 [node name="treasure_1_icon" type="AnimatedSprite2D" parent="."]
 position = Vector2(57, 309)
 sprite_frames = SubResource("SpriteFrames_5vajq")
@@ -510,7 +519,7 @@ sprite_frames = SubResource("SpriteFrames_ixywf")
 transform = Transform3D(0.048206, 0, -0.115331, 0, 0.125, 0, 0.115331, 0, 0.048206, 33.9361, 2.63175, -17.8985)
 
 [node name="Snake4" parent="." instance=ExtResource("24_hlmj2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.765, -7.8435, 13.9152)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.34945, 0.0829239, -4.4561)
 
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
 [connection signal="area_entered" from="Node3D2/Area3D" to="." method="_on_area_3d_area_entered"]

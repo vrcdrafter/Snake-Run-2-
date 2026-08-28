@@ -112,6 +112,23 @@ signal can_leave
 var snake_that_nommed :Node3D = null
 var snake_that_nommed2 :Node3D = null # because the first did not work . 
 
+@onready var yaw_pivot = $Cam_origin
+@onready var pitch_pivot = $Cam_origin/Cam_pitch
+
+var yaw := 0.0
+
+var pitch := 0.0
+@export var sens :float = .5
+
+#nomming variables 
+var struggle = 0.0
+const MAX_STRUGGLE = 1.0
+const PUSH_SPEED = 8
+const RETURN_SPEED = 1.5
+
+var skin_material :Material = null
+ 
+
 func _ready():
 	camera = $rotation_helper/Camera3D
 	rotation_helper = $rotation_helper
@@ -157,6 +174,8 @@ func _input(event: InputEvent) -> void:
 
 
 
+
+
 func _physics_process(delta: float) -> void:
 	
 	if GlobalVars.items_collected >= 3:
@@ -195,14 +214,33 @@ func _physics_process(delta: float) -> void:
 	elif held:
 		
 		if nommed_oneshot:
-			$rotation_helper/Camera3D.global_transform = $rotation_helper/Camera3D.global_transform.interpolate_with($nom_camera_pos.global_transform,1)
 			make_inert()
+			# make camera not defautl 
+			$rotation_helper/Camera3D.current = false
+	
+			$Cam_origin/Cam_pitch/SpringArm3D/Camera3D.current = true
+			player_id = find_id()
 			nommed_oneshot = false
 			dead.emit(self) # your not really dead but undetected. 
 		# now you need to move the player to that snake anchor point . 
-		var anchor = snake_that_nommed2.get_node("player_internal_anchor/player_pos")
-		self.global_position = anchor.global_position
+				# camera stuff 
+		var anchor :Marker3D = snake_that_nommed2.get_node("player_internal_anchor/player_pos")
+		var follow_speed := 6.0
+		self.global_position = global_position.lerp(anchor.global_position,follow_speed * delta) # this makes it softer . 
+		event = top_container_handle.mouse_event
+		if previous_event == event:
+			event = Vector2(0,0)
+		else:
+			previous_event = event
 		
+		yaw -= event.x * sens
+		pitch -= event.y * sens
+		pitch = clamp(pitch, -90, 45)
+		yaw_pivot.rotation_degrees.y = yaw
+		pitch_pivot.rotation_degrees.x = pitch
+		
+		# run the struggle stuff too 
+		run_struggle(player_id,delta,skin_material)
 		
 	else:
 		
@@ -446,7 +484,7 @@ func remake_connections():
 		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,health_hurt_speed,test])):
 			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,health_hurt_speed,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
-			n.connect("nommed",callable_nommed.bind([snake_that_nommed,position_ensnared,test]))
+			n.connect("nommed",callable_nommed.bind([snake_that_nommed,position_ensnared,skin_material,test]))
 			n.connect("let_go_prey",callable_changed_target.bind([previous_thing_ensnared,current_thing_ensnared,test,test2]))
 			#	timer_handle.connect("timeout",timer_callable)
 #	game_over_button_handle.connect("pressed",reset_level)
@@ -612,13 +650,14 @@ func respawn():
 	$rotation_helper/Camera3D.rotation = Vector3(0,0,0)
 	health = 100
 	
-func been_nommed(snake_that_nommed,position_ensnared,test):
+func been_nommed(snake_that_nommed,position_ensnared,skin_material_2,test):
 	print("been eaten")
 	# we need to do a few special and odd things here . we need to disable key input . 
 	# we need to remove the colission all of the 
 	snake_that_nommed2 = snake_that_nommed
 	held = true
 	nommed_oneshot = true
+	skin_material = skin_material_2
 
 	
 	pass
@@ -637,10 +676,30 @@ func make_inert():
 	velocity = Vector3.ZERO
 	# how do I turn off the gravity on kinematic body ? 
 	$Sound_area.monitorable = false 
+	# reset that rotaiton helper to 0 
 	
 	pass
 	
+
 	
+func run_struggle(player_id:String, delta:float, material:Material):
+	var dir = Input.get_axis("player_initial_left","player_initial_right")
+	struggle += dir * PUSH_SPEED * delta
+	struggle = clamp(
+		struggle,
+		-MAX_STRUGGLE,
+		MAX_STRUGGLE
+		)
+	if abs(dir) < 0.01:
+		struggle = move_toward(
+		struggle,
+		0.0,
+		RETURN_SPEED * delta
+		)
+	material.set_shader_parameter(
+		"struggle_offset",
+		struggle
+		)
 	
 	
 	
