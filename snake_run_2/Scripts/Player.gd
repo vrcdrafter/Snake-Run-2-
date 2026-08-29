@@ -127,6 +127,7 @@ const PUSH_SPEED = 8
 const RETURN_SPEED = 1.5
 
 var skin_material :Material = null
+var snake_target :Node = null
  
 
 func _ready():
@@ -219,7 +220,7 @@ func _physics_process(delta: float) -> void:
 			$rotation_helper/Camera3D.current = false
 	
 			$Cam_origin/Cam_pitch/SpringArm3D/Camera3D.current = true
-			player_id = find_id()
+			
 			nommed_oneshot = false
 			dead.emit(self) # your not really dead but undetected. 
 		# now you need to move the player to that snake anchor point . 
@@ -484,7 +485,7 @@ func remake_connections():
 		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,health_hurt_speed,test])):
 			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,health_hurt_speed,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
-			n.connect("nommed",callable_nommed.bind([snake_that_nommed,position_ensnared,skin_material,test]))
+			n.connect("nommed",callable_nommed.bind([snake_that_nommed,position_ensnared,skin_material,snake_target,test]))
 			n.connect("let_go_prey",callable_changed_target.bind([previous_thing_ensnared,current_thing_ensnared,test,test2]))
 			#	timer_handle.connect("timeout",timer_callable)
 #	game_over_button_handle.connect("pressed",reset_level)
@@ -650,14 +651,16 @@ func respawn():
 	$rotation_helper/Camera3D.rotation = Vector3(0,0,0)
 	health = 100
 	
-func been_nommed(snake_that_nommed,position_ensnared,skin_material_2,test):
+func been_nommed(snake_that_nommed,position_ensnared,skin_material_2,who_is_targeted,test):
 	print("been eaten")
 	# we need to do a few special and odd things here . we need to disable key input . 
+	# need logic if its you here , there is a bug . 
+	if self == who_is_targeted:
 	# we need to remove the colission all of the 
-	snake_that_nommed2 = snake_that_nommed
-	held = true
-	nommed_oneshot = true
-	skin_material = skin_material_2
+		snake_that_nommed2 = snake_that_nommed
+		held = true
+		nommed_oneshot = true
+		skin_material = skin_material_2
 
 	
 	pass
@@ -678,19 +681,21 @@ func make_inert():
 	$Sound_area.monitorable = false 
 	# reset that rotaiton helper to 0 
 	
-	pass
-	
 
 	
 func run_struggle(player_id:String, delta:float, material:Material):
-	var dir = Input.get_axis("player_initial_left","player_initial_right")
-	struggle += dir * PUSH_SPEED * delta
+	var dir_local :float = 0.0
+	if player_id == "0":
+		dir_local = Input.get_axis("player_initial_left","player_initial_right")
+	else:
+		dir_local = Input.get_axis("pan_left_p"+player_id, "pan_right_p"+player_id)
+	struggle += dir_local * PUSH_SPEED * delta
 	struggle = clamp(
 		struggle,
 		-MAX_STRUGGLE,
 		MAX_STRUGGLE
 		)
-	if abs(dir) < 0.01:
+	if abs(dir_local) < 0.01:
 		struggle = move_toward(
 		struggle,
 		0.0,

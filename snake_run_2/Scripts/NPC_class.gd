@@ -30,7 +30,7 @@ var turn_speed := 6.0  # higher = snappier turnin
 @onready var test_target = get_node("MeshInstance3D")
 var enemy_array :Array[Node3D] = []
 @onready var text_diag :Label3D = get_node("Label3D")
-
+@onready var detect :Area3D = $Detection
 var shooting_timer :float = 1.3
 var shooting_accumulator :float = 0 
 
@@ -59,6 +59,13 @@ var snake_strength :float = 0
 var health_hurt_speed :float = 0 
 
 @onready var detection_area :Area3D = get_node("Detection")
+
+# nommed logic . 
+var snake_that_nommed :Node3D = null
+var snake_that_nommed2 :Node3D = null # because the first did not work . 
+var skin_material :Material = null
+var held = false
+var nommed_oneshot = false
 
 func set_movement_target(movement_target: Vector3):
 	navigation_agent.set_target_position(movement_target)
@@ -228,6 +235,7 @@ func remake_connections():
 	var callable_stunned_snake :Callable = Callable(self, "_snake_stunned")
 	var callable_changed_target = Callable(self,"turn_off_ensnared")
 	var callable_dead_snake = Callable(self,"turn_off_ensnared")
+	var callable_nommed = Callable(self, "been_nommed")
 	var test
 	var test2
 	
@@ -237,6 +245,7 @@ func remake_connections():
 			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_strength,health_hurt_speed,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
 			n.connect("let_go_prey",callable_changed_target.bind([previous_thing_ensnared,current_thing_ensnared,test,test2]))
+			n.connect("nommed",callable_nommed.bind([snake_that_nommed,position_ensnared,skin_material,snake_target,test]))
 			print("connected")
 	
 func _on_snake_ensnared(player_ensnared,position_ensnared,snake_strength,health_hurt_speed,test):
@@ -261,3 +270,30 @@ func turn_off_ensnared(previous_thing_ensnared,current_thing_ensnared,test,test2
 		AI_STATE = "follow_player"
 		is_ensnared = false
 # need a function incase the snake is dead 
+
+func make_inert():
+	# so this function takes all of the 
+	# get the current mask settings . 
+	self.hide()
+	# make them 0 
+	
+	detect.monitorable = false
+	# no more movement. 
+	velocity = Vector3.ZERO
+	# how do I turn off the gravity on kinematic body ? 
+
+	# reset that rotaiton helper to 0 
+	
+	
+func been_nommed(snake_that_nommed,position_ensnared,skin_material_2,who_was_eaten,test):
+	print("been eaten")
+	# we need to do a few special and odd things here . we need to disable key input . 
+	# we need to remove the colission all of the 
+	if self == who_was_eaten:
+		snake_that_nommed2 = snake_that_nommed
+		held = true
+		nommed_oneshot = true
+		# the mouse uses this 
+		AI_STATE = "is_eaten"
+		
+		skin_material = skin_material_2

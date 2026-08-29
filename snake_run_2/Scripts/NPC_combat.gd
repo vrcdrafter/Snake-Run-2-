@@ -30,8 +30,6 @@ func _process(delta: float) -> void:
 			pass
 		"attack":
 			pass
-
-				
 		"follow_player":
 			
 			run_targeting(delta)
@@ -55,4 +53,11 @@ func _process(delta: float) -> void:
 			pass
 			
 		"is_ensnared":
+			pass
+		"is_eaten":
+			if nommed_oneshot:
+				make_inert()
+				nommed_oneshot = false
+			
+			
 			pass

@@ -49,7 +49,7 @@ var ensnarement_transform_snapline :Transform3D
 var animation_curve :Curve3D
 
 var ennarement_done :bool = false
-
+var ensnarement_percentage :float = 0 
 
 
 var ensnared_position :Vector3 
@@ -261,9 +261,10 @@ func _physics_process(delta: float) -> void:
 					change_masking_bones(0)
 					if target_animation == "anim_ensnare_3" or target_animation == "anim_typing":
 						if local_target_distance < 4: # keep trying to ensnare 
-							ennarement_done = move_segments_along_path(delta,5)
+							ensnarement_percentage = move_segments_along_path(delta,5)
 							
-							if ennarement_done:
+							if ensnarement_percentage > 50:
+								ensnarement_percentage = 0
 								move_segments_back_normal()
 								ensnare_state = "run_animation"
 								
@@ -273,15 +274,16 @@ func _physics_process(delta: float) -> void:
 							ensnare_state = "abort_dynamic"
 					
 					else: # for any other animation 
-						
+						# so it needs to be not just done , but in progress. 
 						if local_target_distance < 10: # keep trying to ensnare 
 							if target_animation == "anim_strike":
-								ennarement_done = move_segments_along_path(delta,25)
+								ensnarement_percentage = move_segments_along_path(delta,25)
 							else:
 							
-								ennarement_done = move_segments_along_path(delta,13)
+								ensnarement_percentage = move_segments_along_path(delta,13)
 							
-							if ennarement_done and local_target_distance < 4:
+							if ensnarement_percentage > 50 and local_target_distance < 4:
+								ensnarement_percentage = 0
 								move_segments_back_normal()
 								ensnare_state = "run_animation"
 								
@@ -567,7 +569,7 @@ func run_a_swallow_and_emit():
 	var my_name = self.name
 	var name_of_target = snake_target.name
 	if target_animation == "anim_boss_wrapped_pre_nom": # because of a glitch where it pre_triggers
-		nommed.emit(self,ensnared_position,skin_material)
+		nommed.emit(self,ensnared_position,skin_material,snake_target)
 		timer_up = true # except you dont really want to do that untill the animation finishes. 
 # then we play the idle animation while moving the materia. 		
 		animate_bulge = true 
