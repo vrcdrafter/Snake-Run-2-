@@ -49,7 +49,7 @@ var ensnarement_transform_snapline :Transform3D
 var animation_curve :Curve3D
 
 var ennarement_done :bool = false
-var ensnarement_percentage :float = 0 
+
 
 
 var ensnared_position :Vector3 
@@ -82,8 +82,9 @@ var can_be_ensnared := [
 var damage_strength :float = 0.0 
 
 var one_shot_have_snack :bool = false
+var one_shot_early_wrap :bool  = true
 
-
+var stomach_full = false
 
 func _ready() -> void:
 
@@ -155,7 +156,7 @@ func _physics_process(delta: float) -> void:
 	
 	snake_wave_pysics_process(delta) # initialize the snake wavyness
 	if health < 0:
-		snake_state = "null"
+		snake_state = "Death"
 		
 		
 	if health_decremented:
@@ -174,7 +175,8 @@ func _physics_process(delta: float) -> void:
 	match snake_state:
 		
 		"patrol":
-			
+			if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
+				change_eyes(1)
 			
 			if new_patrol_instance:
 				new_patrol_instance = false
@@ -254,6 +256,11 @@ func _physics_process(delta: float) -> void:
 
 					ensnare_state = "run"
 				"run":
+					
+					# THIS IS A PRE-EMPTIVE ESNARE .
+					var test_local = snake_target.name
+
+					
 					ensnared_position = snake_target.global_position
 					var local_target_distance :float = (snake_target.global_position - tri_array[0].global_position).length()
 					twist_triangles(0)
@@ -261,34 +268,29 @@ func _physics_process(delta: float) -> void:
 					change_masking_bones(0)
 					if target_animation == "anim_ensnare_3" or target_animation == "anim_typing":
 						if local_target_distance < 4: # keep trying to ensnare 
-							ensnarement_percentage = move_segments_along_path(delta,5)
-							
-							if ensnarement_percentage > 50:
-								ensnarement_percentage = 0
+							ennarement_done = move_segments_along_path(delta,5)
+							if ennarement_done:
 								move_segments_back_normal()
 								ensnare_state = "run_animation"
-								
 						else:
 							# means the prey esaped 
-							
 							ensnare_state = "abort_dynamic"
-					
-					else: # for any other animation 
-						# so it needs to be not just done , but in progress. 
+					else: # for any other animation 						
 						if local_target_distance < 10: # keep trying to ensnare 
 							if target_animation == "anim_strike":
-								ensnarement_percentage = move_segments_along_path(delta,25)
+								ennarement_done = move_segments_along_path(delta,25)
 							else:
-							
-								ensnarement_percentage = move_segments_along_path(delta,13)
-							
-							if ensnarement_percentage > 50 and local_target_distance < 4:
-								ensnarement_percentage = 0
+								ennarement_done = move_segments_along_path(delta,13)
+								if target_animation == "anim_boss_wrapped_pre_nom" and one_shot_early_wrap: # this needs to run once . not every frame . 
+									ensnared.emit(snake_target,ensnared_position,snake_strength,0)
+									one_shot_early_wrap = false
+
+										
+							if ennarement_done and local_target_distance < 4:
+								one_shot_early_wrap = true
 								move_segments_back_normal()
 								ensnare_state = "run_animation"
-								
-								# if its a biting animation there is no ensnare 
-								
+								# if its a biting animation there is no ensnare
 								if target_animation == "anim_strike":
 									# if its a biting animation there is no ensnare 
 									pass
@@ -365,6 +367,9 @@ func _physics_process(delta: float) -> void:
 				"abort_dynamic":
 					abort_universal_reset()
 		"chase":
+			if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
+				change_eyes(0)
+			
 			found_player = false
 			# make it so the target is the player 			snake_target = target_player
 			var named_think = target_player.name
@@ -397,10 +402,14 @@ func _physics_process(delta: float) -> void:
 				new_patrol_instance = true
 			if target_distance < 2:  
 				snake_state = "ensnare_anim"
-		"null":
+		"Death":  # this is a death , 
+			if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
+				change_eyes(2)
+			
 			var test2 :Array[Node] = self.find_children("*PhysicalBoneSimulator3D*","PhysicalBoneSimulator3D",true,false)
 			if simlation_oneshot:
-				let_go_prey.emit(snake_target_at_beginning, null, ensnare_state)
+				let_go_prey.emit(snake_target_at_beginning, null, ensnare_state) # so here is something interesting , if the player is swallowed , player needs to know the snakes target and the snake ID . 
+				# and the player script needs to compare if its ID matches the snake target ,, might just do a custom signal 
 				
 				var scene_path = self.scene_file_path
 				var scene_name = scene_path.get_file().get_basename()				
@@ -539,8 +548,6 @@ func _physics_process(delta: float) -> void:
 				frame_counter = 0
 			else:
 				pass
-				
-	
 		
 	if snake_target_at_beginning == snake_target:
 		# nothing changed , resume . 
@@ -560,6 +567,7 @@ func abort_universal_reset():
 	if snake_target == target_player:
 		snake_state = "chase"
 	else :
+		# if the snake has eaten the mouse make sure you go back to 
 		snake_state = "patrol"
 		new_patrol_instance = true
 	ensnare_state = "setup"
@@ -568,8 +576,27 @@ func abort_universal_reset():
 func run_a_swallow_and_emit():
 	var my_name = self.name
 	var name_of_target = snake_target.name
-	if target_animation == "anim_boss_wrapped_pre_nom": # because of a glitch where it pre_triggers
+	if target_animation == "anim_boss_wrapped_pre_nom" and not snake_target.get("held"): # I need a and routine to make sure the snake_target is not swallowed already 
 		nommed.emit(self,ensnared_position,skin_material,snake_target)
 		timer_up = true # except you dont really want to do that untill the animation finishes. 
+		stomach_full = true
 # then we play the idle animation while moving the materia. 		
 		animate_bulge = true 
+		# get a random patrol object now . W
+	if home == null:
+		
+		snake_target = fetch_random_patrol_object() # just pick a first target . 
+		var name_local = snake_target.name
+		set_movement_target(snake_target.global_position) # assigns target
+	else:
+		snake_target = home
+		set_movement_target(snake_target.global_position) # assigns target
+		
+		
+		
+		
+		
+
+func change_eyes(state: int):
+	$BoneAttachment3D2/AnimatedSprite3D.frame = state
+	$BoneAttachment3D2/AnimatedSprite3D2.frame = state

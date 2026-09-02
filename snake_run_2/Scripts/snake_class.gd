@@ -520,10 +520,15 @@ func initialize_ensnarment_curve():
 	
 	add_child(ensarement_path)
 	
-func move_segments_along_path(delta, speed_new: float) -> float:
-	for i in snake_vertibrea.size():
-		follow_path_array[i].progress += speed_new * delta
-	return follow_path_array[0].progress_ratio * 100.0
+func move_segments_along_path(delta,speed_new :float) -> bool:	
+	if follow_path_array[0].progress_ratio > .99:
+		return true
+	else:	
+		for i in snake_vertibrea.size():
+			follow_path_array[i].progress += speed_new *delta
+		var temp_progress = follow_path_array[0].progress_ratio
+		
+		return false
 
 
 

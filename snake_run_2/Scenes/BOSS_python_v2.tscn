@@ -1,7 +1,8 @@
-[gd_scene load_steps=23 format=4 uid="uid://s0a6bhi36c2v"]
+[gd_scene load_steps=24 format=4 uid="uid://s0a6bhi36c2v"]
 
 [ext_resource type="Script" path="res://Scenes/snake_controller_4v1.gd" id="1_rnuua"]
 [ext_resource type="Texture2D" uid="uid://dduiuptry7y0r" path="res://level_data/python_Boss_v1__boss_python_skin.png" id="2_xqpje"]
+[ext_resource type="Texture2D" uid="uid://c78o53xdwjaf0" path="res://textures/boss_python_skin.png" id="3_aqrwv"]
 [ext_resource type="Animation" uid="uid://ck2bu5esq5hp1" path="res://Resources/anim_boss_above_beam.res" id="4_o7rwy"]
 [ext_resource type="PackedScene" uid="uid://bpclxwra286ec" path="res://level_data/tounge_1.glb" id="6_mahnb"]
 [ext_resource type="Animation" uid="uid://by1o5h2i6xon8" path="res://Resources/anim_boss_wrapped_post_nom.res" id="6_w1mat"]
@@ -237,6 +238,13 @@ uniform float struggle_offset;
 0 = Use UV.x for snake length
 1 = Use UV.y for snake length
 */
+// This creates an editable color field in the Inspector
+uniform vec4 albedo_color : source_color = vec4(1.0);
+
+// This creates an editable texture slot in the Inspector
+uniform sampler2D albedo_texture : source_color, filter_linear_mipmap;
+
+
 uniform int uv_mode = 0;
 
 void vertex()
@@ -264,6 +272,17 @@ VERTEX.z += struggle_offset * falloff * 0.5;
 
 VERTEX += NORMAL * falloff * bulge_amount * 0.1;
 }
+
+
+
+void fragment() {
+    // 1. Read the color from your texture using the mesh's UV coordinates
+    vec4 tex_color = texture(albedo_texture, UV);
+
+    // 2. Multiply the texture color by your albedo color tint
+    // 3. Assign it to the built-in ALBEDO variable so Godot can render it
+    ALBEDO = tex_color.rgb * albedo_color.rgb;
+}
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2voq0"]
@@ -274,7 +293,9 @@ shader_parameter/bulge_pos = 1.02
 shader_parameter/bulge_size = 0.08
 shader_parameter/bulge_amount = 3.155
 shader_parameter/struggle_offset = null
+shader_parameter/albedo_color = Color(1, 1, 1, 1)
 shader_parameter/uv_mode = 1
+shader_parameter/albedo_texture = ExtResource("3_aqrwv")
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vat7v"]
 _data = {
@@ -774,26 +795,26 @@ external_skeleton = NodePath("../snake_python/snake_export/Skeleton3D")
 transform = Transform3D(1, 2.07871e-06, 2.10106e-06, -2.20537e-06, 0.0460953, 0.998937, 1.9595e-06, -0.998937, 0.0460953, 0.0370109, -0.107655, -0.0399226)
 
 [node name="Skeleton3D" parent="BoneAttachment3D/tounge_1/tounge_phantom_001" index="0"]
-bones/0/position = Vector3(0.0229679, 0.0798965, 0.0873719)
-bones/0/rotation = Quaternion(0.887279, -0.0852449, 0.0854593, 0.445159)
-bones/1/rotation = Quaternion(-0.196589, 6.98435e-05, -0.0555027, 0.978914)
-bones/2/rotation = Quaternion(-0.0733526, -0.00042146, -0.0206583, 0.997092)
-bones/3/rotation = Quaternion(-0.0371376, 0.000404758, -0.0104439, 0.999256)
-bones/4/rotation = Quaternion(-0.0220186, -0.000241369, -0.00619428, 0.999738)
-bones/5/rotation = Quaternion(-0.0181301, 0.000157274, -0.0051031, 0.999823)
-bones/6/rotation = Quaternion(-0.0145638, -9.97951e-05, -0.00414202, 0.999885)
-bones/7/rotation = Quaternion(-0.00996964, 7.94789e-05, -0.00326981, 0.999945)
-bones/8/rotation = Quaternion(-0.00900776, -2.82859e-05, -0.00271983, 0.999956)
-bones/9/rotation = Quaternion(-0.00851533, 1.08879e-05, -0.00233956, 0.999961)
-bones/10/rotation = Quaternion(-0.00910918, 1.31471e-05, -0.0024683, 0.999955)
-bones/11/rotation = Quaternion(-0.0145787, -0.000122457, -0.0047484, 0.999883)
-bones/12/rotation = Quaternion(0.0311709, 0.000384057, -0.0243261, 0.999218)
-bones/13/rotation = Quaternion(0.0420538, 1.94257e-09, -0.00495161, 0.999103)
-bones/14/rotation = Quaternion(0.0370343, 1.17162e-05, -0.00122282, 0.999313)
-bones/15/rotation = Quaternion(0.04203, -8.79774e-06, -0.000586936, 0.999116)
-bones/16/rotation = Quaternion(0.0602584, 4.71912e-06, -0.000304765, 0.998183)
-bones/17/rotation = Quaternion(0.0847808, -1.99715e-06, -0.000202085, 0.9964)
-bones/18/rotation = Quaternion(0.0907562, 2.13284e-09, 6.81746e-05, 0.995873)
+bones/0/position = Vector3(0.0229679, 0.00314479, -0.179765)
+bones/0/rotation = Quaternion(0.905695, -0.0972909, 0.0975356, 0.400921)
+bones/1/rotation = Quaternion(-0.247319, 8.23393e-05, -0.0654331, 0.966722)
+bones/2/rotation = Quaternion(-0.0600371, -0.000329635, -0.0161571, 0.998065)
+bones/3/rotation = Quaternion(-0.0809438, 0.000858612, -0.0221543, 0.996472)
+bones/4/rotation = Quaternion(-0.00572567, -6.55329e-05, -0.00168174, 0.999982)
+bones/5/rotation = Quaternion(-0.0464591, 0.000420549, -0.0136457, 0.998827)
+bones/6/rotation = Quaternion(-3.53903e-08, -4.77958e-08, -2.02243e-06, 1)
+bones/7/rotation = Quaternion(-0.0101176, 8.26998e-05, -0.00340222, 0.999943)
+bones/8/rotation = Quaternion(-0.016331, -5.71111e-05, -0.00548747, 0.999852)
+bones/9/rotation = Quaternion(2.25334e-06, -2.56981e-08, -4.25337e-06, 1)
+bones/10/rotation = Quaternion(-0.00420985, 1.00233e-05, -0.00188195, 0.999989)
+bones/11/rotation = Quaternion(-0.00863815, -9.98267e-05, -0.00387095, 0.999955)
+bones/12/rotation = Quaternion(2.60398e-06, 6.70137e-08, -1.42265e-06, 1)
+bones/13/rotation = Quaternion(-1.18291e-05, -5.26779e-09, 0.000243851, 1)
+bones/14/rotation = Quaternion(-0.00348928, 3.84828e-05, -0.00400677, 0.999986)
+bones/15/rotation = Quaternion(-0.000236671, -3.81194e-06, -0.000254153, 1)
+bones/16/rotation = Quaternion(2.13273e-07, 3.38829e-08, -2.48186e-06, 1)
+bones/17/rotation = Quaternion(0.00159883, -1.15009e-05, -0.00114316, 0.999998)
+bones/18/rotation = Quaternion(0.00254758, -1.84833e-09, -0.00182065, 0.999995)
 
 [node name="AnimationPlayer" parent="BoneAttachment3D/tounge_1" index="1"]
 script = ExtResource("7_mjq36")
@@ -815,17 +836,6 @@ playback_type = 2
 transform = Transform3D(-0.0546522, 0.00969636, -0.0227843, -0.0239775, -0.0069391, 0.0545612, -0.00618238, -0.0588033, -0.0101955, -0.00746831, 0.23585, 0.515385)
 visible = false
 
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="BoneAttachment3D"]
-transform = Transform3D(0.019055, 0.00705736, 0.0220703, 0.0231604, -0.00667346, -0.0178622, 0.000707513, 0.0283841, -0.00968715, -0.264383, 0.711048, 0.235959)
-sprite_frames = SubResource("SpriteFrames_7huwv")
-frame = 2
-frame_progress = 0.807304
-
-[node name="AnimatedSprite3D2" type="AnimatedSprite3D" parent="BoneAttachment3D"]
-transform = Transform3D(-0.0185367, -0.00483916, 0.0230862, 0.0232348, -0.00880767, 0.0168098, 0.00406635, 0.0282667, 0.00919006, 0.241683, 0.739136, 0.236589)
-sprite_frames = SubResource("SpriteFrames_7huwv")
-frame = 2
-
 [node name="player_internal_anchor" type="BoneAttachment3D" parent="."]
 transform = Transform3D(-0.0269189, 0.594454, -0.803679, 0.996695, -0.0456874, -0.0671774, -0.0766521, -0.802831, -0.591259, -0.865655, 0.0603135, 1.13505)
 bone_name = "neck.043"
@@ -834,6 +844,23 @@ use_external_skeleton = true
 external_skeleton = NodePath("../snake_python/snake_export/Skeleton3D")
 
 [node name="player_pos" type="Marker3D" parent="player_internal_anchor"]
+
+[node name="BoneAttachment3D2" type="BoneAttachment3D" parent="."]
+transform = Transform3D(0.458107, -0.846421, 0.271496, 0.271496, 0.424068, 0.863977, -0.846421, -0.322084, 0.424068, 1.04135, 3.16794, -1.30067)
+bone_name = "neck.head"
+bone_idx = 0
+use_external_skeleton = true
+external_skeleton = NodePath("../snake_python/snake_export/Skeleton3D")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="BoneAttachment3D2"]
+transform = Transform3D(0.0172394, 0.00451984, -0.0241324, -0.024507, 0.00495354, -0.0165792, 0.00148687, 0.0292409, 0.00653877, -0.245577, 0.288736, 0.11714)
+sprite_frames = SubResource("SpriteFrames_7huwv")
+frame = 1
+
+[node name="AnimatedSprite3D2" type="AnimatedSprite3D" parent="BoneAttachment3D2"]
+transform = Transform3D(-0.0169324, -0.00416826, -0.0244115, -0.0247183, 0.00465456, 0.0163504, 0.00151573, 0.0293421, -0.00606152, 0.277221, 0.329166, 0.0987645)
+sprite_frames = SubResource("SpriteFrames_7huwv")
+frame = 1
 
 [connection signal="area_entered" from="BoneAttachment3D/Detection" to="BoneAttachment3D/Detection" method="_on_area_entered"]
 

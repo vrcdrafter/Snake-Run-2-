@@ -202,11 +202,8 @@ func _physics_process(delta: float) -> void:
 	
 	
 	if death_oneshot:
-
 		$"source_fox/Armature (Mecha g)/Skeleton3D/PhysicalBoneSimulator3D".physical_bones_start_simulation()
 		$rotation_helper/Camera3D.global_transform = $rotation_helper/Camera3D.global_transform.interpolate_with($Marker3D.global_transform,1)
-
-		
 		respawn_accumulator += delta
 		if respawn_accumulator > respawn_timer:
 			respawn()
@@ -407,13 +404,15 @@ func _physics_process(delta: float) -> void:
 				ensnared = false
 				held = false
 				
-			if health < 0:
+			if health < 0: # or your nommed and the snake dies, then your health tecnically reaches 0 and I need you to respawn . 
 				death_oneshot = true
 				ensnared = false
 				held = false
 				# turn off ability to be detected by snake 
 				collision_layer = 0
 				dead.emit(self)
+		else:
+			print("test")
 				
 				
 
@@ -434,7 +433,8 @@ func _on_snake_ensnared(player_ensnared,position_ensnared,snake_stength,health_h
 		snakes_around_you += 1
 		
 func turn_off_ensnared(previous_thing_ensnared,current_thing_ensnared,test,test2):
-
+	# if its a death signal , then the first argument is the snake that died , 
+	
 	if previous_thing_ensnared == self and current_thing_ensnared != self:
 		ensnared = false
 func slow_move_back(pos:Vector3, delta:float, move_strength:float):

@@ -258,14 +258,14 @@ func _on_snake_ensnared(player_ensnared,position_ensnared,snake_strength,health_
 	
 func _snake_stunned(player_ensnared,the_state,test):
 	print(player_ensnared)
-	if the_state == "run" and player_ensnared == self:
+	if (the_state == "run" and player_ensnared == self) and AI_STATE != "is_eaten":
 		AI_STATE = "follow_player"
 		detection_area.add_to_group("NPC")
 		is_ensnared = false
 		
 
 func turn_off_ensnared(previous_thing_ensnared,current_thing_ensnared,test,test2):
-	if previous_thing_ensnared == self and current_thing_ensnared != self:
+	if (previous_thing_ensnared == self and current_thing_ensnared != self) and AI_STATE != "is_eaten":
 		detection_area.add_to_group("NPC")
 		AI_STATE = "follow_player"
 		is_ensnared = false
