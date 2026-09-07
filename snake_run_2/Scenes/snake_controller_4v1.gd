@@ -2,13 +2,7 @@ extends Snake
 var ensnare_state :String = "setup"
 var snake_state :String = "patrol"
 
-@onready var test_mesh :MeshInstance3D = get_node("../MeshInstance3D")
-var stunned_material :StandardMaterial3D = preload("res://Materials/snake_stunned.tres")
-var stunned_material2 :StandardMaterial3D = preload("res://Materials/cobra_blue.tres")
-var stunned_material3 :StandardMaterial3D = preload("res://Materials/adder.tres")
-var regular_material :StandardMaterial3D = preload("res://Materials/snake_friendly.tres")
-var regular_material2 :StandardMaterial3D = preload("res://Materials/cobra_blue.tres")
-var regular_material3 :StandardMaterial3D = preload("res://Materials/adder.tres")
+
 
 @onready var skel :Skeleton3D
 var all_animation_curves :Array[Curve3D]
@@ -85,6 +79,8 @@ var one_shot_have_snack :bool = false
 var one_shot_early_wrap :bool  = true
 
 var stomach_full = false
+var contents = null
+signal Died_when_full
 
 func _ready() -> void:
 
@@ -132,7 +128,7 @@ func _ready() -> void:
 	init_snake_names()
 	print("the snakes name is ", scene_name)
 	if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
-		snake_strength = 20
+		snake_strength = 30
 		damage_strength = 0.0 # because you get eaten 
 		initialize_swallow_shape()
 	if scene_name == "Cobra_biting":
@@ -188,7 +184,7 @@ func _physics_process(delta: float) -> void:
 						# just be casual agressivness 
 			if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
 				aggressivness = 12
-				movement_speed = 4
+				movement_speed = 6
 			else:
 				aggressivness = 12
 				movement_speed = 3
@@ -213,7 +209,7 @@ func _physics_process(delta: float) -> void:
 						
 
 				
-			if found_player:
+			if found_player and target_player.snake_ensnare_array.size() == 0:  # add a condition that its doesnt currently have a snake wrapped around it . 
 				snake_state = "chase"
 				
 			old_target_position = snake_target.global_position
@@ -252,7 +248,7 @@ func _physics_process(delta: float) -> void:
 					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse"))  and (target_animation in can_be_ensnared):
 						
 						if not target_animation == "anim_strike":
-							ensnared.emit(snake_target,ensnared_position,snake_strength,damage_strength) # you have to pass the damage rate here too . how fast it dies . 
+							ensnared.emit(snake_target,ensnared_position,snake_strength,damage_strength,self) # you have to pass the damage rate here too . how fast it dies . 
 
 					ensnare_state = "run"
 				"run":
@@ -282,7 +278,7 @@ func _physics_process(delta: float) -> void:
 							else:
 								ennarement_done = move_segments_along_path(delta,13)
 								if target_animation == "anim_boss_wrapped_pre_nom" and one_shot_early_wrap: # this needs to run once . not every frame . 
-									ensnared.emit(snake_target,ensnared_position,snake_strength,0)
+									ensnared.emit(snake_target,ensnared_position,snake_strength,0,self)
 									one_shot_early_wrap = false
 
 										
@@ -296,9 +292,9 @@ func _physics_process(delta: float) -> void:
 									pass
 								elif target_animation == "anim_boss_wrapped_pre_nom":
 									# then the character is being eaten , do not constrrict 
-									ensnared.emit(snake_target,ensnared_position,snake_strength,0) 
+									ensnared.emit(snake_target,ensnared_position,snake_strength,0,self) 
 								else: 
-									ensnared.emit(snake_target,ensnared_position,snake_strength,damage_strength) # run this if its the right animation or the player is in the rigth position
+									ensnared.emit(snake_target,ensnared_position,snake_strength,damage_strength,self) # run this if its the right animation or the player is in the rigth position
 							if ennarement_done and local_target_distance > 4:
 								ensnare_state = "abort_dynamic"
 						else:
@@ -379,7 +375,7 @@ func _physics_process(delta: float) -> void:
 			
 			if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
 				aggressivness = 15
-				movement_speed = 8
+				movement_speed = 12
 			else:
 				aggressivness = randf_range(5.0, 7.0)
 				movement_speed = randf_range(5.0, 7.0)
@@ -410,7 +406,8 @@ func _physics_process(delta: float) -> void:
 			if simlation_oneshot:
 				let_go_prey.emit(snake_target_at_beginning, null, ensnare_state) # so here is something interesting , if the player is swallowed , player needs to know the snakes target and the snake ID . 
 				# and the player script needs to compare if its ID matches the snake target ,, might just do a custom signal 
-				
+				if stomach_full:
+					Died_when_full.emit(self,contents)
 				var scene_path = self.scene_file_path
 				var scene_name = scene_path.get_file().get_basename()				
 				if scene_name == "Cobra_biting":
@@ -419,7 +416,6 @@ func _physics_process(delta: float) -> void:
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material3
 				
 				else:
-					
 					$snake_python/snake_export/Skeleton3D/export_snake_mesh.material_override = stunned_material
 				$BoneAttachment3D/Node3D.show()
 				$BoneAttachment3D/tounge_1/AnimationPlayer.stop()
@@ -580,6 +576,7 @@ func run_a_swallow_and_emit():
 		nommed.emit(self,ensnared_position,skin_material,snake_target)
 		timer_up = true # except you dont really want to do that untill the animation finishes. 
 		stomach_full = true
+		contents = snake_target
 # then we play the idle animation while moving the materia. 		
 		animate_bulge = true 
 		# get a random patrol object now . W

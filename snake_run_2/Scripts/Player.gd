@@ -128,6 +128,9 @@ const RETURN_SPEED = 1.5
 
 var skin_material :Material = null
 var snake_target :Node = null
+var eaten_respawn_position :Vector3 = Vector3.ZERO
+
+var snake_ensnare_array :Array = []
  
 
 func _ready():
@@ -223,6 +226,7 @@ func _physics_process(delta: float) -> void:
 		# now you need to move the player to that snake anchor point . 
 				# camera stuff 
 		var anchor :Marker3D = snake_that_nommed2.get_node("player_internal_anchor/player_pos")
+		eaten_respawn_position = anchor.global_position + Vector3(0,10,0)
 		var follow_speed := 6.0
 		self.global_position = global_position.lerp(anchor.global_position,follow_speed * delta) # this makes it softer . 
 		event = top_container_handle.mouse_event
@@ -399,10 +403,11 @@ func _physics_process(delta: float) -> void:
 
 			slow_move_back(ensnared_position,delta,wave(1,8,time,delta)+active_strength)
 			var distance_to_free = (ensnared_position-self.get_global_position()).length()
-			if ((ensnared_position-self.get_global_position()).length() > .58):
+			if ((ensnared_position-self.get_global_position()).length() > .7):
 				snakes_around_you = 0 
 				ensnared = false
 				held = false
+				snake_ensnare_array.clear()
 				
 			if health < 0: # or your nommed and the snake dies, then your health tecnically reaches 0 and I need you to respawn . 
 				death_oneshot = true
@@ -423,7 +428,7 @@ func _on_button_button_down():
 	emit_signal("remove_mouse")
 	GlobalVars.game_started = true
 
-func _on_snake_ensnared(player_ensnared,position_ensnared,snake_stength,health_hurt_speed,test):
+func _on_snake_ensnared(player_ensnared,position_ensnared,snake_stength,health_hurt_speed,snake_that_wrapped,test):
 
 	if self == player_ensnared:
 		health_hurt_speed_local = health_hurt_speed
@@ -431,12 +436,14 @@ func _on_snake_ensnared(player_ensnared,position_ensnared,snake_stength,health_h
 		ensnared = true
 		ensnared_position = self.get_global_position() # may want a different position , 
 		snakes_around_you += 1
+		snake_ensnare_array.append(snake_that_wrapped) 
 		
 func turn_off_ensnared(previous_thing_ensnared,current_thing_ensnared,test,test2):
 	# if its a death signal , then the first argument is the snake that died , 
 	
 	if previous_thing_ensnared == self and current_thing_ensnared != self:
 		ensnared = false
+		snake_ensnare_array.clear()
 func slow_move_back(pos:Vector3, delta:float, move_strength:float):
 	var current_position = self.get_global_position() # get the position 
 	self.position = self.position.lerp(pos, delta * move_strength)
@@ -476,17 +483,22 @@ func remake_connections():
 	var callable_dead_snake = Callable(self,"turn_off_ensnared")
 	var callable_changed_target = Callable(self,"turn_off_ensnared")
 	var callable_nommed = Callable(self, "been_nommed")
+	var callable_died_when_full = Callable(self, "_on_died_when_full")
 	var test
 	var test2
 	var test3
 	var health_hurt_speed 
+	var snake_that_died
+	var stomach_contents 
+	var wrap_snake
 	for n in all_snakes:
 		
-		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,health_hurt_speed,test])):
-			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,health_hurt_speed,test]))
+		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,health_hurt_speed,wrap_snake,test])):
+			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_stength,health_hurt_speed,wrap_snake,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
 			n.connect("nommed",callable_nommed.bind([snake_that_nommed,position_ensnared,skin_material,snake_target,test]))
 			n.connect("let_go_prey",callable_changed_target.bind([previous_thing_ensnared,current_thing_ensnared,test,test2]))
+			n.connect("Died_when_full", callable_died_when_full)
 			#	timer_handle.connect("timeout",timer_callable)
 #	game_over_button_handle.connect("pressed",reset_level)
 	
@@ -643,8 +655,12 @@ func play_reload_sound():
 	$reload.play()
 	
 	
-func respawn():
-	self.global_position = respawn_point.global_position
+func respawn(respawn_pos: Vector3 = Vector3.ZERO):
+	snake_ensnare_array.clear()
+	if respawn_pos != Vector3.ZERO:
+		self.global_position = respawn_pos
+	else:
+		self.global_position = respawn_point.global_position
 	death_oneshot = false
 	$"source_fox/Armature (Mecha g)/Skeleton3D/PhysicalBoneSimulator3D".physical_bones_stop_simulation()
 	$rotation_helper/Camera3D.position = Vector3(0, .821, -.338)
@@ -653,6 +669,7 @@ func respawn():
 	
 func been_nommed(snake_that_nommed,position_ensnared,skin_material_2,who_is_targeted,test):
 	print("been eaten")
+	snake_ensnare_array.clear()
 	# we need to do a few special and odd things here . we need to disable key input . 
 	# need logic if its you here , there is a bug . 
 	if self == who_is_targeted:
@@ -706,7 +723,13 @@ func run_struggle(player_id:String, delta:float, material:Material):
 		struggle
 		)
 	
-	
+func _on_died_when_full(snake_name,who_was_in_stomach):
+	print("snake_died with contents . ")
+	if self == who_was_in_stomach and snake_that_nommed2 == snake_name:
+		held = false
+		respawn(eaten_respawn_position) # but this needs a optional argument 
+		snake_ensnare_array.clear()
+	pass
 	
 	
 	

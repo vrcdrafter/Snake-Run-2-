@@ -47,8 +47,16 @@ func _process(delta: float) -> void:
 		"hold_position":
 			# Hold position is where the NPC stays in that area and does not move , attacking when a enemy approaches 
 			# if health gets low enough it can switch to retrat 
-			
 			pass
+		"death_respawn":
+			# so what do I need here , I need the respawn position . 
+				# conditions are already handled. 
+			var _anchor_node :Marker3D = snake_that_nommed2.get_node("player_internal_anchor/player_pos")
+			self.global_position = _anchor_node.global_position
+			# start up all of the activities agaibn 
+			make_active()
+			AI_STATE = "follow_player"
+			
 		"attack_retreat":
 			pass
 			

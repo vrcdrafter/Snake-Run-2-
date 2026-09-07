@@ -1,7 +1,8 @@
-[gd_scene load_steps=38 format=3 uid="uid://ckhfv62q3d3u"]
+[gd_scene load_steps=39 format=3 uid="uid://ckhfv62q3d3u"]
 
 [ext_resource type="Script" path="res://Scripts/detect_controller_script.gd" id="1_gojc7"]
 [ext_resource type="ArrayMesh" uid="uid://bdbrcg2oqa6um" path="res://level_data/forest_nav.obj" id="2_rvigj"]
+[ext_resource type="PackedScene" uid="uid://dtjmtnv35shjq" path="res://Scenes/mouse.tscn" id="2_thgbi"]
 [ext_resource type="Script" path="res://Scenes/sub_viewport_container_2.gd" id="3_30711"]
 [ext_resource type="PackedScene" uid="uid://dgpjxoygnvyy4" path="res://Scenes/Player.tscn" id="4_1x6v2"]
 [ext_resource type="Script" path="res://Scripts/color_rect.gd" id="5_js2l1"]
@@ -122,6 +123,9 @@ animations = [{
 
 [node name="Node" type="Node"]
 script = ExtResource("1_gojc7")
+
+[node name="Mouse" parent="." instance=ExtResource("2_thgbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.0943, 7.03268, -7.64152)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0634928)

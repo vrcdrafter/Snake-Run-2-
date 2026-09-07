@@ -66,6 +66,8 @@ var snake_that_nommed2 :Node3D = null # because the first did not work .
 var skin_material :Material = null
 var held = false
 var nommed_oneshot = false
+var snake_ensnare_array :Array = []
+
 
 func set_movement_target(movement_target: Vector3):
 	navigation_agent.set_target_position(movement_target)
@@ -236,19 +238,26 @@ func remake_connections():
 	var callable_changed_target = Callable(self,"turn_off_ensnared")
 	var callable_dead_snake = Callable(self,"turn_off_ensnared")
 	var callable_nommed = Callable(self, "been_nommed")
+	var callable_died_when_full = Callable(self, "_on_died_when_full")
+	
 	var test
 	var test2
+	var snake_that_died
+	var stomach_contents 
+	var snake_that_wrapped
 	
 	for n in all_snakes:
 	
-		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_strength,health_hurt_speed,test])):
-			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_strength,health_hurt_speed,test]))
+		if not n.is_connected("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_strength,health_hurt_speed,snake_that_wrapped,test])):
+			n.connect("ensnared",callable_ensnare.bind([player_ensnared,position_ensnared,snake_strength,health_hurt_speed,snake_that_wrapped,test]))
 			n.connect("dead_snake",callable_dead_snake.bind([snake_that_died,test]))
 			n.connect("let_go_prey",callable_changed_target.bind([previous_thing_ensnared,current_thing_ensnared,test,test2]))
 			n.connect("nommed",callable_nommed.bind([snake_that_nommed,position_ensnared,skin_material,snake_target,test]))
+			n.connect("Died_when_full", callable_died_when_full)
 			print("connected")
 	
-func _on_snake_ensnared(player_ensnared,position_ensnared,snake_strength,health_hurt_speed,test):
+func _on_snake_ensnared(player_ensnared,position_ensnared,snake_strength,health_hurt_speed,snake_id,test):
+	snake_ensnare_array.append(snake_id)
 	var sname_local = player_ensnared.name
 	print("should be ensnared ",player_ensnared.name)
 	if sname_local == "Mouse":
@@ -258,6 +267,7 @@ func _on_snake_ensnared(player_ensnared,position_ensnared,snake_strength,health_
 	
 func _snake_stunned(player_ensnared,the_state,test):
 	print(player_ensnared)
+	snake_ensnare_array.clear()
 	if (the_state == "run" and player_ensnared == self) and AI_STATE != "is_eaten":
 		AI_STATE = "follow_player"
 		detection_area.add_to_group("NPC")
@@ -266,6 +276,7 @@ func _snake_stunned(player_ensnared,the_state,test):
 
 func turn_off_ensnared(previous_thing_ensnared,current_thing_ensnared,test,test2):
 	if (previous_thing_ensnared == self and current_thing_ensnared != self) and AI_STATE != "is_eaten":
+		snake_ensnare_array.clear()
 		detection_area.add_to_group("NPC")
 		AI_STATE = "follow_player"
 		is_ensnared = false
@@ -275,21 +286,24 @@ func make_inert():
 	# so this function takes all of the 
 	# get the current mask settings . 
 	self.hide()
-	# make them 0 
-	
+	# make them 0 	
 	detect.monitorable = false
 	# no more movement. 
 	velocity = Vector3.ZERO
 	# how do I turn off the gravity on kinematic body ? 
-
 	# reset that rotaiton helper to 0 
-	
+func make_active():
+	self.show()
+	detect.monitorable = true
+	is_ensnared = false
+	detection_area.add_to_group("NPC")
 	
 func been_nommed(snake_that_nommed,position_ensnared,skin_material_2,who_was_eaten,test):
 	print("been eaten")
 	# we need to do a few special and odd things here . we need to disable key input . 
 	# we need to remove the colission all of the 
 	if self == who_was_eaten:
+		snake_ensnare_array.clear()
 		snake_that_nommed2 = snake_that_nommed
 		held = true
 		nommed_oneshot = true
@@ -297,3 +311,10 @@ func been_nommed(snake_that_nommed,position_ensnared,skin_material_2,who_was_eat
 		AI_STATE = "is_eaten"
 		
 		skin_material = skin_material_2
+		
+func _on_died_when_full(snake_name,who_was_in_stomach):
+	print("snake_died with contents . ")
+	if snake_that_nommed2 == snake_name and self == who_was_in_stomach :
+		held = false
+		AI_STATE = "death_respawn"
+	pass

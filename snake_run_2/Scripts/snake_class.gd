@@ -104,6 +104,14 @@ var num_players :int
 
 var player_in_scene :Array = []
 
+@onready var test_mesh :MeshInstance3D = get_node("../MeshInstance3D")
+var stunned_material :StandardMaterial3D = preload("res://Materials/snake_stunned.tres")
+var stunned_material2 :StandardMaterial3D = preload("res://Materials/cobra_blue.tres")
+var stunned_material3 :StandardMaterial3D = preload("res://Materials/adder.tres")
+var regular_material :StandardMaterial3D = preload("res://Materials/snake_friendly.tres")
+var regular_material2 :StandardMaterial3D = preload("res://Materials/cobra_blue.tres")
+var regular_material3 :StandardMaterial3D = preload("res://Materials/adder.tres")
+
 
 @onready var Snake_audio :AudioStreamPlayer3D = get_node("BoneAttachment3D/AudioStreamPlayer3D")
 var hiss_accumulator :float = 0 
@@ -119,6 +127,8 @@ var scene_name
 @onready var skin_material : Material = mesh_instance.get_surface_override_material(0)
 var bulge_pos := 1.0
 var animate_bulge := false
+
+var prev_dir := Vector3.ZERO
 
 func _init() -> void:
 
@@ -481,21 +491,29 @@ func nav_startup_ready():
 	
 
 	
-func nav_startup_physics_process(delta,head_object :MeshInstance3D):
-			# Do not query when the map has never synchronized and is empty.
+func nav_startup_physics_process(delta, head_object: MeshInstance3D):
 	if NavigationServer3D.map_get_iteration_id(navigation_agent.get_navigation_map()) == 0:
 		return
-	
+		
+	NavigationServer3D.set_debug_enabled(true)
 	movement_delta = movement_speed * delta
 	time_accumulator += delta
 	var refresh_distance = movement_speed * nav_mesh_calc_time
 	if time_accumulator > nav_mesh_calc_time \
 	or head_object.global_position.distance_to(next_path_position) < refresh_distance:
+		var old_path_position = next_path_position
 		next_path_position = navigation_agent.get_next_path_position()
+		var old_dir = (old_path_position - head_object.global_position).normalized()
+		var new_dir = (next_path_position - head_object.global_position).normalized()
+		# Dot product of -1 means exact opposite directions
+		if old_dir.dot(new_dir) < -0.99:
+			print("Direction flipped!")
+			regular_material.albedo_color = Color.RED
+		else:
+			regular_material.albedo_color = Color.GREEN
 		time_accumulator = 0.0
-	var head_object_position = head_object.global_position
 	
-	
+
 	
 	
 	var new_velocity: Vector3 = head_object.global_position.direction_to(next_path_position) * movement_delta
