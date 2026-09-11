@@ -1,12 +1,73 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bfqejaunexisg"]
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bfqejaunexisg"]
 
-[ext_resource type="Texture2D" uid="uid://vcyccunygd3q" path="res://level_data/python_Boss_GREEN__boss_python_skin_jungle.png" id="1_03y2w"]
+[ext_resource type="Texture2D" uid="uid://cr3ts7ap7w5u7" path="res://textures/boss_python_skin_jungle.png" id="1_fwm1r"]
+
+[sub_resource type="Shader" id="Shader_d2026"]
+code = "shader_type spatial;
+
+uniform float bulge_pos = 0.5;   // 0.0 (Tail) to 1.0 (Head)
+uniform float bulge_size = 0.1;
+uniform float bulge_amount = 0.5;
+uniform float struggle_offset;
+/*
+0 = Use UV.x for snake length
+1 = Use UV.y for snake length
+*/
+// This creates an editable color field in the Inspector
+uniform vec4 albedo_color : source_color = vec4(1.0);
+
+// This creates an editable texture slot in the Inspector
+uniform sampler2D albedo_texture : source_color, filter_linear_mipmap;
+
+
+uniform int uv_mode = 0;
+
+void vertex()
+{
+    float t;
+
+    // Use unchangeable UV coordinates to determine position along the body
+    if (uv_mode == 0) {
+        t = UV.x;
+    } else {
+        t = UV.y;
+    }
+
+float d = abs(t - bulge_pos);
+
+float falloff =
+    1.0 - smoothstep(0.0, bulge_size, d);
+
+float body_limit =
+    1.0 - smoothstep(0.85, 1.0, t);
+
+falloff *= body_limit;
+
+VERTEX.z += struggle_offset * falloff * 0.5;
+
+VERTEX += NORMAL * falloff * bulge_amount * 0.1;
+}
+
+
+
+void fragment() {
+    // 1. Read the color from your texture using the mesh's UV coordinates
+    vec4 tex_color = texture(albedo_texture, UV);
+
+    // 2. Multiply the texture color by your albedo color tint
+    // 3. Assign it to the built-in ALBEDO variable so Godot can render it
+    ALBEDO = tex_color.rgb * albedo_color.rgb;
+}
+"
 
 [resource]
-resource_name = "hefty_boss"
-cull_mode = 2
-shading_mode = 0
-vertex_color_use_as_albedo = true
-albedo_color = Color(0.695503, 0.695503, 0.695503, 1)
-albedo_texture = ExtResource("1_03y2w")
-texture_filter = 2
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_d2026")
+shader_parameter/bulge_pos = 1.02
+shader_parameter/bulge_size = 0.08
+shader_parameter/bulge_amount = 3.155
+shader_parameter/struggle_offset = null
+shader_parameter/albedo_color = Color(1, 1, 1, 1)
+shader_parameter/uv_mode = 1
+shader_parameter/albedo_texture = ExtResource("1_fwm1r")
