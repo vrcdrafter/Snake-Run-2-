@@ -153,7 +153,7 @@ func run_targeting(delta :float) -> bool:
 		
 		shooting_accumulator += delta
 		if shooting_accumulator > shooting_timer:
-			spawn_bullet(delta)
+			#spawn_bullet(delta)
 			tree.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 			shooting_accumulator = 0
 		

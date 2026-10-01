@@ -79,6 +79,7 @@ var one_shot_have_snack :bool = false
 var one_shot_early_wrap :bool  = true
 
 var stomach_full = false
+
 var contents = null
 signal Died_when_full
 
@@ -167,7 +168,7 @@ func _physics_process(delta: float) -> void:
 	snake_target_at_beginning = snake_target
 	
 	give_hiss(delta)
-	var name_of_target = snake_target.name
+	
 	match snake_state:
 		
 		"patrol":
@@ -194,10 +195,13 @@ func _physics_process(delta: float) -> void:
 			follower(delta,tri_array,bone_length)
 			# if condition if its just a relay point
 			
-
+			var height_off_floor :float = 0
+			if snake_target.get("distance_to_floor") != null:
+				height_off_floor = snake_target.distance_to_floor
+				print("found height ")
 			
 			# meaning give the snake a larger reach to get back home 
-			if target_distance < 1 or (target_distance < 4 and snake_target == home):
+			if target_distance < 1 or (target_distance < height_off_floor and snake_target == home):
 				if not snake_target.is_in_group("A"):
 					snake_target = pick_new_target(snake_target)
 					set_movement_target(snake_target.global_position)
@@ -209,7 +213,7 @@ func _physics_process(delta: float) -> void:
 						
 
 				
-			if found_player and target_player.snake_ensnare_array.size() == 0:  # add a condition that its doesnt currently have a snake wrapped around it . 
+			if found_player and snake_target.snake_ensnare_array.size() == 0:  # add a condition that its doesnt currently have a snake wrapped around it . 
 				snake_state = "chase"
 				
 			old_target_position = snake_target.global_position
@@ -255,8 +259,8 @@ func _physics_process(delta: float) -> void:
 					
 					# THIS IS A PRE-EMPTIVE ESNARE .
 					var test_local = snake_target.name
-
-					
+					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse")):
+						prey_in_coils = true
 					ensnared_position = snake_target.global_position
 					var local_target_distance :float = (snake_target.global_position - tri_array[0].global_position).length()
 					twist_triangles(0)
@@ -313,10 +317,11 @@ func _physics_process(delta: float) -> void:
 					else:
 						discernment_distance = local_target_distance_self
 					
-					if (snake_target.name.contains("Player") or snake_target.name.contains("Mouse")) and discernment_distance > 3:
+					if prey_in_coils and discernment_distance > 3:
 						timer_up = true
-					if found_player and not (snake_target.name.contains("Player") or snake_target.name.contains("Mouse")): 
-						timer_up = true
+					var name_local = snake_target.name
+					if found_player and not prey_in_coils:  # why do we have this 
+						timer_up = true #so this can cause a loop per and over . 
 						
 					bone_overriding = false
 					skel.clear_bones_global_pose_override()
@@ -337,7 +342,7 @@ func _physics_process(delta: float) -> void:
 						self.global_transform.origin = self.global_transform.origin - offset
 						transform_onestart = false
 					# check to see if player gets close 
-					var name_local :String = snake_target.name
+				
 					# so a odd edge error occurs here where the snaek is targetsing the mouse , but cant move into if statement , onestart is true 
 					if onestart and not (snake_target.name.contains("Player") or snake_target.name.contains("Mouse")):  #do not run this if you have a player 
 						timer_move_on.start() # start the timer for how long to be there .
@@ -367,9 +372,9 @@ func _physics_process(delta: float) -> void:
 				change_eyes(0)
 			
 			found_player = false
-			# make it so the target is the player 			snake_target = target_player
-			var named_think = target_player.name
-			snake_target = target_player
+			# make it so the target is the player 		
+			var named_think = snake_target.name
+			
 		
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
 			
@@ -547,11 +552,12 @@ func _physics_process(delta: float) -> void:
 		
 	if snake_target_at_beginning == snake_target:
 		# nothing changed , resume . 
-		pass
-		
+		pass		
 	else:
 		let_go_prey.emit(snake_target_at_beginning, snake_target, ensnare_state)
 func abort_universal_reset():
+	
+	prey_in_coils = false
 	
 	transform_onestart = true #w reset this so it can grab the next transform when the time comes . 
 	onestart = true
@@ -560,9 +566,9 @@ func abort_universal_reset():
 	snake_animations.stop() 
 	var name_loca = snake_target.name
 	
-	if snake_target == target_player:
+	if found_player:
 		snake_state = "chase"
-	else :
+	else:
 		# if the snake has eaten the mouse make sure you go back to 
 		snake_state = "patrol"
 		new_patrol_instance = true
@@ -579,6 +585,7 @@ func run_a_swallow_and_emit():
 		contents = snake_target
 # then we play the idle animation while moving the materia. 		
 		animate_bulge = true 
+		found_player = false
 		# get a random patrol object now . W
 	if home == null:
 		

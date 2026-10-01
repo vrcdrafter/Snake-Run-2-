@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b103gt166e6is" path="res://Scenes/items/toilet_paper.tscn" id="9_kw7nf"]
 [ext_resource type="PackedScene" uid="uid://y0scseug4ia2" path="res://Scenes/items/gun.tscn" id="10_lfco2"]
 [ext_resource type="PackedScene" uid="uid://dqmru7ce75dj3" path="res://Scenes/items/lite_brite.tscn" id="10_w3qh1"]
-[ext_resource type="AudioStream" uid="uid://clqnooqn2s4qa" path="res://sounds/1. Bells and Synth.ogg" id="12_j4qgy"]
+[ext_resource type="AudioStream" uid="uid://ckgyr8odx3gej" path="res://sounds/1. Bells and Synth.ogg" id="12_j4qgy"]
 [ext_resource type="PackedScene" uid="uid://duj445gwmyx3u" path="res://Scenes/items/ammo.tscn" id="12_yce01"]
 [ext_resource type="Script" path="res://Scripts/re_enable_mouse.gd" id="13_7ch05"]
 [ext_resource type="PackedScene" uid="uid://k1xk3gxjiuco" path="res://Scenes/portal.tscn" id="15_hn5up"]

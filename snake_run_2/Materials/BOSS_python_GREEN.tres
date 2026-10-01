@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bfqejaunexisg"]
 
-[ext_resource type="Texture2D" uid="uid://cr3ts7ap7w5u7" path="res://textures/boss_python_skin_jungle.png" id="1_fwm1r"]
+[ext_resource type="Texture2D" uid="uid://bkowptnj3dfv7" path="res://textures/boss_python_skin_jungle.png" id="1_fwm1r"]
 
 [sub_resource type="Shader" id="Shader_d2026"]
 code = "shader_type spatial;

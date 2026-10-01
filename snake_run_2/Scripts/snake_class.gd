@@ -129,7 +129,7 @@ var bulge_pos := 1.0
 var animate_bulge := false
 
 var prev_dir := Vector3.ZERO
-
+var prey_in_coils :bool = false
 func _init() -> void:
 
 
@@ -727,8 +727,9 @@ func connect_player_signals(): #what this does is connect the players signals if
 		
 	
 func found_prey(player_to_chase,test):
-	found_player = true
-	target_player = player_to_chase
+	if !prey_in_coils: # meaning I dont care if you found new prey you already have something 
+		found_player = true
+		snake_target = player_to_chase
 	
 func prey_dead(whoe_died,test2):
 	if snake_target == whoe_died:

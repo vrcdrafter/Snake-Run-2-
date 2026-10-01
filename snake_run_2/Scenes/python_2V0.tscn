@@ -886,7 +886,7 @@ libraries = {
 }
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="."]
-transform = Transform3D(0.981193, -0.0555286, -0.184871, 0.186543, 0.0265678, 0.982087, -0.0496224, -0.998104, 0.0364265, 0.0267713, 1.72017, 1.2839)
+transform = Transform3D(0.981193, -0.0555287, -0.184871, 0.186543, 0.0265678, 0.982088, -0.0496224, -0.998104, 0.0364265, 0.0267714, 1.72017, 1.28389)
 bone_name = "jaw"
 bone_idx = 33
 use_external_skeleton = true
