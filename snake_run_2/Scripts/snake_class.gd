@@ -506,11 +506,6 @@ func nav_startup_physics_process(delta, head_object: MeshInstance3D):
 		var old_dir = (old_path_position - head_object.global_position).normalized()
 		var new_dir = (next_path_position - head_object.global_position).normalized()
 		# Dot product of -1 means exact opposite directions
-		if old_dir.dot(new_dir) < -0.99:
-			print("Direction flipped!")
-			regular_material.albedo_color = Color.RED
-		else:
-			regular_material.albedo_color = Color.GREEN
 		time_accumulator = 0.0
 	
 

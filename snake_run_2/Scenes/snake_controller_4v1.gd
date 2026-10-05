@@ -73,6 +73,12 @@ var can_be_ensnared := [
 "anim_boss_ensnare_1"
 ]
 
+var boss_Snakes :Array = [
+"BOSS_python",
+"BOSS_python_v2",
+"BOSS_python_GREEN"
+]
+
 var damage_strength :float = 0.0 
 
 var one_shot_have_snack :bool = false
@@ -128,7 +134,7 @@ func _ready() -> void:
 
 	init_snake_names()
 	print("the snakes name is ", scene_name)
-	if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
+	if boss_Snakes.has(scene_name):
 		snake_strength = 30
 		damage_strength = 0.0 # because you get eaten 
 		initialize_swallow_shape()
@@ -172,7 +178,7 @@ func _physics_process(delta: float) -> void:
 	match snake_state:
 		
 		"patrol":
-			if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
+			if boss_Snakes.has(scene_name):
 				change_eyes(1)
 			
 			if new_patrol_instance:
@@ -183,7 +189,7 @@ func _physics_process(delta: float) -> void:
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
 						# when you go into patrol , just skip a frame , see how bad it looks 
 						# just be casual agressivness 
-			if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
+			if boss_Snakes.has(scene_name):
 				aggressivness = 12
 				movement_speed = 6
 			else:
@@ -378,7 +384,7 @@ func _physics_process(delta: float) -> void:
 		
 			var target_distance :float = tri_array[0].global_position.distance_to(snake_target.global_position)
 			
-			if scene_name == "BOSS_python" or scene_name == "BOSS_python_v2":
+			if boss_Snakes.has(scene_name):
 				aggressivness = 15
 				movement_speed = 12
 			else:
