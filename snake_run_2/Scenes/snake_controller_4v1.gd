@@ -79,14 +79,18 @@ var boss_Snakes :Array = [
 "BOSS_python_GREEN"
 ]
 
+var prey_characters :Array = [
+	"Mouse",
+	"Player"	
+]
+
 var damage_strength :float = 0.0 
 
 var one_shot_have_snack :bool = false
 var one_shot_early_wrap :bool  = true
 
-var stomach_full = false
 
-var contents = null
+
 signal Died_when_full
 
 func _ready() -> void:
@@ -219,7 +223,7 @@ func _physics_process(delta: float) -> void:
 						
 
 				
-			if found_player and snake_target.snake_ensnare_array.size() == 0:  # add a condition that its doesnt currently have a snake wrapped around it . 
+			if found_player and snake_target.snake_ensnare_array.size() == 0 and prey_characters.has(snake_target.name):  # add a condition that its doesnt currently have a snake wrapped around it . 
 				snake_state = "chase"
 				
 			old_target_position = snake_target.global_position
@@ -290,7 +294,6 @@ func _physics_process(delta: float) -> void:
 								if target_animation == "anim_boss_wrapped_pre_nom" and one_shot_early_wrap: # this needs to run once . not every frame . 
 									ensnared.emit(snake_target,ensnared_position,snake_strength,0,self)
 									one_shot_early_wrap = false
-
 										
 							if ennarement_done and local_target_distance < 4:
 								one_shot_early_wrap = true
@@ -302,7 +305,7 @@ func _physics_process(delta: float) -> void:
 									pass
 								elif target_animation == "anim_boss_wrapped_pre_nom":
 									# then the character is being eaten , do not constrrict 
-									ensnared.emit(snake_target,ensnared_position,snake_strength,0,self) 
+									ensnared.emit(snake_target,ensnared_position,snake_strength,.2,self) 
 								else: 
 									ensnared.emit(snake_target,ensnared_position,snake_strength,damage_strength,self) # run this if its the right animation or the player is in the rigth position
 							if ennarement_done and local_target_distance > 4:

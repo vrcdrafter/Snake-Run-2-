@@ -131,6 +131,9 @@ var snake_target :Node = null
 var eaten_respawn_position :Vector3 = Vector3.ZERO
 
 var snake_ensnare_array :Array = []
+
+var saved_collision_mask :int = 0
+var saved_collision_layer :int = 0 
  
 
 func _ready():
@@ -210,17 +213,35 @@ func _physics_process(delta: float) -> void:
 		respawn_accumulator += delta
 		if respawn_accumulator > respawn_timer:
 			respawn()
+			if held:
+				restore_from_inert()
+				held = false
+
 			respawn_accumulator = 0 
 		# start rebirth timer 
 	elif held:
+	
+		# start doing slow damage 
+		
+		health_accumulator += delta
+		if health_accumulator > health_decrement_timer:
+			health -= .2	
+			health_accumulator = 0
+		
+		if health <= 0: # or your nommed and the snake dies, then your health tecnically reaches 0 and I need you to respawn . 
+			death_oneshot = true
+			ensnared = false
+			
+			# turn off ability to be detected by snake 
+			collision_layer = 0
+			dead.emit(self)
+		
+	
+	
 		
 		if nommed_oneshot:
 			make_inert()
-			# make camera not defautl 
-			$rotation_helper/Camera3D.current = false
-	
-			$Cam_origin/Cam_pitch/SpringArm3D/Camera3D.current = true
-			
+			# make camera not defautl 			
 			nommed_oneshot = false
 			dead.emit(self) # your not really dead but undetected. 
 		# now you need to move the player to that snake anchor point . 
@@ -395,7 +416,7 @@ func _physics_process(delta: float) -> void:
 		if ensnared or held: # remember ensnared needs to be player indendent , plain signals is not good enough 
 			# decrement health too 
 			health_accumulator += delta
-			if health_accumulator > health_decrement_timer and ensnared:
+			if health_accumulator > health_decrement_timer:
 				health -= health_hurt_speed_local
 				
 				health_accumulator = 0
@@ -417,7 +438,7 @@ func _physics_process(delta: float) -> void:
 				collision_layer = 0
 				dead.emit(self)
 		else:
-			print("test")
+			pass
 				
 				
 
@@ -685,8 +706,8 @@ func been_nommed(snake_that_nommed,position_ensnared,skin_material_2,who_is_targ
 func make_inert():
 	# so this function takes all of the 
 	# get the current mask settings . 
-	var current_mask :int = collision_mask
-	var current_layer :int = collision_layer
+	saved_collision_layer = collision_layer
+	saved_collision_mask = collision_mask
 	self.hide()
 	# make them 0 
 	collision_mask = 0 
@@ -697,6 +718,17 @@ func make_inert():
 	# how do I turn off the gravity on kinematic body ? 
 	$Sound_area.monitorable = false 
 	# reset that rotaiton helper to 0 
+	$rotation_helper/Camera3D.current = false	
+	$Cam_origin/Cam_pitch/SpringArm3D/Camera3D.current = true
+	
+func restore_from_inert():
+	show()
+	collision_mask = saved_collision_mask
+	collision_layer = saved_collision_layer
+	$Sound_area.monitorable = true
+	velocity = Vector3.ZERO
+	$rotation_helper/Camera3D.current = true
+	$Cam_origin/Cam_pitch/SpringArm3D/Camera3D.current = false
 	
 
 	

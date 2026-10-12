@@ -130,6 +130,9 @@ var animate_bulge := false
 
 var prev_dir := Vector3.ZERO
 var prey_in_coils :bool = false
+
+var stomach_full = false
+var contents = null
 func _init() -> void:
 
 
@@ -491,26 +494,15 @@ func nav_startup_ready():
 	
 
 	
-func nav_startup_physics_process(delta, head_object: MeshInstance3D):
+func nav_startup_physics_process(delta,head_object :MeshInstance3D):
+			# Do not query when the map has never synchronized and is empty.
 	if NavigationServer3D.map_get_iteration_id(navigation_agent.get_navigation_map()) == 0:
 		return
-		
-	NavigationServer3D.set_debug_enabled(true)
-	movement_delta = movement_speed * delta
-	time_accumulator += delta
-	var refresh_distance = movement_speed * nav_mesh_calc_time
-	if time_accumulator > nav_mesh_calc_time \
-	or head_object.global_position.distance_to(next_path_position) < refresh_distance:
-		var old_path_position = next_path_position
-		next_path_position = navigation_agent.get_next_path_position()
-		var old_dir = (old_path_position - head_object.global_position).normalized()
-		var new_dir = (next_path_position - head_object.global_position).normalized()
-		# Dot product of -1 means exact opposite directions
-		time_accumulator = 0.0
-	
+	if navigation_agent.is_navigation_finished():
+		return
 
-	
-	
+	movement_delta = movement_speed * delta
+	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 	var new_velocity: Vector3 = head_object.global_position.direction_to(next_path_position) * movement_delta
 	if navigation_agent.avoidance_enabled:
 		navigation_agent.set_velocity(new_velocity)
@@ -722,6 +714,11 @@ func connect_player_signals(): #what this does is connect the players signals if
 		
 	
 func found_prey(player_to_chase,test):
+	
+	if !(player_to_chase is CharacterBody3D) and !(player_to_chase is Node3D):
+		push_warning("found_prey() received invalid type: " + str(player_to_chase))
+
+	
 	if !prey_in_coils: # meaning I dont care if you found new prey you already have something 
 		found_player = true
 		snake_target = player_to_chase
@@ -735,6 +732,12 @@ func prey_dead(whoe_died,test2):
 		else:
 			snake_target = home
 			timer_up = true # this is because the timer one no longer works when home is set. 
+			
+	if stomach_full and whoe_died == contents:
+		stomach_full = false
+		contents = null
+		initialize_swallow_shape()
+		# slim yourself too . 
 
 func widen_cull_margin():
 	var all_stuff :Array = self.find_children("*")
